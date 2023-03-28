@@ -13,3 +13,4 @@ google 搜尋 git bush下載 git
 5.git remote add <自訂名稱> <網址>：加入一個remote
 6.git remote：查看當前有的remote
 7.git push -u <remote名稱> <branch名稱>：把當前的branch推送到該remote上 (-u會讓之後預設都為這個remote)
+8.git clone <網址>：複製當前網址的檔案
