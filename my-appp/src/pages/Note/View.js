@@ -57,9 +57,9 @@ function View(isAuth) {
           </div>
           <label></label>
         </div>
-        <Link to={"/edit/" + id}>
+        <a href={"/edit/" + id}>
           <button class="btn btn-primary">修改</button>
-        </Link>
+        </a>
       </div>
     </div>
   );

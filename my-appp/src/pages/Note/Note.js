@@ -18,7 +18,7 @@ function Note({ isAuth }) {
       noteList.filter(
         (notes) =>
           notes.title.toLowerCase().includes(search.toLowerCase()) ||
-          notes.body.toLowerCase().includes(search.toLowerCase())
+          notes.body.replace(/<\/?.+?>/g,"").replace(/ /g,"").toLowerCase().includes(search.toLowerCase())
       )
     );
   };
