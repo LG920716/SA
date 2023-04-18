@@ -29,11 +29,11 @@ function App() {
                   文件
                 </a>
 
-                <a class="nav-item nav-link" href="calendar">
+                <a class="nav-item nav-link" href="../calendar">
                   日曆
                 </a>
                 
-                <a class="nav-item nav-link" href="charge">
+                <a class="nav-item nav-link" href="../charge">
                   記帳
                 </a>
                 <a class="nav-item nav-link" href="#">
