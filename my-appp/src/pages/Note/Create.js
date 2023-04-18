@@ -18,8 +18,8 @@ function Create({ isAuth }) {
       title,
       body,
       createAt: serverTimestamp(),
-      editAt: "",
-      viewAt: "",
+      editAt: serverTimestamp(),
+      viewAt: serverTimestamp(),
     });
     navigate("/");
   };
