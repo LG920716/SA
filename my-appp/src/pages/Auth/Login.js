@@ -17,11 +17,14 @@ function Login({ setIsAuth }) {
       name: auth?.currentUser?.displayName,
     });
   };
-
+  
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         localStorage.setItem("isAuth", true);
+        localStorage.setItem("url", auth?.currentUser?.photoURL);
+        localStorage.setItem("name", auth?.currentUser?.displayName);
+        
         setIsAuth(true);
         userAdd()
         navigate("/");
