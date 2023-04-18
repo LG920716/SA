@@ -15,6 +15,8 @@ import Charge from './Charge/Charge';
 
 function App() {
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
+  
+
 
   return (
     <Router>
@@ -37,7 +39,11 @@ function App() {
                 <a class="nav-item nav-link" href="#">
                   <Logout setIsAuth={setIsAuth} />
                 </a>
-
+                
+                <img src={localStorage.getItem("url")} class="avatar"></img>
+                <a class="nav-item nav-link">{localStorage.getItem("name")}</a>
+                
+                
               </div>
             </div>
           </nav>

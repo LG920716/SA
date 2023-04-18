@@ -36,6 +36,7 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
+        tag:[],
       });
       setEventsData([
         ...eventsData,

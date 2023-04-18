@@ -20,6 +20,7 @@ function Create({ isAuth }) {
       createAt: serverTimestamp(),
       editAt: serverTimestamp(),
       viewAt: serverTimestamp(),
+      tag:[],
     });
     navigate("/");
   };
