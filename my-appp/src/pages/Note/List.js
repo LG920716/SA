@@ -22,8 +22,8 @@ function List({
   };
 
   useEffect(() => {
-    getNotes();
     setSearchClose(false);
+    getNotes();
   }, [orderChange, searchClose]);
 
   const deleteNote = async (id) => {
