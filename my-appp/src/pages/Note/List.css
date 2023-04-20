@@ -1,0 +1,13 @@
+.btn.btn-light{
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border: 0px;
+    border-radius: 0px;
+}
+.btn.btn-light:hover{
+    background-color: #0e6cfd;
+    color: white;
+    border: 0px;
+    border-radius: 0px;
+    transition:0.2s;
+}

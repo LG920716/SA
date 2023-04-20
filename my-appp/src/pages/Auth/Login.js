@@ -17,11 +17,14 @@ function Login({ setIsAuth }) {
       name: auth?.currentUser?.displayName,
     });
   };
-
+  
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         localStorage.setItem("isAuth", true);
+        localStorage.setItem("url", auth?.currentUser?.photoURL);
+        localStorage.setItem("name", auth?.currentUser?.displayName);
+        
         setIsAuth(true);
         userAdd()
         navigate("/");
@@ -32,15 +35,18 @@ function Login({ setIsAuth }) {
   };
 
   return (
+    <div className="shadow-xl mt-32">
     <div
       style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
+        width:"100vw"
       }}
     >
       <GoogleButton onClick={signInWithGoogle} />
+    </div>
     </div>
   );
 }

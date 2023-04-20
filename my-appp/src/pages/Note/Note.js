@@ -3,6 +3,8 @@ import List from "./List";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./search";
+import "./Note.css";
+import AddIcon from '@mui/icons-material/Add';
 
 function Note({ isAuth }) {
   let navigate = useNavigate();
@@ -51,20 +53,12 @@ function Note({ isAuth }) {
         <div
           style={{
             display: "flex",
+            marginTop:"-40px",
             marginBottom: "20px",
+
           }}
         >
-          <Link to={"/create"}>
-            <button
-              type="button"
-              class="btn btn-primary"
-              style={{
-                marginRight: "15px",
-              }}
-            >
-              新增文件
-            </button>
-          </Link>
+         
 
           <select
             class="form-select"
@@ -76,13 +70,40 @@ function Note({ isAuth }) {
             <option value="editAt">更新時間</option>
             <option value="createAt">創建時間</option>
           </select>
-          <button type="button" class="btn btn-light" onClick={orderIsChange}>
+          <button type="button" class="btn btn-light" style={{marginRight:"970px"}} onClick={orderIsChange}>
             {order === "desc" ? (
               <i class="bi bi-arrow-up"></i>
             ) : (
               <i class="bi bi-arrow-down"></i>
             )}
           </button>
+          <Link to={"/create"}>
+            <button
+            
+              type="button"
+              class="btn btn-primary1"
+              style={{
+              zIndex:"99",borderRadius:"5%", border:"0px"
+              }}
+
+            >
+              新增文件
+              <AddIcon></AddIcon>
+            </button>
+          </Link>
+          <Link to={"/create"}>
+            <button
+              type="button"
+              class="btn btn-primary2"
+              style={{
+                position:"fixed",right:"5%", top:"80%",
+                width:"90px", height:"90px",
+                zIndex:"99",borderRadius:"80%"
+              }}
+            >
+              <AddIcon style={{fontSize:"50px", }}></AddIcon>
+            </button>
+          </Link>
         </div>
         <List
           orderArr={orderArr}

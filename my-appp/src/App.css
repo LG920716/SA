@@ -1,6 +1,77 @@
-.avatar {
-    vertical-align: middle;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+.navbarhead{
+  position: fixed;
+  top:0;
+  width:100%;
+  overflow: hidden;
+  z-index: 99;
+  background-color: white;
+  border-bottom: 3px solid #f0f0f0;
+
   }
+  .avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  margin-right:10px;
+  border-radius: 50%;
+}
+.icon{
+display: flex;
+margin-right: -10px;
+}
+
+.navbar-nav{
+  color: rgb(255, 255, 255);
+  margin-left: -10px;
+  width:23%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.nav-link2{
+  margin-top:12px;
+  margin-left:10px;
+  margin-right:15px;
+  margin-bottom: -1rem;
+}
+.nav-link{
+width:20%;
+text-align: center;
+color: white;
+
+}
+.nav-link:hover{
+  border-bottom: 3px solid #0c6efd;
+  transition: 0.1s;
+}
+
+.nav-link.active{
+  color: white;
+  font-weight: bold;
+  border-bottom: 3px solid #0c6efd;
+
+}
+.logout{
+  display: flex;
+  align-items: center;
+  margin-right: 25px;
+}
+
+#root{
+  margin-top: 90px;
+}
+.nav-logout{
+  background-color: #0c6dfd;
+  height: 30px;
+  width: 60px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-decoration: 0;
+  color:white;
+  border-radius: 10px;
+}
+.nav-logout:hover{
+  background-color: #0957cd;
+  color: white;
+  transition: 0.2s;
+}

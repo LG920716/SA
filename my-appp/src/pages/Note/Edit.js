@@ -54,25 +54,29 @@ function Edit(isAuth) {
   return (
     <div className="container">
       <div className="wrapper">
-        <div className="form-group">
-          <div className="form-group">
+        <div className="form-group1">
+          <div className="form-group2" >
             <input
+            
               value={editTitle}
               className="form-control"
               placeholder="title..."
               onChange={(e) => setEditTitle(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group3 " style={{marginBottom:"-20px"}}>
+            <div class="ql-container ql-snow"style={{height:"100%"}}>
             <EditorToolbar />
-            <ReactQuill
+            <ReactQuill 
               theme="snow"
               value={editBody}
               onChange={setEditBody}
               placeholder={"Write something awesome..."}
               modules={modules}
               formats={formats}
+              
             />
+            </div>
             <label></label>
           </div>
           <button class="btn btn-primary" onClick={updateEditNote}>

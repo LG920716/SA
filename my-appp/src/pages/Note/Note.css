@@ -1,0 +1,30 @@
+.container{
+    width:100%;
+    max-width: 1383px;
+}
+.wrapper{
+    width:95%;
+    display: flex;
+    flex-direction: column;
+    margin:auto;
+    justify-content: center;
+    margin-top: -30px;
+}
+.btn.btn.btn-primary1{
+  background-color: #0c6dfd;
+  color: white;
+  font-size: 16px;
+}
+.btn.btn.btn-primary1:hover{
+    background-color: #0957cd;
+    color: white;
+}
+.btn.btn.btn-primary2{
+        background-color: #0c6dfd;
+        border: 1px solid white;
+        color: white;
+}
+.btn.btn.btn-primary2:hover{
+    background-color: #0957cd;
+    color: white;
+}

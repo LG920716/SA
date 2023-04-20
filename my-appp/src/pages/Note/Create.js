@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, notesCollectionRef } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
+import "./Create.css"
 
 function Create({ isAuth }) {
   const [title, setTitle] = useState("");
@@ -33,21 +34,21 @@ function Create({ isAuth }) {
   return (
     <div className="container">
       <div className="wrapper">
-        <div className="form-group">
-          <div className="form-group">
+        <div className="form-group1">
+          <div className="form-group2">
             <input
               className="form-control"
-              placeholder="title..."
+              placeholder="標題..."
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group3">
             <EditorToolbar />
-            <ReactQuill
+            <ReactQuill className="text"
               theme="snow"
               value={body}
               onChange={setBody}
-              placeholder={"Write something awesome..."}
+              placeholder={"內文..."}
               modules={modules}
               formats={formats}
             />

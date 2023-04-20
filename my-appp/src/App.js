@@ -12,7 +12,7 @@ import View from "./pages/Note/View";
 import Calendars from "./pages/Calendar/Calendar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Charge from './Charge/Charge';
-
+import {NavLink} from 'react-router-dom';
 function App() {
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
   
@@ -22,31 +22,43 @@ function App() {
     <Router>
       {isAuth && (
         <>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="/">
-                  文件
-                </a>
+        <div className="navbarhead">
+          <nav class="navbar navbar-expand-lg navbar-light" 
+          style={{width:"92%", margin:"auto"}}>
+           <div className="collapse navbar-collapse " id="navbarNavAltMarkup" 
+           style=
+           {{justifyContent:"space-between",paddingRight:"20px"}}>
+            
+             <div className="navbar-nav" >
+               <NavLink className={"nav-link"} to="/">
+                 文件
+               </NavLink>
 
-                <a class="nav-item nav-link" href="calendar">
-                  日曆
-                </a>
-                
-                <a class="nav-item nav-link" href="charge">
-                  記帳
-                </a>
-                <a class="nav-item nav-link" href="#">
-                  <Logout setIsAuth={setIsAuth} />
-                </a>
-                
-                <img src={localStorage.getItem("url")} class="avatar"></img>
-                <a class="nav-item nav-link">{localStorage.getItem("name")}</a>
-                
-                
-              </div>
-            </div>
-          </nav>
+
+               <NavLink className={"nav-link"}to="../calendar">
+                 日曆
+               </NavLink>
+              
+               <NavLink className={"nav-link"}to="../charge">
+                 記帳
+               </NavLink>
+               
+               
+             </div>
+             
+             
+           </div>
+           <div className="icon" >
+               <img src={localStorage.getItem("url")} class="avatar"></img>
+               <p class="nav-item nav-link2">{localStorage.getItem("name")}</p>
+               <div className="logout">
+               <a class="nav-item nav-logout" href="#">
+                 <Logout setIsAuth={setIsAuth} />
+               </a>
+               </div>
+               </div>
+         </nav>
+         </div>
         </>
       )}
       {/* <nav>

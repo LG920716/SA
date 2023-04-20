@@ -2,6 +2,10 @@ import { getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
 import { db, notesCollectionRef } from "../../firebase-config";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import "./List.css"
 
 function List({
   orderArr,
@@ -33,38 +37,44 @@ function List({
   };
 
   return (
+   
     <div
       style={{
+        borderRadius:"20px",
         display: "grid",
-        gridTemplateColumns: "repeat(4,1fr)",
-        gridGap: "2.5rem",
-      }}
+        gridTemplateColumns: "repeat(3,1fr)",
+        rowGap:"2rem",
+        justifyItems: "center",
+        backgroundColor: "#F5F5F5",
+        paddingTop:"30px",
+        paddingBottom:"30px"
+        
+            }}
     >
       {noteList.map((note) => (
-        <div key={note.id} style={{ width: "250px" }}>
+        <div key={note.id} 
+        style={{ width: "400px",height:"363px", backgroundColor:"white", borderRadius: "20px"}}>
           {/* <p>Title: {note.title}</p>
           <p>Body: {note.body}</p> */}
 
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <Link to={"view/" + note.id}>
-              <button type="button" class="btn btn-light">
-                檢視
-              </button>
-            </Link>
-            <Link to={"edit/" + note.id}>
-              <button type="button" class="btn btn-light">
-                修改
-              </button>
-            </Link>
-            <button
-              type="button"
-              class="btn btn-light"
-              onClick={() => {
-                deleteNote(note.id);
-              }}
-            >
-              刪除
-            </button>
+<div className="form-group" >
+ 
+            <input 
+              className="form-control" 
+              style={{
+
+                borderRadius:"20px", 
+                border:"0px",
+                height:"60px",
+                fontSize:"20px",
+                backgroundColor:"white",
+                fontWeight:"bold"}} 
+
+              placeholder="title..."
+              value={note.title}
+              disabled
+            />
+            
           </div>
 
           {/* <div class="select-menu">
@@ -96,7 +106,7 @@ function List({
             <div class="quill ">
               <div
                 class="ql-container ql-snow"
-                style={{ height: "200px", overflowY: "auto" }}
+                style={{ height: "264px", overflowY: "auto", border:"0px", }}
               >
                 <div class="ql-editor ql-blank" data-gramm="false">
                   <div dangerouslySetInnerHTML={{ __html: note.body }}></div>
@@ -104,17 +114,37 @@ function List({
               </div>
             </div>
           </div>
-          <div className="form-group">
-            <input
-              className="form-control"
-              placeholder="title..."
-              value={note.title}
-              disabled
-            />
+          
+          <div class="btn-group" role="group" aria-label="Basic example" 
+          style={{width:"100%", display:"flex", justifyContent:"space-evenly"}}>
+
+            <Link to={"view/" + note.id}>
+              <button type="button" class="btn btn-light" style={{width:"133.4px"}}>
+                <FullscreenIcon />
+              </button>
+            </Link>
+            <Link to={"edit/" + note.id}>
+              <button type="button" class="btn btn-light" style={{width:"133.4px"}}>
+                <EditIcon />
+              </button>
+            </Link>
+            <a>
+            <button
+              type="button"
+              style={{width:"133.4px"}}
+              class="btn btn-light"
+              onClick={() => {
+                deleteNote(note.id);
+              }}
+            >
+              <DeleteIcon />
+            </button>
+            </a>
           </div>
         </div>
       ))}
     </div>
+  
   );
 }
 

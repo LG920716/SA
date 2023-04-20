@@ -17,16 +17,17 @@ function MyVerticallyCenteredModal({
   handleDelete,
 }) {
   return (
+    
     <Modal show={modalStatus} onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
+          新增行事曆
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="form-group">
           <div className="form-group">
-            <label>start date</label>
+            <label>起始日期</label>
             <input
               value={moment(startDate).format("YYYY/MM/DD[（]ddd[）]HH:mm")}
               className="form-control"
@@ -36,7 +37,7 @@ function MyVerticallyCenteredModal({
             <label></label>
           </div>
           <div className="form-group">
-            <label>end date</label>
+            <label>結束日期</label>
             <input
               value={moment(endDate).format("YYYY/MM/DD[（]ddd[）]HH:mm")}
               className="form-control"
@@ -45,11 +46,11 @@ function MyVerticallyCenteredModal({
             <label></label>
           </div>
           <div className="form-group">
-            <label>title</label>
+            <label>標題</label>
             <input
               value={eventInput}
               className="form-control"
-              placeholder="title..."
+              placeholder="標題..."
               onChange={(e) => setEventInput(e.target.value)}
             />
           </div>

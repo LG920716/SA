@@ -6,6 +6,8 @@ import { addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { eventsCollectionRef, db } from "../../firebase-config";
 import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
+import "./Calendar.css";
+
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -20,7 +22,6 @@ export default function Calendars({ isAuth }) {
   const [eventId, setEventId] = useState("");
   const [delStatus, setDelStatus] = useState(false);
   let navigate = useNavigate();
-
   useEffect(() => {
     if (!isAuth) {
       navigate("/login");
@@ -116,16 +117,22 @@ export default function Calendars({ isAuth }) {
 
   // console.log(startDate);
   return (
-   <center>
-     <div className="App" style={{width:"90%"}}>
+   <center className="Calendar">
+     <div >
+      <div className="py-4 border-bottom">
+        <div className="form-title text-center">
+      <h1>行事曆</h1>
+      </div>
+      </div><br></br>
       <Calendar
         views={["day", "week", "month", "agenda"]}
         selectable
+        locale="zh"
         localizer={localizer}
         defaultDate={new Date()}
         defaultView="month"
         events={eventsData}
-        style={{ height: "100vh" }}
+        style={{ height: "100%" }}
         onSelectEvent={hanldeOnSelectEvent}
         onSelectSlot={handleSlotSelectEvent}
       />

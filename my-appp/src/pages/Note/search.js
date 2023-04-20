@@ -7,8 +7,11 @@ const SearchBar = ({ setSearch, search, searchNotes, setSearchClose }) => {
     setSearchClose(true);
   };
   return (
-    <div className="searchBar-wrap">
-      <input
+    <div className="searchBar-wrap" 
+    style={{display:"flex",
+            width:"50%",
+            justifyContent:"space-between",}}>
+      <input style={{width:"100%"}}
         type="text"
         placeholder="關鍵字尋找"
         value={search}

@@ -3,6 +3,9 @@ import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function View(isAuth) {
   const { id } = useParams();
@@ -39,7 +42,7 @@ function View(isAuth) {
   return (
     <div className="container">
       <div className="wrapper">
-        <div className="form-group">
+        <div className="form-group1">
           <input
             className="form-control"
             placeholder="title..."
@@ -47,19 +50,29 @@ function View(isAuth) {
             disabled
           />
         </div>
-        <div className="form-group">
+        <div className="form-group2" style={{marginBottom:"-20px"}}>
           <div class="quill ">
-            <div class="ql-container ql-snow">
-              <div class="ql-editor ql-blank" data-gramm="false">
+            <div class="ql-container ql-snow" >
+              <div class="ql-editor ql-blank" data-gramm="false" style={{height:"100%"}}>
                 <div dangerouslySetInnerHTML={{ __html: noteData.body }}></div>
               </div>
             </div>
           </div>
           <label></label>
         </div>
-        <a href={"/edit/" + id}>
-          <button class="btn btn-primary">修改</button>
+        <div >
+        
+        <a href={"/edit/" + id} >
+        <button type="button" class="btn btn-light" style={{width:"60px"}}>
+                <EditIcon /></button>
         </a>
+        <a href={"/"}>
+        <button type="button" class="btn btn-light" style={{width:"60px"}}>
+                <FullscreenExitIcon />
+              </button>
+        </a>
+        
+        </div>
       </div>
     </div>
   );
