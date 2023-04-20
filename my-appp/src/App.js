@@ -27,7 +27,7 @@ function App() {
           style={{width:"92%", margin:"auto"}}>
            <div className="collapse navbar-collapse " id="navbarNavAltMarkup" 
            style=
-           {{justifyContent:"space-between",paddingRight:"20px"}}>
+           {{justifyContent:"space-between",paddingRight:""}}>
             
              <div className="navbar-nav" >
                <NavLink className={"nav-link"} to="/">
