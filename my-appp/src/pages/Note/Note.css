@@ -1,6 +1,6 @@
 .container{
     width:100%;
-    max-width: 1383px;
+    max-width: 86.4375rem;
 }
 .wrapper{
     width:95%;
@@ -8,7 +8,7 @@
     flex-direction: column;
     margin:auto;
     justify-content: center;
-    margin-top: -30px;
+    margin-top: -1.875rem;
 }
 .btn.btn.btn-primary1{
   background-color: #0c6dfd;

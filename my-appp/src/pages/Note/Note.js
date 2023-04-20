@@ -53,8 +53,8 @@ function Note({ isAuth }) {
         <div
           style={{
             display: "flex",
-            marginTop:"-40px",
-            marginBottom: "20px",
+            marginTop:"-2.5rem",
+            marginBottom: "1.25rem",
 
           }}
         >
@@ -64,13 +64,13 @@ function Note({ isAuth }) {
             class="form-select"
             value={orderArr}
             onChange={selectChange}
-            style={{ width: "150px", marginRight: "15px" }}
+            style={{ width: "9.375rem", height:"2.6875rem",marginRight: "0.9375rem" }}
           >
             <option value="viewAt">檢視時間</option>
             <option value="editAt">更新時間</option>
             <option value="createAt">創建時間</option>
           </select>
-          <button type="button" class="btn btn-light" style={{marginRight:"970px"}} onClick={orderIsChange}>
+          <button type="button" class="btn btn-light" style={{marginRight:"60.625rem"}} onClick={orderIsChange}>
             {order === "desc" ? (
               <i class="bi bi-arrow-up"></i>
             ) : (
@@ -79,11 +79,11 @@ function Note({ isAuth }) {
           </button>
           <Link to={"/create"}>
             <button
-            
+              
               type="button"
               class="btn btn-primary1"
               style={{
-              zIndex:"99",borderRadius:"5%", border:"0px"
+              zIndex:"99",borderRadius:"5%", border:"0px",height:"2.6875rem", width:"7rem",
               }}
 
             >
@@ -97,7 +97,7 @@ function Note({ isAuth }) {
               class="btn btn-primary2"
               style={{
                 position:"fixed",right:"5%", top:"80%",
-                width:"90px", height:"90px",
+                width:"5.625rem", height:"5.625rem",
                 zIndex:"99",borderRadius:"80%"
               }}
             >

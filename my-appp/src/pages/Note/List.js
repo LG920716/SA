@@ -53,7 +53,7 @@ function List({
     >
       {noteList.map((note) => (
         <div key={note.id} 
-        style={{ width: "400px",height:"363px", backgroundColor:"white", borderRadius: "20px"}}>
+        style={{ width: "25rem",height:"22.6875rem", backgroundColor:"white", borderRadius: "20px"}}>
           {/* <p>Title: {note.title}</p>
           <p>Body: {note.body}</p> */}
 
@@ -106,7 +106,7 @@ function List({
             <div class="quill ">
               <div
                 class="ql-container ql-snow"
-                style={{ height: "264px", overflowY: "auto", border:"0px", }}
+                style={{ height: "16.5rem", overflowY: "auto", border:"0px", }}
               >
                 <div class="ql-editor ql-blank" data-gramm="false">
                   <div dangerouslySetInnerHTML={{ __html: note.body }}></div>
@@ -119,19 +119,19 @@ function List({
           style={{width:"100%", display:"flex", justifyContent:"space-evenly"}}>
 
             <Link to={"view/" + note.id}>
-              <button type="button" class="btn btn-light" style={{width:"133.4px"}}>
+              <button type="button" class="btn btn-light" style={{width:"8.3375rem"}}>
                 <FullscreenIcon />
               </button>
             </Link>
             <Link to={"edit/" + note.id}>
-              <button type="button" class="btn btn-light" style={{width:"133.4px"}}>
+              <button type="button" class="btn btn-light" style={{width:"8.3375rem"}}>
                 <EditIcon />
               </button>
             </Link>
             <a>
             <button
               type="button"
-              style={{width:"133.4px"}}
+              style={{width:"8.3375rem"}}
               class="btn btn-light"
               onClick={() => {
                 deleteNote(note.id);

@@ -24,10 +24,10 @@ function App() {
         <>
         <div className="navbarhead">
           <nav class="navbar navbar-expand-lg navbar-light" 
-          style={{width:"92%", margin:"auto"}}>
+          style={{width:"92%", margin:"auto", height:"4rem"}}>
            <div className="collapse navbar-collapse " id="navbarNavAltMarkup" 
            style=
-           {{justifyContent:"space-between",paddingRight:""}}>
+           {{justifyContent:"space-between",paddingRight:"1.25rem"}}>
             
              <div className="navbar-nav" >
                <NavLink className={"nav-link"} to="/">
