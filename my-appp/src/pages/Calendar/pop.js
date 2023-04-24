@@ -17,12 +17,9 @@ function MyVerticallyCenteredModal({
   handleDelete,
 }) {
   return (
-    
     <Modal show={modalStatus} onHide={handleClose} centered>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          新增行事曆
-        </Modal.Title>
+      <Modal.Header style={{ border: "none" }} closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">新增行事曆</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="form-group">
@@ -56,7 +53,7 @@ function MyVerticallyCenteredModal({
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={{ border: "none" }}>
         {delStatus ? (
           <>
             {" "}
