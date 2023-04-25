@@ -11,3 +11,15 @@
     border-radius: 0px;
     transition:0.2s;
 }
+.grid{
+    max-width: "1200px";
+    display: grid;
+    gap:1rem;
+    grid-template-columns: repeat(3,1fr);
+}
+    @media(min-width: 25rem){
+     .card {grid-template-columns: repeat(1,1fr);}
+    }
+    @media(min-width: 1500px){
+     .card{grid-template-columns: repeat(3,1fr),}
+    }

@@ -55,7 +55,7 @@ function App() {
               </div>
               <div className="icon">
                 <img src={localStorage.getItem("url")} class="avatar"></img>
-                <p class="nav-item nav-link2">{localStorage.getItem("name")}</p>
+                {/*<p class="nav-item nav-link2">{localStorage.getItem("name")}</p>*/}
                 <div className="logout">
                   <a class="nav-item nav-logout" href="#">
                     <Logout setIsAuth={setIsAuth} />
