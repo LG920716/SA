@@ -61,7 +61,7 @@ function Login({ setIsAuth }) {
   };
 
   return (
-    <div className="shadow-xl mt-32">
+    <div style={{marginTop:"-7%"}}>
       <div
         style={{
           display: "flex",

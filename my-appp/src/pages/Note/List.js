@@ -38,21 +38,20 @@ function List({
 
   return (
    
-    <div
+    <div className="grid"
       style={{
         borderRadius:"20px",
         display: "grid",
-        gridTemplateColumns: "repeat(3,1fr)",
-        rowGap:"2rem",
         justifyItems: "center",
         backgroundColor: "#F5F5F5",
         paddingTop:"30px",
         paddingBottom:"30px"
         
+        
             }}
     >
       {noteList.map((note) => (
-        <div key={note.id} 
+        <div key={note.id} className="card"
         style={{ width: "25rem",height:"22.6875rem", backgroundColor:"white", borderRadius: "20px"}}>
           {/* <p>Title: {note.title}</p>
           <p>Body: {note.body}</p> */}
@@ -106,7 +105,7 @@ function List({
             <div class="quill ">
               <div
                 class="ql-container ql-snow"
-                style={{ height: "16.5rem", overflowY: "auto", border:"0px", }}
+                style={{ height: "16.45rem", overflowY: "auto", border:"0px", }}
               >
                 <div class="ql-editor ql-blank" data-gramm="false">
                   <div dangerouslySetInnerHTML={{ __html: note.body }}></div>
@@ -119,19 +118,19 @@ function List({
           style={{width:"100%", display:"flex", justifyContent:"space-evenly"}}>
 
             <Link to={"view/" + note.id}>
-              <button type="button" class="btn btn-light" style={{width:"8.3375rem"}}>
+              <button type="button" class="btn btn-light" style={{width:"8.3313rem", borderRadius:"0px 0px 0px 20px"}}>
                 <FullscreenIcon />
               </button>
             </Link>
             <Link to={"edit/" + note.id}>
-              <button type="button" class="btn btn-light" style={{width:"8.3375rem"}}>
+              <button type="button" class="btn btn-light" style={{width:"8.3313rem"}}>
                 <EditIcon />
               </button>
             </Link>
             <a>
             <button
               type="button"
-              style={{width:"8.3375rem"}}
+              style={{width:"8.2rem", borderRadius:"0px 0px 20px 0px"}}
               class="btn btn-light"
               onClick={() => {
                 deleteNote(note.id);

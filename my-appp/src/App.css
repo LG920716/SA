@@ -12,12 +12,12 @@
   vertical-align: middle;
   width: 3.125rem;
   height: 3.125rem;
-  margin-right:0.625rem;
   border-radius: 50%;
 }
 .icon{
 display: flex;
-margin-right: -0.625rem;
+width: 9%;
+justify-content: space-between;
 }
 
 .navbar-nav{
@@ -53,11 +53,10 @@ height:100%;
 .logout{
   display: flex;
   align-items: center;
-  margin-right: 25px;
 }
 
 #root{
-  margin-top: 90px;
+  margin-top: 7%;
 }
 .nav-logout{
   background-color: #0c6efd;
