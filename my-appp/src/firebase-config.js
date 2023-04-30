@@ -23,3 +23,4 @@ export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const notesCollectionRef = collection(db, "notes");
 export const eventsCollectionRef = collection(db, "events");
+export const projectsCollectionRef = collection(db, "projects");

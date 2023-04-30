@@ -6,18 +6,7 @@ export default function ExpenseForm(props) {
   const [EnterAmount, setEnterAmount] = useState("");
   const [EnterDate, setEnterDate] = useState("");
   const [EnterProject, setEnterProject] = useState("");
-  const titleChangeHandler = (event) => {
-    setEnterTitle(event.target.value);
-  };
-  const amountChangeHandler = (event) => {
-    setEnterAmount(event.target.value);
-  };
-  const dateChangeHandler = (event) => {
-    setEnterDate(event.target.value);
-  };
-  const projectChangeHandler = (event) => {
-    setEnterProject(event.target.value);
-  };
+
   const SubmitHandlar = (event) => {
     event.preventDefault();
 
@@ -40,7 +29,13 @@ export default function ExpenseForm(props) {
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" value={EnterTitle} onChange={titleChangeHandler} />
+          <input
+            type="text"
+            value={EnterTitle}
+            onChange={(event) => {
+              setEnterTitle(event.target.value);
+            }}
+          />
         </div>
       </div>
       <div className="new-expense__controls">
@@ -51,26 +46,34 @@ export default function ExpenseForm(props) {
             min="1"
             step="1"
             value={EnterAmount}
-            onChange={amountChangeHandler}
+            onChange={(event) => {
+              setEnterAmount(event.target.value);
+            }}
           />
         </div>
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Date</label>
-          <input type="date" value={EnterDate} onChange={dateChangeHandler} />
+          <input
+            type="date"
+            value={EnterDate}
+            onChange={(event) => {
+              setEnterDate(event.target.value);
+            }}
+          />
         </div>
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>project</label>
-          {/* <select onChange={projectChangeHandler}>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-          </select> */}
-          <input type="text" list="project-list" onChange={projectChangeHandler}/>
+          <input
+            type="text"
+            list="project-list"
+            onChange={(event) => {
+              setEnterProject(event.target.value);
+            }}
+          />
           <datalist id="project-list">
             <option value="A" />
             <option value="B" />
