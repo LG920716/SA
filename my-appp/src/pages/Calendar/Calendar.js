@@ -21,6 +21,7 @@ export default function Calendars({ isAuth }) {
   //state for on select event
   const [eventId, setEventId] = useState("");
   const [delStatus, setDelStatus] = useState(false);
+
   let navigate = useNavigate();
   useEffect(() => {
     if (!isAuth) {
@@ -37,7 +38,6 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        tag:[],
       });
       setEventsData([
         ...eventsData,
@@ -64,7 +64,7 @@ export default function Calendars({ isAuth }) {
       }))
     );
   };
-  console.log("eventId?????", eventId);
+  console.log("eventId", eventId);
   console.log("title", eventInput);
   console.log("startDate", startDate);
   console.log("endDate", endDate);
@@ -107,6 +107,8 @@ export default function Calendars({ isAuth }) {
     const eventDocRef = doc(db, "events", eventId);
     try {
       await updateDoc(eventDocRef, {
+        start: startDate.toDate(),
+        end: endDate.toDate(),
         title: eventInput,
       });
       getEvents();
@@ -115,7 +117,6 @@ export default function Calendars({ isAuth }) {
     }
   };
 
-  // console.log(startDate);
   return (
    <center className="Calendar">
      <div >
@@ -148,6 +149,8 @@ export default function Calendars({ isAuth }) {
         handleDelete={handleDelete}
         eventId={eventId}
         handleEdit={handleEdit}
+        setEndDate={setEndDate}
+        setStartDate={setStartDate}
       />
     </div>
    </center>
