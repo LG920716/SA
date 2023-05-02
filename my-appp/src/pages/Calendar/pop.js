@@ -31,7 +31,7 @@ function MyVerticallyCenteredModal({
           <div className="form-group">
             <label>起始日期</label>
             <DateTime
-              value={moment(startDate).format("YYYY/MM/DD[（]ddd[）]HH:mm")}
+              value={startDate}
               onChange={(Date) => setStartDate(Date)}
               dateFormat="YYYY/MM/DD[（]ddd[）]"
               timeFormat="HH:mm"
@@ -42,7 +42,7 @@ function MyVerticallyCenteredModal({
           <div className="form-group">
             <label>結束日期</label>
             <DateTime
-              value={moment(endDate).format("YYYY/MM/DD[（]ddd[）]HH:mm")}
+              value={endDate}
               onChange={(date) => setEndDate(date)}
               dateFormat="YYYY/MM/DD[（]ddd[）]"
               timeFormat="HH:mm"

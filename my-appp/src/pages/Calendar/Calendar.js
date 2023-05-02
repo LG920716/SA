@@ -16,8 +16,8 @@ export default function Calendars({ isAuth }) {
   const [eventsData, setEventsData] = useState([]);
   const [modalStatus, setModalStatus] = useState(false);
   const [eventInput, setEventInput] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   //state for on select event
   const [eventId, setEventId] = useState("");
   const [delStatus, setDelStatus] = useState(false);
