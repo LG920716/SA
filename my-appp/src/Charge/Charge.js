@@ -3,54 +3,29 @@ import Expenses from "./Expenses/Expenses";
 import NewExpense from "./NewExpense/NewExpense";
 import NewProject from "./NewProject/NewProject";
 import DonutChart from "./DonutChart/DonutChart";
-import { db } from "../firebase-config";
-import { Collection, getDocs, addDoc } from "firebase/firestore";
+import { db, projectsCollectionRef, expensesCollectionRef } from "../firebase-config";
+import { Collection, getDocs, addDoc, collectionGroup } from "firebase/firestore";
 
-const DUMMY_EXPENSES = [
-  {
-    id: "1",
-    title: "Aaaaaaaaaaaa",
-    amount: 234,
-    date: new Date(2021, 1, 1),
-    project: "A",
-  },
-  {
-    id: "2",
-    title: "B",
-    amount: 234,
-    date: new Date(2021, 1, 2),
-    project: "B",
-  },
-  {
-    id: "3",
-    title: "C",
-    amount: 234,
-    date: new Date(2021, 1, 3),
-    project: "C",
-  },
-  {
-    id: "4",
-    title: "D",
-    amount: 234,
-    date: new Date(2021, 1, 4),
-    project: "D",
-  },
-];
 
-const DUMMY_PROJECT = [
-  {
-    id: "www",
-    name: "aefybi",
-    budget: 456,
-    date: new Date(2021, 1, 4),
-    description: "faghjdcs"
-  }
-]
 
 export default function Charge() {
-  // const [Charge, setCharge] = useState([]);
-  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
-  const [project, setProject] = useState([DUMMY_PROJECT]);
+  const [project, setProject] = useState([]);
+  const [expenses,setExpenses] = useState([]);
+  useEffect(() => {
+    const getProject = async () => {
+      const data = await getDocs(projectsCollectionRef);
+      setProject(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+    };
+    getProject();
+  },[]);
+  useEffect(() => {
+    const getExpense = async () => {
+      const data = await getDocs(expensesCollectionRef);
+      setExpenses(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+    }
+    getExpense();
+  }, []);
+  console.log(expenses);
 
 
   const addExpenseHandler = (expense) => {
@@ -68,9 +43,9 @@ export default function Charge() {
   return (
     <div>
       <DonutChart />
-      <NewProject onAddProject={addProjectHandler} />
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />
+      {/* <NewProject onAddProject={addProjectHandler} /> */}
+      <NewExpense onAddExpense={addExpenseHandler} expensesItems={expenses} projectItems={project} />
+      <Expenses expensesItems={expenses} projectItems={project} />
     </div>
   );
 }

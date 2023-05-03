@@ -12,7 +12,7 @@ export default function ExpenseList(props) {
       {props.items.map((Expense) => (
         <ExpenseItem
           key={Expense.id}
-          title={Expense.title}
+          name={Expense.name}
           amount={Expense.amount}
           date={Expense.date}
           project={Expense.project}
