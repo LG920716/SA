@@ -19,6 +19,7 @@
     "react-apexcharts": "^1.4.0",
     "react-big-calendar": "^1.6.9",
     "react-bootstrap": "^2.7.4",
+    "react-datetime": "^3.2.0",
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
     "react-quill": "^2.0.0",
