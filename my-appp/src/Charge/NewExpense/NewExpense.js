@@ -20,7 +20,7 @@ const NewExpense = (props) => {
       name: enterExpenseData.name,
       amount: enterExpenseData.amount,
       date: enterExpenseData.date,
-      project: enterExpenseData.project,
+      projectName: enterExpenseData.project,
       created_at: new Date(),
       updated_at: new Date(),
     });

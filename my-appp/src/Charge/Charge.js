@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Expenses from "./Expenses/Expenses";
 import NewExpense from "./NewExpense/NewExpense";
-import NewProject from "./NewProject/NewProject";
 import DonutChart from "./DonutChart/DonutChart";
 import { db, projectsCollectionRef, expensesCollectionRef } from "../firebase-config";
 import { Collection, getDocs, addDoc, collectionGroup } from "firebase/firestore";
@@ -27,24 +26,10 @@ export default function Charge() {
   }, []);
   console.log(expenses);
 
-
-  const addExpenseHandler = (expense) => {
-    setExpenses((prevExpenses) => {
-      return [expense, ...prevExpenses];
-    });
-  };
-
-  const addProjectHandler = (project) => {
-    setProject((prevProject) => {
-      return [project, ...prevProject];
-    });
-  }
-
   return (
     <div>
       <DonutChart />
-      {/* <NewProject onAddProject={addProjectHandler} /> */}
-      <NewExpense onAddExpense={addExpenseHandler} expensesItems={expenses} projectItems={project} />
+      <NewExpense expensesItems={expenses} projectItems={project} />
       <Expenses expensesItems={expenses} projectItems={project} />
     </div>
   );
