@@ -16,11 +16,16 @@ export default function Calendars({ isAuth }) {
   const [eventsData, setEventsData] = useState([]);
   const [modalStatus, setModalStatus] = useState(false);
   const [eventInput, setEventInput] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  //state for on select event
+
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  const [startDate, setStartDate] = useState(new Date(today));
+  const [endDate, setEndDate] = useState(new Date(tomorrow));
   const [eventId, setEventId] = useState("");
   const [delStatus, setDelStatus] = useState(false);
+  const [tag, settag] = useState("1");
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -38,6 +43,7 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
+        tag: tag,
       });
       setEventsData([
         ...eventsData,
@@ -45,6 +51,7 @@ export default function Calendars({ isAuth }) {
           start: startDate,
           end: endDate,
           title: eventInput,
+          tag: tag,
         },
       ]);
     } catch (err) {
@@ -60,6 +67,7 @@ export default function Calendars({ isAuth }) {
         start: doc.data().start.toDate(),
         end: doc.data().end.toDate(),
         title: doc.data().title,
+        tag: doc.data().tag,
         id: doc.id,
       }))
     );
@@ -69,6 +77,7 @@ export default function Calendars({ isAuth }) {
   console.log("startDate", startDate);
   console.log("endDate", endDate);
   console.log(endDate > startDate);
+  console.log("tag", tag);
   useEffect(() => {
     getEvents();
   }, []);
@@ -79,6 +88,7 @@ export default function Calendars({ isAuth }) {
   const handleSlotSelectEvent = (slotInfo) => {
     setStartDate(slotInfo.start);
     setEndDate(slotInfo.end);
+    settag(slotInfo.tag);
     setModalStatus(true);
     setEventInput("");
   };
@@ -87,6 +97,7 @@ export default function Calendars({ isAuth }) {
     setStartDate(e.start);
     setEndDate(e.end);
     setEventInput(e.title);
+    settag(e.tag);
     setEventId(e.id);
     setModalStatus(true);
   };
@@ -107,9 +118,10 @@ export default function Calendars({ isAuth }) {
     const eventDocRef = doc(db, "events", eventId);
     try {
       await updateDoc(eventDocRef, {
-        start: startDate.toDate(),
-        end: endDate.toDate(),
+        start: startDate,
+        end: endDate,
         title: eventInput,
+        tag: tag,
       });
       getEvents();
     } catch (err) {
@@ -122,9 +134,12 @@ export default function Calendars({ isAuth }) {
      <div >
       <div className="py-4 border-bottom">
         <div className="form-title text-center">
-      <h1>行事曆</h1>
+          <h1>行事曆</h1>
+          <input type="button" value="新增活動" 
+          onClick={() => handleSlotSelectEvent({start: startDate, end: endDate})} />
+        </div>
       </div>
-      </div><br></br>
+      <br></br>
       <Calendar
         views={["day", "week", "month", "agenda"]}
         selectable
@@ -151,6 +166,8 @@ export default function Calendars({ isAuth }) {
         handleEdit={handleEdit}
         setEndDate={setEndDate}
         setStartDate={setStartDate}
+        tag = {tag}
+        settag = {settag}
       />
     </div>
    </center>

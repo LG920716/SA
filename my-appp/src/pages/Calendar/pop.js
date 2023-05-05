@@ -1,8 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import moment from "moment";
-import DateTime from "react-datetime";
-import "react-datetime/css/react-datetime.css";
+//import moment from "moment";
 
 function MyVerticallyCenteredModal({
   modalStatus,
@@ -18,6 +16,8 @@ function MyVerticallyCenteredModal({
   eventId,
   handleEdit,
   handleDelete,
+  tag,
+  settag,
 }) {
 
   return (
@@ -30,24 +30,24 @@ function MyVerticallyCenteredModal({
         <div className="form-group">
           <div className="form-group">
             <label>起始日期</label>
-            <DateTime
-              value={startDate}
-              onChange={(Date) => setStartDate(Date)}
-              dateFormat="YYYY/MM/DD[（]ddd[）]"
-              timeFormat="HH:mm"
-              timeIntervals={15}
+            <br></br>
+            <input 
+              type="datetime-local" 
+              defaultValue={startDate.toISOString().slice(0, -8)}
+              onChange={(e) => setStartDate(new Date(e.target.value))}
             />
+            <br></br>
             <label></label>
           </div>
           <div className="form-group">
             <label>結束日期</label>
-            <DateTime
-              value={endDate}
-              onChange={(date) => setEndDate(date)}
-              dateFormat="YYYY/MM/DD[（]ddd[）]"
-              timeFormat="HH:mm"
-              timeIntervals={15}
+            <br></br>
+            <input 
+              type="datetime-local" 
+              defaultValue={endDate.toISOString().slice(0, -8)}
+              onChange={(e) => setEndDate(new Date(e.target.value))}
             />
+            <br></br>
             <label></label>
           </div>
           <div className="form-group">
@@ -58,38 +58,65 @@ function MyVerticallyCenteredModal({
               placeholder="標題..."
               onChange={(e) => setEventInput(e.target.value)}
             />
+            <br></br>
+          </div>
+          
+          <div className="form-group">
+            <label>活動類別</label>
+            <br></br>
+            <select name="the_select" defaultValue={tag} onChange={(tag) => settag(tag.target.value)}>
+              <option value="1">其他活動</option>
+              <option value="2">例行社課</option> 
+              <option value="3">幹部會議</option>
+            </select>
+            <br></br>
           </div>
         </div>
       ) : (
         <div className="form-group">
           <div className="form-group">
             <label>起始日期</label>
+            <br></br>
             <input
-              value={moment(startDate).format("YYYY/MM/DD[（]ddd[）]HH:mm")}
-              className="form-control"
-              disabled
+              type="datetime-local" 
+              defaultValue={startDate.toISOString().slice(0, -8)}
+              onChange={(e) => setStartDate(new Date(e.target.value))}
             />
-
+            <br></br>
             <label></label>
           </div>
           <div className="form-group">
             <label>結束日期</label>
+            <br></br>
             <input
-              value={moment(endDate).format("YYYY/MM/DD[（]ddd[）]HH:mm")}
-              className="form-control"
-              disabled
+              type="datetime-local" 
+              defaultValue={endDate.toISOString().slice(0, -8)}
+              onChange={(e) => setEndDate(new Date(e.target.value))}
             />
+            <br></br>
             <label></label>
           </div>
           <div className="form-group">
             <label>標題</label>
+            <br></br>
             <input
               value={eventInput}
               className="form-control"
               placeholder="標題..."
               onChange={(e) => setEventInput(e.target.value)}
             />
+            <br></br>
           </div>
+          <div className="form-group">
+            <label>活動類別</label>
+            <br></br>
+            <select name="the_select" onChange={(tag) => settag(tag.target.value)}>
+              <option value="1">其他活動</option>
+              <option value="2">例行社課</option> 
+              <option value="3">幹部會議</option>
+            </select>
+            <br></br>
+          </div>          
         </div>
       )
       }
