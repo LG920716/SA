@@ -52,13 +52,24 @@ export default function Calendars({ isAuth }) {
           end: endDate,
           title: eventInput,
           tag: tag,
+          backgroundColor: (() => {
+            switch (tag) {
+              case "1":
+                return "blue";
+              case "2":
+                return "green";
+              case "3":
+                return "purple";
+              default:
+                return "red";
+            }
+          })()
         },
       ]);
     } catch (err) {
       console.error(err);
     }
   };
-
   const getEvents = async () => {
     const data = await getDocs(eventsCollectionRef);
     console.log(data);
@@ -69,9 +80,22 @@ export default function Calendars({ isAuth }) {
         title: doc.data().title,
         tag: doc.data().tag,
         id: doc.id,
+        backgroundColor: (() => {
+          switch (doc.data().tag) {
+            case "1":
+              return "blue";
+            case "2":
+              return "green";
+            case "3":
+              return "purple";
+            default:
+              return "red";
+          }
+        })()
       }))
     );
   };
+
   console.log("eventId", eventId);
   console.log("title", eventInput);
   console.log("startDate", startDate);
@@ -122,6 +146,18 @@ export default function Calendars({ isAuth }) {
         end: endDate,
         title: eventInput,
         tag: tag,
+        backgroundColor: (() => {
+          switch (tag) {
+            case "1":
+              return "blue";
+            case "2":
+              return "green";
+            case "3":
+              return "purple";
+            default:
+              return "red";
+          }
+        })()
       });
       getEvents();
     } catch (err) {
@@ -136,7 +172,7 @@ export default function Calendars({ isAuth }) {
         <div className="form-title text-center">
           <h1>行事曆</h1>
           <input type="button" value="新增活動" 
-          onClick={() => handleSlotSelectEvent({start: startDate, end: endDate})} />
+          onClick={() => handleSlotSelectEvent({start: today, end: tomorrow})} />
         </div>
       </div>
       <br></br>
@@ -149,6 +185,11 @@ export default function Calendars({ isAuth }) {
         defaultView="month"
         events={eventsData}
         style={{ height: "100%" }}
+        eventPropGetter={(event) => ({
+          style: {
+            backgroundColor: event.backgroundColor,
+          },
+        })}
         onSelectEvent={hanldeOnSelectEvent}
         onSelectSlot={handleSlotSelectEvent}
       />

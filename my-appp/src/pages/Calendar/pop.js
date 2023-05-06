@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-//import moment from "moment";
+import moment from "moment";
 
 function MyVerticallyCenteredModal({
   modalStatus,
@@ -20,7 +20,11 @@ function MyVerticallyCenteredModal({
   settag,
 }) {
 
+  const localStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
+  const localEndDate = moment(endDate).format("YYYY-MM-DDTHH:mm");
+
   return (
+
     <Modal show={modalStatus} onHide={handleClose} centered>
       <Modal.Header style={{ border: "none" }} closeButton>
         <Modal.Title id="contained-modal-title-vcenter">{delStatus ? "修改行事曆" : "新增行事曆"}</Modal.Title>
@@ -33,7 +37,7 @@ function MyVerticallyCenteredModal({
             <br></br>
             <input 
               type="datetime-local" 
-              defaultValue={startDate.toISOString().slice(0, -8)}
+              defaultValue={localStartDate}
               onChange={(e) => setStartDate(new Date(e.target.value))}
             />
             <br></br>
@@ -44,7 +48,7 @@ function MyVerticallyCenteredModal({
             <br></br>
             <input 
               type="datetime-local" 
-              defaultValue={endDate.toISOString().slice(0, -8)}
+              defaultValue={localEndDate}
               onChange={(e) => setEndDate(new Date(e.target.value))}
             />
             <br></br>
@@ -65,6 +69,7 @@ function MyVerticallyCenteredModal({
             <label>活動類別</label>
             <br></br>
             <select name="the_select" defaultValue={tag} onChange={(tag) => settag(tag.target.value)}>
+              <option value="0">請選擇</option>
               <option value="1">其他活動</option>
               <option value="2">例行社課</option> 
               <option value="3">幹部會議</option>
@@ -79,7 +84,7 @@ function MyVerticallyCenteredModal({
             <br></br>
             <input
               type="datetime-local" 
-              defaultValue={startDate.toISOString().slice(0, -8)}
+              defaultValue={localStartDate}
               onChange={(e) => setStartDate(new Date(e.target.value))}
             />
             <br></br>
@@ -90,7 +95,7 @@ function MyVerticallyCenteredModal({
             <br></br>
             <input
               type="datetime-local" 
-              defaultValue={endDate.toISOString().slice(0, -8)}
+              defaultValue={localEndDate}
               onChange={(e) => setEndDate(new Date(e.target.value))}
             />
             <br></br>
@@ -111,6 +116,7 @@ function MyVerticallyCenteredModal({
             <label>活動類別</label>
             <br></br>
             <select name="the_select" onChange={(tag) => settag(tag.target.value)}>
+              <option value="0">請選擇</option>
               <option value="1">其他活動</option>
               <option value="2">例行社課</option> 
               <option value="3">幹部會議</option>
