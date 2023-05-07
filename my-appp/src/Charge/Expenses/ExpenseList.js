@@ -3,6 +3,7 @@ import ExpenseItem from "./ExpenseItem";
 import "./ExpenseList.css";
 
 export default function ExpenseList(props) {
+  console.log(props);
   if(props.items.length === 0){
     return <h2 className="expenses-list__fallback">Found no expenses.</h2>
   }
@@ -12,10 +13,12 @@ export default function ExpenseList(props) {
       {props.items.map((Expense) => (
         <ExpenseItem
           key={Expense.id}
+          id={Expense.id}
           name={Expense.name}
           amount={Expense.amount}
           date={Expense.date}
-          project={Expense.project}
+          project={Expense.projectName}
+          projectItems={props.projectItems}
         />
       ))}
     </ul>

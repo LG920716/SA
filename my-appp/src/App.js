@@ -12,6 +12,7 @@ import View from "./pages/Note/View";
 import Calendars from "./pages/Calendar/Calendar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Charge from "./Charge/Charge";
+import Project from "./ProjectManagement/Project";
 import { NavLink } from "react-router-dom";
 import Admin from "./pages/admin/Admin";
 
@@ -51,6 +52,9 @@ function App() {
                   <NavLink className={"nav-link"} to="../admin">
                     權限
                   </NavLink>
+                  <NavLink className={"nav-link"} to="../ProjectManagement">
+                    活動管理
+                  </NavLink>
                 </div>
               </div>
               <div className="icon">
@@ -84,6 +88,7 @@ function App() {
         <Route path="/calendar" element={<Calendars isAuth={isAuth} />} />
 
         <Route path="/charge" element={<Charge />} />
+        <Route path="/ProjectManagement" element={<Project />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>

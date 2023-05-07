@@ -4,7 +4,7 @@ import NewExpense from "./NewExpense/NewExpense";
 import DonutChart from "./DonutChart/DonutChart";
 import { db, projectsCollectionRef, expensesCollectionRef } from "../firebase-config";
 import { Collection, getDocs, addDoc, collectionGroup } from "firebase/firestore";
-
+import Project from "../ProjectManagement/Project";
 
 
 export default function Charge() {
@@ -28,6 +28,7 @@ export default function Charge() {
 
   return (
     <div>
+      {/* <Project/> */}
       <DonutChart />
       <NewExpense expensesItems={expenses} projectItems={project} />
       <Expenses expensesItems={expenses} projectItems={project} />

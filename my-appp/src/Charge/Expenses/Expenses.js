@@ -24,7 +24,7 @@ export default function Expense(props) {
         projectItems={props.projectItems}
       />
       <ExpenseChart expenses={filteredExpense} orginExpenses={props.expensesItems}/>
-      <ExpenseList items={filteredExpense} />
+      <ExpenseList items={filteredExpense} projectItems={props.projectItems}/>
     </Card>
   );
 }
