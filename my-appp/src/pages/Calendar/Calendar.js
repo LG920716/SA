@@ -25,7 +25,7 @@ export default function Calendars({ isAuth }) {
   const [endDate, setEndDate] = useState(new Date(tomorrow));
   const [eventId, setEventId] = useState("");
   const [delStatus, setDelStatus] = useState(false);
-  const [tag, settag] = useState("1");
+  const [backgroundColor, setbackgroundColor] = useState("red");
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        tag: tag,
+        backgroundColor: backgroundColor
       });
       setEventsData([
         ...eventsData,
@@ -51,19 +51,7 @@ export default function Calendars({ isAuth }) {
           start: startDate,
           end: endDate,
           title: eventInput,
-          tag: tag,
-          backgroundColor: (() => {
-            switch (tag) {
-              case "1":
-                return "blue";
-              case "2":
-                return "green";
-              case "3":
-                return "purple";
-              default:
-                return "red";
-            }
-          })()
+          backgroundColor: backgroundColor
         },
       ]);
     } catch (err) {
@@ -78,20 +66,8 @@ export default function Calendars({ isAuth }) {
         start: doc.data().start.toDate(),
         end: doc.data().end.toDate(),
         title: doc.data().title,
-        tag: doc.data().tag,
         id: doc.id,
-        backgroundColor: (() => {
-          switch (doc.data().tag) {
-            case "1":
-              return "blue";
-            case "2":
-              return "green";
-            case "3":
-              return "purple";
-            default:
-              return "red";
-          }
-        })()
+        backgroundColor: doc.data().backgroundColor
       }))
     );
   };
@@ -101,7 +77,7 @@ export default function Calendars({ isAuth }) {
   console.log("startDate", startDate);
   console.log("endDate", endDate);
   console.log(endDate > startDate);
-  console.log("tag", tag);
+  console.log("backgroundColor", backgroundColor);
   useEffect(() => {
     getEvents();
   }, []);
@@ -112,7 +88,7 @@ export default function Calendars({ isAuth }) {
   const handleSlotSelectEvent = (slotInfo) => {
     setStartDate(slotInfo.start);
     setEndDate(slotInfo.end);
-    settag(slotInfo.tag);
+    setbackgroundColor(slotInfo.backgroundColor);
     setModalStatus(true);
     setEventInput("");
   };
@@ -121,7 +97,7 @@ export default function Calendars({ isAuth }) {
     setStartDate(e.start);
     setEndDate(e.end);
     setEventInput(e.title);
-    settag(e.tag);
+    setbackgroundColor(e.backgroundColor);
     setEventId(e.id);
     setModalStatus(true);
   };
@@ -145,19 +121,7 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        tag: tag,
-        backgroundColor: (() => {
-          switch (tag) {
-            case "1":
-              return "blue";
-            case "2":
-              return "green";
-            case "3":
-              return "purple";
-            default:
-              return "red";
-          }
-        })()
+        backgroundColor: backgroundColor
       });
       getEvents();
     } catch (err) {
@@ -207,8 +171,8 @@ export default function Calendars({ isAuth }) {
         handleEdit={handleEdit}
         setEndDate={setEndDate}
         setStartDate={setStartDate}
-        tag = {tag}
-        settag = {settag}
+        backgroundColor = {backgroundColor}
+        setbackgroundColor = {setbackgroundColor}
       />
     </div>
    </center>
