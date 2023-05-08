@@ -38,34 +38,34 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
   //   );
   // };
 
-  useEffect(() => {
-    console.log("on");
-    if (!isAuth) {
-      navigate("/login");
-    } else if (!authId) {
-      console.log("12111");
-      return;
-    } else {
-      console.log("oning");
-      const levelRef = doc(db, "users", authId);
-      const unSub = onSnapshot(levelRef, (snapShot) => {
-        if (!snapShot.data()) {
-          signUserOut();
-        } else {
-          setLevel(snapShot.data().level);
-          localStorage.setItem("level", level);
-          snapShot.data().level === "unCheck"
-            ? navigate("/nonUser")
-            : navigate("/");
-        }
-      });
+  // useEffect(() => {
+  //   console.log("on");
+  //   if (!isAuth) {
+  //     navigate("/login");
+  //   } else if (!authId) {
+  //     console.log("12111");
+  //     return;
+  //   } else {
+  //     console.log("oning");
+  //     const levelRef = doc(db, "users", authId);
+  //     const unSub = onSnapshot(levelRef, (snapShot) => {
+  //       if (!snapShot.data()) {
+  //         signUserOut();
+  //       } else {
+  //         setLevel(snapShot.data().level);
+  //         localStorage.setItem("level", level);
+  //         snapShot.data().level === "unCheck"
+  //           ? navigate("/nonUser")
+  //           : navigate("/");
+  //       }
+  //     });
 
-      return () => {
-        console.log("off");
-        unSub();
-      };
-    }
-  }, []);
+  //     return () => {
+  //       console.log("off");
+  //       unSub();
+  //     };
+  //   }
+  // }, []);
 
   // console.log(level);
   // useEffect(() => {
@@ -81,8 +81,8 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
   // setLevel("user");
 
   return (
-    isAuth &&
-    levelList.includes(level) && (
+    isAuth && (
+      // levelList.includes(level) && (
       <div className="navbarhead">
         <nav
           class="navbar navbar-expand-lg navbar-light"

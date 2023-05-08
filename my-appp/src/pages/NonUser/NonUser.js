@@ -6,14 +6,14 @@ import { useState, useEffect } from "react";
 function NonUser({ setIsAuth, isAuth, level }) {
   let navigate = useNavigate();
   const levelList = ["admin", "money", "user"];
-  useEffect(() => {
-    console.log(level);
-    if (!isAuth) {
-      navigate("/login");
-    } else if (levelList.includes(level)) {
-      navigate("/");
-    }
-  }, [level]);
+  // useEffect(() => {
+  //   console.log(level);
+  //   if (!isAuth) {
+  //     navigate("/login");
+  //   } else if (levelList.includes(level)) {
+  //     navigate("/");
+  //   }
+  // }, [level]);
 
   return (
     <center>
