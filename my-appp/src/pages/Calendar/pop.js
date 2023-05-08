@@ -16,8 +16,8 @@ function MyVerticallyCenteredModal({
   eventId,
   handleEdit,
   handleDelete,
-  tag,
-  settag,
+  backgroundColor,
+  setbackgroundColor
 }) {
 
   const localStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
@@ -64,15 +64,14 @@ function MyVerticallyCenteredModal({
             />
             <br></br>
           </div>
-          
           <div className="form-group">
-            <label>活動類別</label>
+            <label>顯示顏色</label>
             <br></br>
-            <select name="the_select" defaultValue={tag} onChange={(tag) => settag(tag.target.value)}>
-              <option value="0">請選擇</option>
-              <option value="1">其他活動</option>
-              <option value="2">例行社課</option> 
-              <option value="3">幹部會議</option>
+            <select name="the_select" defaultValue={backgroundColor} onChange={(e) => setbackgroundColor(e.target.value)}>
+              <option value="red">請選擇</option>
+              <option value="blue">藍色</option>
+              <option value="green">綠色</option> 
+              <option value="purple">紫色</option>
             </select>
             <br></br>
           </div>
@@ -113,16 +112,16 @@ function MyVerticallyCenteredModal({
             <br></br>
           </div>
           <div className="form-group">
-            <label>活動類別</label>
+            <label>顯示顏色</label>
             <br></br>
-            <select name="the_select" onChange={(tag) => settag(tag.target.value)}>
-              <option value="0">請選擇</option>
-              <option value="1">其他活動</option>
-              <option value="2">例行社課</option> 
-              <option value="3">幹部會議</option>
+            <select name="the_select" onChange={(e) => setbackgroundColor(e.target.value)}>
+              <option value="red">請選擇</option>
+              <option value="blue">藍色</option>
+              <option value="green">綠色</option> 
+              <option value="purple">紫色</option>
             </select>
             <br></br>
-          </div>          
+          </div>      
         </div>
       )
       }
@@ -131,7 +130,7 @@ function MyVerticallyCenteredModal({
       {delStatus ? (
         <>
           <Button onClick={handleEdit}>修改</Button>
-          <Button onClick={() => { handleDelete(eventId); }}>
+          <Button onClick={handleDelete}>
             <i className="bi bi-trash3"></i>
           </Button>
         </>
