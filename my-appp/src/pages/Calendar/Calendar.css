@@ -1,29 +1,33 @@
-.Calendar{
-    width:85%;
-    margin: auto;
-    padding-bottom: 3%;
-    margin-top: -15px;
+.Calendar {
+  width: 85%;
+  margin: auto;
+  padding-bottom: 3%;
+  margin-top: -15px;
 }
-.rbc-btn-group{
-    border: 0px;
+.rbc-btn-group {
+  border: 0px;
 }
-.button{
-    border:0px;
+.button {
+  border: 0px;
 }
 
 .rbc-month-row {
-    display: inline-table !important;
-    flex: 0 0 0 !important;
-    min-height: 120px !important;
-  }
-  .rbc-timeslot-group {
-    min-height: 50px;
-  }
-  .rbc-month-header{
-    min-height: 40px;
-    text-align: center;
-    font-size: 30px;
-    vertical-align: middle;
-    background-color: white;
-    color: rgb(125, 125, 125);
-  }
+  display: inline-table !important;
+  flex: 0 0 0 !important;
+  min-height: 120px !important;
+}
+.rbc-timeslot-group {
+  min-height: 50px;
+}
+.rbc-month-header {
+  min-height: 40px;
+  text-align: center;
+  font-size: 30px;
+  vertical-align: middle;
+  background-color: white;
+  color: rgb(125, 125, 125);
+}
+.rbc-event-content {
+  font-weight: bold;
+  font-size: 15px;
+}

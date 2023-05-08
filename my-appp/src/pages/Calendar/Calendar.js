@@ -8,7 +8,6 @@ import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
 import "./Calendar.css";
 
-
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
 
@@ -55,15 +54,15 @@ export default function Calendars({ isAuth }) {
           backgroundColor: (() => {
             switch (tag) {
               case "1":
-                return "blue";
+                return "#78ABCA";
               case "2":
-                return "green";
+                return "#B986D5";
               case "3":
-                return "purple";
+                return "#F5A63B";
               default:
-                return "red";
+                return "#16cb93";
             }
-          })()
+          })(),
         },
       ]);
     } catch (err) {
@@ -83,15 +82,15 @@ export default function Calendars({ isAuth }) {
         backgroundColor: (() => {
           switch (doc.data().tag) {
             case "1":
-              return "blue";
+              return "#78ABCA";
             case "2":
-              return "green";
+              return "#B986D5";
             case "3":
-              return "purple";
+              return "#F5A63B";
             default:
-              return "red";
+              return "#16cb93";
           }
-        })()
+        })(),
       }))
     );
   };
@@ -149,15 +148,15 @@ export default function Calendars({ isAuth }) {
         backgroundColor: (() => {
           switch (tag) {
             case "1":
-              return "blue";
+              return "#78ABCA";
             case "2":
-              return "green";
+              return "#B986D5";
             case "3":
-              return "purple";
+              return "#F5A63B";
             default:
-              return "red";
+              return "#16cb93";
           }
-        })()
+        })(),
       });
       getEvents();
     } catch (err) {
@@ -166,51 +165,61 @@ export default function Calendars({ isAuth }) {
   };
 
   return (
-   <center className="Calendar">
-     <div >
-      <div className="py-4 border-bottom">
-        <div className="form-title text-center">
-          <h1>行事曆</h1>
-          <input type="button" value="新增活動" 
-          onClick={() => handleSlotSelectEvent({start: today, end: tomorrow})} />
+    <center className="Calendar">
+      <div>
+        <div className="py-4 border-bottom">
+          <div className="form-title text-center">
+            <h1>行事曆</h1>
+          </div>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() =>
+                handleSlotSelectEvent({ start: today, end: tomorrow })
+              }
+            >
+              新增活動
+            </button>
+          </div>
         </div>
+
+        <br></br>
+        <Calendar
+          views={["day", "week", "month", "agenda"]}
+          selectable
+          locale="zh"
+          localizer={localizer}
+          defaultDate={new Date()}
+          defaultView="month"
+          events={eventsData}
+          style={{ height: "100%" }}
+          eventPropGetter={(event) => ({
+            style: {
+              backgroundColor: event.backgroundColor,
+            },
+          })}
+          onSelectEvent={hanldeOnSelectEvent}
+          onSelectSlot={handleSlotSelectEvent}
+        />
+        <MyVerticallyCenteredModal
+          modalStatus={modalStatus}
+          handleClose={handleClose}
+          startDate={startDate}
+          endDate={endDate}
+          eventInput={eventInput}
+          setEventInput={setEventInput}
+          handleSave={handleSave}
+          delStatus={delStatus}
+          handleDelete={handleDelete}
+          eventId={eventId}
+          handleEdit={handleEdit}
+          setEndDate={setEndDate}
+          setStartDate={setStartDate}
+          tag={tag}
+          settag={settag}
+        />
       </div>
-      <br></br>
-      <Calendar
-        views={["day", "week", "month", "agenda"]}
-        selectable
-        locale="zh"
-        localizer={localizer}
-        defaultDate={new Date()}
-        defaultView="month"
-        events={eventsData}
-        style={{ height: "100%" }}
-        eventPropGetter={(event) => ({
-          style: {
-            backgroundColor: event.backgroundColor,
-          },
-        })}
-        onSelectEvent={hanldeOnSelectEvent}
-        onSelectSlot={handleSlotSelectEvent}
-      />
-      <MyVerticallyCenteredModal
-        modalStatus={modalStatus}
-        handleClose={handleClose}
-        startDate={startDate}
-        endDate={endDate}
-        eventInput={eventInput}
-        setEventInput={setEventInput}
-        handleSave={handleSave}
-        delStatus={delStatus}
-        handleDelete={handleDelete}
-        eventId={eventId}
-        handleEdit={handleEdit}
-        setEndDate={setEndDate}
-        setStartDate={setStartDate}
-        tag = {tag}
-        settag = {settag}
-      />
-    </div>
-   </center>
+    </center>
   );
 }

@@ -14,23 +14,38 @@ export default function ProjectItems(props) {
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
-  const updateProjectHandler = () => {
-
-  }
+  const updateProjectHandler = () => {};
   const deleteProjectHandler = async (id) => {
     const projectsDoc = doc(db, "projects", id);
     await deleteDoc(projectsDoc);
-  }
+  };
   console.log(props);
   return (
     <li>
-      <input type="radio" name="item" id={props.projectData.id} className="accordion-input"/>
-      <label for={props.projectData.id} className="accordion-label">{props.projectData.name}</label>
+      <input
+        type="radio"
+        name="item"
+        id={props.projectData.id}
+        className="accordion-input"
+      />
+      <label for={props.projectData.id} className="accordion-label">
+        {props.projectData.name}
+      </label>
       <ol>
         <li>
-          <BudgetBar data={props}/>
+          <BudgetBar data={props} />
+          <p>800</p>
         </li>
-        <li>{props.projectData.description}</li>
+
+        <li>
+          <div
+            style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)" }}
+          >
+            <div>{props.projectData.description}</div>
+            <div>800</div>
+          </div>
+        </li>
+
         <li>
           <button type="button" onClick={isEditingHandler}>
             update
