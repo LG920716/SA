@@ -14,6 +14,7 @@ import Admin from "./pages/admin/Admin";
 import Tag from "./pages/Note/Components/Tag/Tag";
 import NavBar from "./NavBar";
 import NonUser from "./pages/NonUser/NonUser";
+import Project from "./ProjectManagement/Project";
 
 function App() {
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
@@ -27,59 +28,12 @@ function App() {
 
   return (
     <Router>
-      {isAuth && (
-        <>
-          <div className="navbarhead">
-            <nav
-              class="navbar navbar-expand-lg navbar-light"
-              style={{ width: "92%", margin: "auto", height: "4rem" }}
-            >
-              <div
-                className="collapse navbar-collapse "
-                id="navbarNavAltMarkup"
-                style={{
-                  justifyContent: "space-between",
-                  paddingRight: "1.25rem",
-                }}
-              >
-                <div className="navbar-nav">
-                  <NavLink className={"nav-link"} to="/">
-                    文件
-                  </NavLink>
-
-                  <NavLink className={"nav-link"} to="../calendar">
-                    日曆
-                  </NavLink>
-
-                  <NavLink className={"nav-link"} to="../charge">
-                    記帳
-                  </NavLink>
-                  <NavLink className={"nav-link"} to="../admin">
-                    權限
-                  </NavLink>
-                </div>
-              </div>
-              <div className="icon">
-                <img src={localStorage.getItem("url")} class="avatar"></img>
-                {/*<p class="nav-item nav-link2">{localStorage.getItem("name")}</p>*/}
-                <div className="logout">
-                  <a class="nav-item nav-logout" href="#">
-                    <Logout setIsAuth={setIsAuth} />
-                  </a>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </>
-      )}
-      {/* <nav>
-        {isAuth && (
-          <>
-            <Logout setIsAuth={setIsAuth} />
-            <Link to={"/note"}>文件</Link>
-          </>
-        )}
-      </nav> */}
+      <NavBar
+        setIsAuth={setIsAuth}
+        level={level}
+        isAuth={isAuth}
+        setLevel={setLevel}
+      />
       <Routes>
         <Route
           path="/login"

@@ -108,12 +108,15 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
               <NavLink className={"nav-link"} to="charge">
                 記帳
               </NavLink>
+              <NavLink className={"nav-link"} to="ProjectManagement">
+                活動管理
+              </NavLink>
               <NavLink className={"nav-link"} to="admin">
                 權限
               </NavLink>
-              <NavLink className={"nav-link"} to="tag">
+              {/* <NavLink className={"nav-link"} to="tag">
                 標籤
-              </NavLink>
+              </NavLink> */}
             </div>
           </div>
           <div className="icon">
