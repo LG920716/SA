@@ -23,17 +23,13 @@ const NewProject = (props) => {
       created_at: new Date(),
       updated_at: new Date(),
     });
-    const projectData = {
-      ...enterProjectDate,
-      id: Math.random().toString(),
-    };
-    props.onAddProject(projectData);
+
     setIsEditing(false);
   };
   return (
     <div className="new-project">
       {!isEditing && (
-        <button onClick={isEditingHandler}>Add New Project</button>
+        <button onClick={isEditingHandler} className='bt-right'>Add New Project</button>
       )}
       {isEditing && (
         <ProjectForm

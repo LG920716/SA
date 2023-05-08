@@ -3,7 +3,7 @@ import "./ExpenseForm.css";
 
 export default function ExpenseForm(props) {
   const [EnterTitle, setEnterTitle] = useState("");
-  const [EnterAmount, setEnterAmount] = useState("");
+  const [EnterAmount, setEnterAmount] = useState();
   const [EnterDate, setEnterDate] = useState("");
   const [EnterProject, setEnterProject] = useState("");
 
@@ -11,7 +11,7 @@ export default function ExpenseForm(props) {
     event.preventDefault();
 
     const expenseData = {
-      title: EnterTitle,
+      name: EnterTitle,
       amount: +EnterAmount,
       date: new Date(EnterDate),
       project: EnterProject,
@@ -19,7 +19,7 @@ export default function ExpenseForm(props) {
 
     props.onSaveExpenseData(expenseData);
     setEnterTitle("");
-    setEnterAmount("");
+    setEnterAmount();
     setEnterDate("");
     setEnterProject("");
   };
@@ -75,10 +75,9 @@ export default function ExpenseForm(props) {
             }}
           />
           <datalist id="project-list">
-            <option value="A" />
-            <option value="B" />
-            <option value="C" />
-            <option value="D" />
+            {props.projectItems.map((doc) => (
+              <option value={doc.name} key={doc.id} />
+            ))}
           </datalist>
         </div>
       </div>

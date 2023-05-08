@@ -16,11 +16,17 @@ export default function Calendars({ isAuth }) {
   const [eventsData, setEventsData] = useState([]);
   const [modalStatus, setModalStatus] = useState(false);
   const [eventInput, setEventInput] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  //state for on select event
+
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  const [startDate, setStartDate] = useState(new Date(today));
+  const [endDate, setEndDate] = useState(new Date(tomorrow));
   const [eventId, setEventId] = useState("");
   const [delStatus, setDelStatus] = useState(false);
+  const [tag, settag] = useState("1");
+
   let navigate = useNavigate();
   useEffect(() => {
     if (!isAuth) {
@@ -37,7 +43,7 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        tag:[],
+        tag: tag,
       });
       setEventsData([
         ...eventsData,
@@ -45,13 +51,25 @@ export default function Calendars({ isAuth }) {
           start: startDate,
           end: endDate,
           title: eventInput,
+          tag: tag,
+          backgroundColor: (() => {
+            switch (tag) {
+              case "1":
+                return "blue";
+              case "2":
+                return "green";
+              case "3":
+                return "purple";
+              default:
+                return "red";
+            }
+          })()
         },
       ]);
     } catch (err) {
       console.error(err);
     }
   };
-
   const getEvents = async () => {
     const data = await getDocs(eventsCollectionRef);
     console.log(data);
@@ -60,15 +78,30 @@ export default function Calendars({ isAuth }) {
         start: doc.data().start.toDate(),
         end: doc.data().end.toDate(),
         title: doc.data().title,
+        tag: doc.data().tag,
         id: doc.id,
+        backgroundColor: (() => {
+          switch (doc.data().tag) {
+            case "1":
+              return "blue";
+            case "2":
+              return "green";
+            case "3":
+              return "purple";
+            default:
+              return "red";
+          }
+        })()
       }))
     );
   };
-  console.log("eventId?????", eventId);
+
+  console.log("eventId", eventId);
   console.log("title", eventInput);
   console.log("startDate", startDate);
   console.log("endDate", endDate);
   console.log(endDate > startDate);
+  console.log("tag", tag);
   useEffect(() => {
     getEvents();
   }, []);
@@ -79,6 +112,7 @@ export default function Calendars({ isAuth }) {
   const handleSlotSelectEvent = (slotInfo) => {
     setStartDate(slotInfo.start);
     setEndDate(slotInfo.end);
+    settag(slotInfo.tag);
     setModalStatus(true);
     setEventInput("");
   };
@@ -87,6 +121,7 @@ export default function Calendars({ isAuth }) {
     setStartDate(e.start);
     setEndDate(e.end);
     setEventInput(e.title);
+    settag(e.tag);
     setEventId(e.id);
     setModalStatus(true);
   };
@@ -107,7 +142,22 @@ export default function Calendars({ isAuth }) {
     const eventDocRef = doc(db, "events", eventId);
     try {
       await updateDoc(eventDocRef, {
+        start: startDate,
+        end: endDate,
         title: eventInput,
+        tag: tag,
+        backgroundColor: (() => {
+          switch (tag) {
+            case "1":
+              return "blue";
+            case "2":
+              return "green";
+            case "3":
+              return "purple";
+            default:
+              return "red";
+          }
+        })()
       });
       getEvents();
     } catch (err) {
@@ -115,15 +165,17 @@ export default function Calendars({ isAuth }) {
     }
   };
 
-  // console.log(startDate);
   return (
    <center className="Calendar">
      <div >
       <div className="py-4 border-bottom">
         <div className="form-title text-center">
-      <h1>行事曆</h1>
+          <h1>行事曆</h1>
+          <input type="button" value="新增活動" 
+          onClick={() => handleSlotSelectEvent({start: today, end: tomorrow})} />
+        </div>
       </div>
-      </div><br></br>
+      <br></br>
       <Calendar
         views={["day", "week", "month", "agenda"]}
         selectable
@@ -133,6 +185,11 @@ export default function Calendars({ isAuth }) {
         defaultView="month"
         events={eventsData}
         style={{ height: "100%" }}
+        eventPropGetter={(event) => ({
+          style: {
+            backgroundColor: event.backgroundColor,
+          },
+        })}
         onSelectEvent={hanldeOnSelectEvent}
         onSelectSlot={handleSlotSelectEvent}
       />
@@ -148,6 +205,10 @@ export default function Calendars({ isAuth }) {
         handleDelete={handleDelete}
         eventId={eventId}
         handleEdit={handleEdit}
+        setEndDate={setEndDate}
+        setStartDate={setStartDate}
+        tag = {tag}
+        settag = {settag}
       />
     </div>
    </center>

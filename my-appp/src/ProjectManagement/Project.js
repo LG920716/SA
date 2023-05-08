@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import Expenses from "./Expenses/Expenses";
-import NewExpense from "./NewExpense/NewExpense";
-import DonutChart from "./DonutChart/DonutChart";
+import ProjectItems from "./ProjectItems";
 import { projectsCollectionRef, expensesCollectionRef } from "../firebase-config";
 import { getDocs } from "firebase/firestore";
+import "./Project.css";
 
-
-export default function Charge() {
+export default function Project() {
   const [project, setProject] = useState([]);
   const [expenses,setExpenses] = useState([]);
   useEffect(() => {
@@ -23,13 +21,21 @@ export default function Charge() {
     }
     getExpense();
   }, []);
-  // console.log(expenses);
+  const chartDataPoints = project.map((item) => ({label: item.name, value: 0, budget: item.budget}));
+  expenses.reduce((accumulator, expense) => {
+    const project = expense.projectName;
+    const amount = expense.amount;
+    const dataPoint = accumulator.find((dataPoint) => dataPoint.label === project);
+    if (dataPoint) {
+      dataPoint.value += amount;
+    } 
+    return accumulator;
+  }, chartDataPoints);
+
 
   return (
-    <div>
-      <DonutChart />
-      <NewExpense expensesItems={expenses} projectItems={project} />
-      <Expenses expensesItems={expenses} projectItems={project} />
-    </div>
+      <ul class="accordion">
+        {project.map((doc) => <ProjectItems projectData={doc} chartDataPoints={chartDataPoints}/>)}
+      </ul>
   );
 }
