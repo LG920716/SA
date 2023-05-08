@@ -11,10 +11,8 @@ import { notesCollectionRef } from "../../../../firebase-config";
 import { getDocs } from "firebase/firestore";
 
 const Tag = ({ tagList, setTagList, tagFrom }) => {
-  const [searchDbTag, setSearchDbTag] = useState([
-    { tagName: "abc", color: "#0052cc" },
-    { tagName: "HHH", color: "#8ed1fc" },
-  ]);
+  const [searchDbTag, setSearchDbTag] = useState([]);
+  const [searchDbTagWait, setSearchDbTagWait] = useState([]);
   const [colorDbList, setColorDbList] = useState([]);
   const [colorTotalList, setColorTotalList] = useState([]);
   const [color, setColor] = useState("#0052cc");
@@ -24,6 +22,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
   const [search, setSearch] = useState("");
   const [colorTagDbCount, setColorTagDbCount] = useState([]);
   const [colorTagCount, setColorTagCount] = useState([]);
+  const [test, setTest] = useState([]);
 
   const colorListDefault = [
     "#0052cc",
@@ -49,9 +48,12 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
   useEffect(() => {
     const getTags = async () => {
       const data = await getDocs(notesCollectionRef);
-      const list = data.docs.map((doc) => ({ ...doc.data() }));
-      const tags = list.map((data) => data.tag);
-      console.log(tags);
+      const list = data.docs.map((doc) => doc.data().tag);
+      const tags = list.reduce((accumulator, currentValue) => {
+        return accumulator.concat(currentValue);
+      });
+      setSearchDbTag(tags);
+      setSearchDbTagWait(tags);
     };
     getTags();
   }, []);
@@ -62,12 +64,13 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     const DbcolorList = DbcolorListArray.filter(
       (item, i, arr) => arr.indexOf(item) == i
     );
+
     setColorDbList(DbcolorList);
     setColorTotalList(DbcolorList);
     setColorTagDbCount(getCount(DbcolorListArray));
     setColorTagCount(getCount(colorListArray));
-  }, []);
-
+  }, [searchDbTagWait]);
+  console.log("!!!", colorDbList);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -86,10 +89,11 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
         setColor("#0052cc");
       } else if (
         tagFrom === "edit" &&
-        colorTagDbCount[tagList[index].color] -
-          colorTagCount[tagList[index].color] ===
-          0
+        colorTagDbCount[tagList[index].color] ===
+          colorTagCount[tagList[index].color]
       ) {
+        console.log("!!!ww", colorTagDbCount[tagList[index].color]);
+        console.log("!!!ww123", colorTagCount[tagList[index].color]);
         setColorDbList(
           colorDbList.filter((color) => color !== tagList[index].color)
         );
@@ -136,11 +140,11 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
             value={search}
             onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Press enter to add tags"
+            placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
           />
-          <ul class="list-group" style={{ position: "absolute" }}>
+          <ul class="list-group" style={{ position: "absolute", zIndex: "20" }}>
             {searchDbTag
-              .filter((tags) => {
+              .filter((tags, i, arr) => {
                 return (
                   search &&
                   tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
@@ -162,9 +166,14 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
         </div>
       </div>
 
-      <button class="btn btn-primary" onClick={() => setColorOpen(!colorOpen)}>
-        <FormatColorFillIcon />
-      </button>
+      {tagFrom !== "view" && (
+        <button
+          class="btn btn-primary"
+          onClick={() => setColorOpen(!colorOpen)}
+        >
+          <FormatColorFillIcon />
+        </button>
+      )}
       {colorOpen && (
         <div className="color-picker-tab">
           <Tabs

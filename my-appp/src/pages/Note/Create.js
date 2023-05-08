@@ -3,10 +3,12 @@ import { addDoc, serverTimestamp } from "firebase/firestore";
 import { notesCollectionRef } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import Editor from "./Components/Editor/Editor";
+import Tag from "./Components/Tag/Tag";
 
 function Create() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [tagList, setTagList] = useState([]);
 
   let navigate = useNavigate();
 
@@ -17,7 +19,7 @@ function Create() {
       createAt: serverTimestamp(),
       editAt: serverTimestamp(),
       viewAt: serverTimestamp(),
-      tag: [],
+      tag: tagList ? tagList : [],
     });
     navigate("/");
   };
@@ -35,6 +37,7 @@ function Create() {
           <button class="btn btn-primary" onClick={createNote}>
             新增
           </button>
+          <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
         </div>
       </div>
     </div>

@@ -33,6 +33,7 @@ function App() {
         level={level}
         isAuth={isAuth}
         setLevel={setLevel}
+        authId={authId}
       />
       <Routes>
         <Route
@@ -52,7 +53,10 @@ function App() {
         <Route path="/calendar" element={<Calendars isAuth={isAuth} />} />
         <Route path="/charge" element={<Charge />} />
         <Route path="/ProjectManagement" element={<Project />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route
+          path="/admin"
+          element={<Admin authId={authId} level={level} />}
+        />
         <Route
           path="/nonUser"
           element={

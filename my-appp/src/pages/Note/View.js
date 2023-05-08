@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import EditIcon from "@mui/icons-material/Edit";
+import Tag from "./Components/Tag/Tag";
 
 function View() {
   const { id } = useParams();
@@ -13,13 +14,14 @@ function View() {
   console.log("id", id);
   let navigate = useNavigate();
   console.log("noteData", noteData);
+  const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
     const getNoteData = async () => {
       try {
         const docSnap = await getDoc(docNoteRef);
         setNoteData(docSnap.data());
-        console.log("geting", docSnap);
+        setTagList(docSnap.data().tag);
       } catch (error) {
         console.log(error);
       }
@@ -69,6 +71,7 @@ function View() {
             <label></label>
           </div>
           <div>
+            <Tag tagFrom={"view"} tagList={tagList} />
             <Link to={"../edit/" + id}>
               <button type="button" class="note-tool" style={{ width: "60px" }}>
                 <EditIcon />

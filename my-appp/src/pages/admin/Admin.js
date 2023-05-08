@@ -7,6 +7,7 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase-config";
 import moment from "moment";
@@ -17,6 +18,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   {
@@ -55,7 +57,7 @@ const columns = [
   },
 ];
 
-function Admin({ isAuth }) {
+function Admin({ authId }) {
   const [rows, setRows] = useState([]);
   const [selected, setSelected] = useState([]);
   console.log();
@@ -63,6 +65,8 @@ function Admin({ isAuth }) {
     pageSize: 5,
     page: 0,
   });
+
+  let navigate = useNavigate();
   const adminRef = collection(db, "users");
   useEffect(() => {
     const unSub = onSnapshot(adminRef, (snapShot) => {
@@ -71,6 +75,20 @@ function Admin({ isAuth }) {
     return () => {
       unSub();
     };
+  }, []);
+
+  useEffect(() => {
+    const getNoteEdit = async () => {
+      try {
+        const docSnap = await getDoc(doc(db, "users", authId));
+        if (docSnap.data().level !== "admin") {
+          navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNoteEdit();
   }, []);
 
   const CheckUser = async (id) => {
@@ -196,6 +214,7 @@ function Admin({ isAuth }) {
 
           alt();
           change();
+          navigate("/");
           Swal.fire({
             showConfirmButton: false,
             title: "移轉成功",
