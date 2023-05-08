@@ -15,20 +15,7 @@ export default function ExpenseItem(props) {
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
-  console.log(props);
-  // const updateExpenseHandler = async (updateExpenseData) => {
-  //   console.log(updateExpenseData);
-  //   setIsEditing(false); 
-  //   const expenseDoc = doc(db, "expenses", props.id);
-  //   const expenseData = {
-  //       name: updateExpenseData.name,
-  //       amount: updateExpenseData.amount,
-  //       date: updateExpenseData.date,
-  //       projectName: updateExpenseData.project,
-  //       updated_at: new Date(),
-  //   };
-  //   await updateDoc(expenseDoc, expenseData);
-  // };
+  // console.log(props);
   const deleteExpenseHandler = async (id) => {
     const expenseDoc = doc(db, "expenses", id);
     await deleteDoc(expenseDoc);

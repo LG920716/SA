@@ -3,6 +3,7 @@ import ProjectUpdate from "./ProjectUpdate";
 import BudgetBar from "./BudgetBar";
 import { db } from "../firebase-config";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+
 import "./ProjectItems.css";
 
 export default function ProjectItems(props) {
@@ -14,9 +15,9 @@ export default function ProjectItems(props) {
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
-  const updateProjectHandler = () => {
+  // const updateProjectHandler = () => {
 
-  }
+  // }
   const deleteProjectHandler = async (id) => {
     const projectsDoc = doc(db, "projects", id);
     await deleteDoc(projectsDoc);
@@ -38,7 +39,7 @@ export default function ProjectItems(props) {
           {isEditing && (
             <ProjectUpdate
               data={props}
-              onUpdateProject={updateProjectHandler}
+              // onUpdateProject={updateProjectHandler}
               onStopEditing={stopEditingHandler}
             />
           )}
