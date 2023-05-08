@@ -1,66 +1,41 @@
 import { useState, useEffect } from "react";
-import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "./Tool";
-import "react-quill/dist/quill.snow.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { addDoc, serverTimestamp } from "firebase/firestore";
-import { auth, notesCollectionRef } from "../../firebase-config";
+import { notesCollectionRef } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
-import "./Create.css"
+import Editor from "./Components/Editor/Editor";
 
-function Create({ isAuth }) {
+function Create() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
   let navigate = useNavigate();
-  console.log(isAuth);
+
   const createNote = async () => {
     await addDoc(notesCollectionRef, {
-      title,
+      title: title ? title : new Date().toLocaleString(),
       body,
       createAt: serverTimestamp(),
       editAt: serverTimestamp(),
       viewAt: serverTimestamp(),
-      tag:[],
+      tag: [],
     });
     navigate("/");
   };
-  useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
-    }
-  }, []);
 
   return (
     <div className="container">
       <div className="wrapper">
-        <div className="form-group1">
-          <div className="form-group2">
-            <input
-              className="form-control"
-              placeholder="標題..."
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="form-group3">
-            <EditorToolbar />
-            <ReactQuill className="text"
-              theme="snow"
-              value={body}
-              onChange={setBody}
-              placeholder={"內文..."}
-              modules={modules}
-              formats={formats}
-            />
-            <label></label>
-          </div>
+        <div className="editorTop">
+          <Editor
+            title={title}
+            setTitle={setTitle}
+            body={body}
+            setBody={setBody}
+          />
           <button class="btn btn-primary" onClick={createNote}>
             新增
           </button>
         </div>
-
-        {/* {title}
-        {body} */}
       </div>
     </div>
   );

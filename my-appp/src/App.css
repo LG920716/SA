@@ -1,64 +1,62 @@
-.navbarhead{
+.navbarhead {
   position: fixed;
-  top:0;
-  width:100%;
+  top: 0;
+  width: 100%;
   overflow: hidden;
   z-index: 99;
   background-color: white;
   border-bottom: 0.1875rem solid #f0f0f0;
-
-  }
-  .avatar {
+}
+.avatar {
   vertical-align: middle;
   width: 3.125rem;
   height: 3.125rem;
   border-radius: 50%;
 }
-.icon{
-display: flex;
-width: 9%;
-justify-content: space-between;
+.icon {
+  display: flex;
+  width: 9%;
+  justify-content: space-between;
 }
 
-.navbar-nav{
+.navbar-nav {
   color: rgb(255, 255, 255);
   margin-left: -0.625rem;
-  width:15rem;
+  width: 15rem;
   display: flex;
   justify-content: space-evenly;
 }
-.nav-link2{
-  margin: top 0.75rem;;
-  margin: left 0.625rem;;
-  margin-right:0.9375rem;
+.nav-link2 {
+  margin: top 0.75rem;
+  margin: left 0.625rem;
+  margin-right: 0.9375rem;
   margin-bottom: -1rem;
 }
-.nav-link{
-width:20%;
-text-align: center;
-color: white;
-height:100%;
+.nav-link {
+  width: 20%;
+  text-align: center;
+  color: white;
+  height: 100%;
 }
-.nav-link:hover{
+.nav-link:hover {
   border-bottom: 3px solid #0c6efd;
   transition: 0.1s;
 }
 
-.nav-link.active{
+.nav-link.active {
   color: white;
   font-weight: bold;
   border-bottom: 3px solid #0c6efd;
-
 }
-.logout{
+.logout {
   display: flex;
   align-items: center;
 }
 
-#root{
+#root {
   margin-top: 7%;
 }
-.nav-logout{
+.nav-logout {
   background-color: #0c6efd;
   height: 30px;
   width: 60px;
@@ -66,11 +64,18 @@ height:100%;
   display: flex;
   align-items: center;
   text-decoration: 0;
-  color:white;
+  color: white;
   border-radius: 10px;
 }
-.nav-logout:hover{
+.nav-logout:hover {
   background-color: #0b62e4;
   color: white;
   transition: 0.2s;
+}
+/*editor*/
+.editorTop {
+  margin-top: 30px;
+}
+.editorBottom {
+  margin-bottom: 10px;
 }

@@ -1,119 +1,115 @@
 import { Link } from "react-router-dom";
-import List from "./List";
+import NoteItem from "./Components/NoteList/NoteItem";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SearchBar from "./search";
+import SearchBar from "./Components/Search/search";
 import "./Note.css";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
+import { getDocs, orderBy, query } from "firebase/firestore";
+import { notesCollectionRef } from "../../firebase-config";
+import searchNote from "./Components/Search/search.svg";
+import { useNavigate } from "react-router-dom";
 
-function Note({ isAuth }) {
-  let navigate = useNavigate();
+function Note({ level }) {
   const [noteList, setNoteList] = useState([]);
+  const [noteListFilter, setNoteListFilter] = useState([]);
   const [orderArr, setOrderArr] = useState("viewAt");
-  const [search, setSearch] = useState("");
   const [order, setOrder] = useState("desc");
-  const [orderChange, setOrderChange] = useState([]);
-  const [searchClose, setSearchClose] = useState(false);
 
-  const searchNotes = () => {
-    setNoteList(
-      noteList.filter(
-        (notes) =>
-          notes.title.toLowerCase().includes(search.toLowerCase()) ||
-          notes.body.replace(/<\/?.+?>/g,"").replace(/ /g,"").toLowerCase().includes(search.toLowerCase())
-      )
-    );
+  let navigate = useNavigate();
+
+  const q = query(notesCollectionRef, orderBy(orderArr, order));
+  const getNotes = async () => {
+    const data = await getDocs(q);
+    const list = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    setNoteList(list);
+    setNoteListFilter(list);
   };
-  console.log("searchClose", searchClose);
 
   useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
+    if (level === "unCheck") {
+      navigate("/nonUser");
     }
-  }, []);
-  console.log("button", order);
-  console.log("orderChange", orderChange);
+  }, [level]);
+
+  console.log("levelNote", level);
+  useEffect(() => {
+    getNotes();
+  }, [orderArr, order]);
+
   const selectChange = (e) => {
     setOrderArr(e.target.value);
-    setOrderChange([orderArr, order]);
   };
+
   const orderIsChange = (e) => {
     order === "desc" ? setOrder("asc") : setOrder("desc");
-    setOrderChange([orderArr, order]);
   };
+  console.log(new Date().toLocaleString());
+
   return (
     <div className="container">
       <div className="wrapper">
-        <SearchBar
-          search={search}
-          setSearch={setSearch}
-          searchNotes={searchNotes}
-          setSearchClose={setSearchClose}
-        />
-        <div
-          style={{
-            display: "flex",
-            marginTop:"-2.5rem",
-            marginBottom: "1.25rem",
-
-          }}
-        >
-         
-
-          <select
-            class="form-select"
-            value={orderArr}
-            onChange={selectChange}
-            style={{ width: "9.375rem", height:"2.6875rem",marginRight: "0.9375rem" }}
-          >
-            <option value="viewAt">檢視時間</option>
-            <option value="editAt">更新時間</option>
-            <option value="createAt">創建時間</option>
-          </select>
-          <button type="button" class="btn btn-light" style={{marginRight:"60.625rem"}} onClick={orderIsChange}>
-            {order === "desc" ? (
-              <i class="bi bi-arrow-up"></i>
-            ) : (
-              <i class="bi bi-arrow-down"></i>
-            )}
-          </button>
-          <Link to={"/create"}>
-            <button
-              
-              type="button"
-              class="btn btn-primary1"
-              style={{
-              zIndex:"99",borderRadius:"5%", border:"0px",height:"2.6875rem", width:"7rem",
-              }}
-
+        <SearchBar noteList={noteList} setNoteListFilter={setNoteListFilter} />
+        <div className="note-filter-tool">
+          <div style={{ display: "flex" }}>
+            <select
+              class="form-select orderArr"
+              value={orderArr}
+              onChange={selectChange}
             >
-              新增文件
-              <AddIcon></AddIcon>
+              <option value="viewAt">檢視時間</option>
+              <option value="editAt">更新時間</option>
+              <option value="createAt">創建時間</option>
+            </select>
+            <button type="button" class="btn btn-light" onClick={orderIsChange}>
+              {order === "desc" ? (
+                <i class="bi bi-arrow-up"></i>
+              ) : (
+                <i class="bi bi-arrow-down"></i>
+              )}
             </button>
-          </Link>
+          </div>
           <Link to={"/create"}>
-            <button
-              type="button"
-              class="btn btn-primary2"
-              style={{
-                position:"fixed",right:"5%", top:"80%",
-                width:"5.625rem", height:"5.625rem",
-                zIndex:"99",borderRadius:"80%"
-              }}
-            >
-              <AddIcon style={{fontSize:"50px", }}></AddIcon>
+            <button type="button" class="btn btn-primary1">
+              新增文件
+              <AddIcon />
             </button>
           </Link>
         </div>
-        <List
-          orderArr={orderArr}
-          order={order}
-          orderChange={orderChange}
-          noteList={noteList}
-          setNoteList={setNoteList}
-          searchClose={searchClose}
-          setSearchClose={setSearchClose}
-        />
+        <Link to={"/create"}>
+          <button type="button" class="btn btn-primary2 note-create-circle">
+            <AddIcon style={{ fontSize: "50px" }}></AddIcon>
+          </button>
+        </Link>
+        <div className="grid">
+          {noteListFilter.length !== 0 ? (
+            noteListFilter.map((note) => {
+              const { title = "", body = "", id } = note;
+              return (
+                <NoteItem
+                  key={id}
+                  title={title}
+                  body={body}
+                  id={id}
+                  noteList={noteList}
+                  setNoteList={setNoteList}
+                />
+              );
+            })
+          ) : (
+            <>
+              <div></div>
+              <center>
+                <img
+                  src={searchNote}
+                  style={{
+                    height: "290px",
+                  }}
+                ></img>
+              </center>
+              <div></div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

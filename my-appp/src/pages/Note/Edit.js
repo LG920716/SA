@@ -1,38 +1,31 @@
 import { useState, useEffect } from "react";
-import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "./Tool";
-import "react-quill/dist/quill.snow.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
+import Editor from "./Components/Editor/Editor";
 
-function Edit(isAuth) {
-  const [editTitle, setEditTitle] = useState("");
-  const [editBody, setEditBody] = useState("");
+function Edit() {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const { id } = useParams();
   const docNoteEditRef = doc(db, "notes", id);
 
   let navigate = useNavigate();
 
-  const getNoteEdit = async () => {
-    try {
-      const docSnap = await getDoc(docNoteEditRef);
-      setEditTitle(docSnap.data().title);
-      setEditBody(docSnap.data().body);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
+    const getNoteEdit = async () => {
+      try {
+        const docSnap = await getDoc(docNoteEditRef);
+        setTitle(docSnap.data().title);
+        setBody(docSnap.data().body);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getNoteEdit();
   }, []);
-  useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
-    }
-  }, []);
+
   useEffect(() => {
     const updateViewTime = async (id) => {
       await updateDoc(docNoteEditRef, {
@@ -41,10 +34,11 @@ function Edit(isAuth) {
     };
     updateViewTime();
   }, []);
+
   const updateEditNote = async (id) => {
     await updateDoc(docNoteEditRef, {
-      title: editTitle,
-      body: editBody,
+      title: title ? title : new Date().toLocaleString(),
+      body,
       editAt: serverTimestamp(),
       viewAt: serverTimestamp(),
     });
@@ -54,31 +48,13 @@ function Edit(isAuth) {
   return (
     <div className="container">
       <div className="wrapper">
-        <div className="form-group1">
-          <div className="form-group2" >
-            <input
-            
-              value={editTitle}
-              className="form-control"
-              placeholder="title..."
-              onChange={(e) => setEditTitle(e.target.value)}
-            />
-          </div>
-          <div className="form-group3 " style={{marginBottom:"-20px"}}>
-            <div class="ql-container ql-snow"style={{height:"100%"}}>
-            <EditorToolbar />
-            <ReactQuill 
-              theme="snow"
-              value={editBody}
-              onChange={setEditBody}
-              placeholder={"Write something awesome..."}
-              modules={modules}
-              formats={formats}
-              
-            />
-            </div>
-            <label></label>
-          </div>
+        <div className="editorTop">
+          <Editor
+            title={title}
+            setTitle={setTitle}
+            body={body}
+            setBody={setBody}
+          />
           <button class="btn btn-primary" onClick={updateEditNote}>
             修改
           </button>

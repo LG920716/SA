@@ -1,0 +1,35 @@
+.note-tool {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border: 0px;
+  padding: 5px;
+}
+.note-tool:hover {
+  background-color: #0e6cfd;
+  color: white;
+  border: 0px;
+  transition: 0.2s;
+}
+.tool-flex {
+  flex: 1;
+}
+.card {
+  background-color: white;
+  border-radius: 0 0 20px 20px;
+}
+.note-item-tool {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+}
+/* @media (min-width: 25rem) {
+  .card {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media (min-width: 1500px) {
+  .card {
+    grid-template-columns: repeat(3, 1fr);
+  }
+} */
