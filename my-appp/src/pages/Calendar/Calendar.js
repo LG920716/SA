@@ -134,13 +134,16 @@ export default function Calendars({ isAuth }) {
         <div className="py-4 border-bottom">
           <div className="form-title text-center">
             <h1>行事曆</h1>
+            <div style={{display:"flex",justifyContent:"flex-end" ,right:"0"}}>
             <input
+            className="btn btn-primary1"
               type="button"
               value="新增活動"
               onClick={() =>
                 handleSlotSelectEvent({ start: today, end: tomorrow })
               }
             />
+            </div>
           </div>
         </div>
         <br></br>
