@@ -8,25 +8,28 @@ const SearchBar = ({ noteList, setNoteListFilter }) => {
     setNoteListFilter(
       noteList.filter(
         (notes) =>
-          notes.title.toLowerCase().includes(search.toLowerCase()) ||
-          notes.body
-            .replace(/<\/?.+?>/g, "")
-            .replace(/ /g, "")
-            .toLowerCase()
-            .includes(search.toLowerCase())
+          {
+            return notes.title.toLowerCase().includes(search.toLowerCase()) ||
+            notes.body
+              .replace(/<\/?.+?>/g, "")
+              .replace(/ /g, "")
+              .toLowerCase()
+              .includes(search.toLowerCase())||
+              notes.tag.map((x)=>x.tagName).filter((x)=>x.toLowerCase().includes(search.toLowerCase())).length>0
+          }
       )
     );
   };
 
-  noteList
-    .reduce((accumulator, currentValue) => {
-      return accumulator.concat(currentValue);
-    }, [])
-    .filter((x) =>
-      x.tag.map(
-        (x) => search && x.tagName.toLowerCase().includes(search.toLowerCase())
-      )
-    );
+  // noteList
+  //   .reduce((accumulator, currentValue) => {
+  //     return accumulator.concat(currentValue);
+  //   }, [])
+  //   .filter((x) =>
+  //     x.tag.map(
+  //       (x) => search && x.tagName.toLowerCase().includes(search.toLowerCase())
+  //     )
+  //   );
 
   useEffect(() => {
     searchNotes();
