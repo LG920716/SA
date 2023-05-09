@@ -6,6 +6,7 @@ import { addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { eventsCollectionRef, db } from "../../firebase-config";
 import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./Calendar.css";
 
 moment.locale("zh-tw");
@@ -100,16 +101,44 @@ export default function Calendars({ isAuth }) {
     setEventId(e.id);
     setModalStatus(true);
   };
-  const handleDelete = async () => {
-    setModalStatus(false);
+  // const handleDelete = async () => {
+  //   setModalStatus(false);
+  //   setDelStatus(false);
+  //   const eventDocRef = doc(db, "events", eventId);
+  //   try {
+  //     await deleteDoc(eventDocRef);
+  //     getEvents();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  const deletehandle = (id) => {
+    Swal.fire({
+      title: "確定刪除?",
+      text: `確定刪除此行程`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "刪除",
+      cancelButtonText: "取消",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setModalStatus(false);
     setDelStatus(false);
-    const eventDocRef = doc(db, "events", eventId);
-    try {
-      await deleteDoc(eventDocRef);
-      getEvents();
-    } catch (err) {
-      console.error(err);
-    }
+        const del = async () => {
+          await deleteDoc(doc(db, "events", id));
+        };
+        del();
+        Swal.fire({
+          showConfirmButton: false,
+          title: "刪除成功",
+          text: `已刪除行程`,
+          icon: "success",
+          timer: 1100,
+        });
+      }
+    });
   };
   const handleEdit = async () => {
     setModalStatus(false);
@@ -173,7 +202,7 @@ export default function Calendars({ isAuth }) {
           setEventInput={setEventInput}
           handleSave={handleSave}
           delStatus={delStatus}
-          handleDelete={handleDelete}
+          handleDelete={() => {deletehandle(eventId)}}
           eventId={eventId}
           handleEdit={handleEdit}
           setEndDate={setEndDate}
