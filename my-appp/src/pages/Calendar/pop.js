@@ -16,8 +16,8 @@ function MyVerticallyCenteredModal({
   eventId,
   handleEdit,
   handleDelete,
-  tag,
-  settag,
+  backgroundColor,
+  setbackgroundColor,
 }) {
   const localStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
   const localEndDate = moment(endDate).format("YYYY-MM-DDTHH:mm");
@@ -34,27 +34,26 @@ function MyVerticallyCenteredModal({
           <div className="form-group">
             <div className="form-group">
               <label>起始日期</label>
-
+              <br></br>
               <input
-                className="form-control"
                 type="datetime-local"
                 defaultValue={localStartDate}
                 onChange={(e) => setStartDate(new Date(e.target.value))}
               />
+              <br></br>
               <label></label>
             </div>
             <div className="form-group">
               <label>結束日期</label>
               <br></br>
               <input
-                className="form-control"
                 type="datetime-local"
                 defaultValue={localEndDate}
                 onChange={(e) => setEndDate(new Date(e.target.value))}
               />
+              <br></br>
               <label></label>
             </div>
-
             <div className="form-group">
               <label>標題</label>
               <input
@@ -65,49 +64,48 @@ function MyVerticallyCenteredModal({
               />
               <br></br>
             </div>
-
             <div className="form-group">
-              <label>活動類別</label>
+              <label>顯示顏色</label>
               <br></br>
               <select
-                class="form-select"
-                id="floatingSelect"
-                aria-label="Floating label select example"
-                defaultValue={tag}
-                onChange={(tag) => settag(tag.target.value)}
+                name="the_select"
+                defaultValue={backgroundColor}
+                onChange={(e) => setbackgroundColor(e.target.value)}
               >
-                <option value="0">請選擇</option>
-                <option value="1">其他活動</option>
-                <option value="2">例行社課</option>
-                <option value="3">幹部會議</option>
+                <option value="red">請選擇</option>
+                <option value="#">藍色</option>
+                <option value="rgba(255, 0, 0, 0.5)">橘色</option>
+                <option value="rgba(128, 0, 255, 0.5)">紫色</option>
+                <option value="rgba(255, 165, 0, 0.5)">黃色</option>
+                <option value="rgba(128, 128, 128, 0.5)">灰色</option>
+                <option value="rgba(165, 42, 42, 0.5)">棕色</option>
               </select>
+
               <br></br>
             </div>
           </div>
         ) : (
           <div className="form-group">
-            <div className="flex1">
-              <div className="form-group">
-                <label>起始日期</label>
-                <input
-                  className="form-control"
-                  type="datetime-local"
-                  defaultValue={localStartDate}
-                  onChange={(e) => setStartDate(new Date(e.target.value))}
-                />
-
-                <label></label>
-              </div>
-              <div className="form-group">
-                <label>結束日期</label>
-                <input
-                  className="form-control"
-                  type="datetime-local"
-                  defaultValue={localEndDate}
-                  onChange={(e) => setEndDate(new Date(e.target.value))}
-                />
-              </div>
-
+            <div className="form-group">
+              <label>起始日期</label>
+              <br></br>
+              <input
+                type="datetime-local"
+                defaultValue={localStartDate}
+                onChange={(e) => setStartDate(new Date(e.target.value))}
+              />
+              <br></br>
+              <label></label>
+            </div>
+            <div className="form-group">
+              <label>結束日期</label>
+              <br></br>
+              <input
+                type="datetime-local"
+                defaultValue={localEndDate}
+                onChange={(e) => setEndDate(new Date(e.target.value))}
+              />
+              <br></br>
               <label></label>
             </div>
             <div className="form-group">
@@ -122,18 +120,19 @@ function MyVerticallyCenteredModal({
               <br></br>
             </div>
             <div className="form-group">
-              <label>活動類別</label>
+              <label>顯示顏色</label>
               <br></br>
               <select
-                class="form-select"
-                id="floatingSelect"
-                aria-label="Floating label select example"
-                onChange={(tag) => settag(tag.target.value)}
+                name="the_select"
+                onChange={(e) => setbackgroundColor(e.target.value)}
               >
-                <option value="0">請選擇</option>
-                <option value="1">其他活動</option>
-                <option value="2">例行社課</option>
-                <option value="3">幹部會議</option>
+                <option value="red">請選擇</option>
+                <option value="rgba(0, 128, 255, 0.5)">藍色</option>
+                <option value="rgba(255, 0, 0, 0.5)">橘色</option>
+                <option value="rgba(128, 0, 255, 0.5)">紫色</option>
+                <option value="rgba(255, 165, 0, 0.5)">黃色</option>
+                <option value="rgba(128, 128, 128, 0.5)">灰色</option>
+                <option value="rgba(165, 42, 42, 0.5)">棕色</option>
               </select>
               <br></br>
             </div>
@@ -144,11 +143,7 @@ function MyVerticallyCenteredModal({
         {delStatus ? (
           <>
             <Button onClick={handleEdit}>修改</Button>
-            <Button
-              onClick={() => {
-                handleDelete(eventId);
-              }}
-            >
+            <Button onClick={handleDelete}>
               <i className="bi bi-trash3"></i>
             </Button>
           </>

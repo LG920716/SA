@@ -18,6 +18,16 @@ const SearchBar = ({ noteList, setNoteListFilter }) => {
     );
   };
 
+  noteList
+    .reduce((accumulator, currentValue) => {
+      return accumulator.concat(currentValue);
+    }, [])
+    .filter((x) =>
+      x.tag.map(
+        (x) => search && x.tagName.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+
   useEffect(() => {
     searchNotes();
   }, [search, noteList]);

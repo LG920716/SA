@@ -14,7 +14,7 @@ import { signOut } from "firebase/auth";
 
 function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
   let navigate = useNavigate();
-
+  const id = auth?.currentUser?.uid;
   const levelList = ["admin", "money", "user"];
 
   const signUserOut = () => {
@@ -23,18 +23,20 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
         localStorage.clear();
         setIsAuth(false);
         window.location.pathname = "/login";
-        console.log("offfff");
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
-  const getLevel = async () => {
-    const data = await getDoc(doc(db, "users", authId));
-    !data.data() ? signUserOut() : setLevel(data.data().level);
-    console.log("runnnnnn");
-  };
+  // const getLevel = async () => {
+  //   const data = await getDocs(collection(db, "users"));
+  //   setLevel(
+  //     data.docs
+  //       .filter((doc) => doc.id === auth?.currentUser?.uid)
+  //       .map((doc) => doc.data().level)[0]
+  //   );
+  // };
 
   // useEffect(() => {
   //   console.log("on");
@@ -65,30 +67,24 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
   //     };
   //   }
   // }, []);
-  const time = 1000 * 60 * 10;
-  console.log(level);
-  useEffect(() => {
-    console.log("start");
-    // const timeoutID = setInterval(() => getLevel(), time);
-    if (!isAuth) {
-      navigate("/login");
-      // clearInterval(timeoutID);
-      console.log("end");
-    } else if (!level) {
-      signUserOut();
-    } else if (!levelList.includes(level)) {
-      navigate("/nonUser");
-    }
-  }, [level]);
+
+  // console.log(level);
+  // useEffect(() => {
+  //   if (!isAuth) {
+  //     navigate("/login");
+  //   } else if (!level) {
+  //     signUserOut();
+  //   } else if (!levelList.includes(level)) {
+  //     navigate("/nonUser");
+  //   }
+  // }, [level]);
 
   // setLevel("user");
-  // export const timeoutID = setInterval(() => console.log("hiiiii"), 3000);
-  // clearInterval(timeoutID);
 
   return (
     isAuth &&
     levelList.includes(level) && (
-      <div className="navbarhead" onClick={getLevel}>
+      <div className="navbarhead">
         <nav
           class="navbar navbar-expand-lg navbar-light"
           style={{ width: "92%", margin: "auto", height: "4rem" }}
@@ -107,7 +103,7 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
               </NavLink>
 
               <NavLink className={"nav-link"} to="calendar">
-                行事曆
+                日曆
               </NavLink>
 
               <NavLink className={"nav-link"} to="charge">
@@ -117,7 +113,7 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
                 活動管理
               </NavLink>
               <NavLink className={"nav-link"} to="admin">
-                權限管理
+                權限
               </NavLink>
               {/* <NavLink className={"nav-link"} to="tag">
                 標籤

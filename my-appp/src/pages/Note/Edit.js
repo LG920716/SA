@@ -4,12 +4,14 @@ import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import Editor from "./Components/Editor/Editor";
+import Tag from "./Components/Tag/Tag";
 
 function Edit() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const { id } = useParams();
   const docNoteEditRef = doc(db, "notes", id);
+  const [tagList, setTagList] = useState([]);
 
   let navigate = useNavigate();
 
@@ -19,6 +21,7 @@ function Edit() {
         const docSnap = await getDoc(docNoteEditRef);
         setTitle(docSnap.data().title);
         setBody(docSnap.data().body);
+        setTagList(docSnap.data().tag);
       } catch (error) {
         console.log(error);
       }
@@ -41,6 +44,7 @@ function Edit() {
       body,
       editAt: serverTimestamp(),
       viewAt: serverTimestamp(),
+      tag: tagList ? tagList : [],
     });
     navigate("/");
   };
@@ -58,6 +62,7 @@ function Edit() {
           <button class="btn btn-primary" onClick={updateEditNote}>
             修改
           </button>
+          <Tag tagList={tagList} setTagList={setTagList} tagFrom={"edit"} />
         </div>
       </div>
     </div>
