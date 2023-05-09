@@ -37,6 +37,7 @@ export default function ExpenseUpdate(props) {
     setEnterAmount("");
     setEnterDate("");
     setEnterProject("");
+    setFormattedDate("");
   };
   return (
     <Card className="update-expense">

@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import ExpenseList from "./ExpenseList";
 import Card from "../UI/Card";
@@ -11,9 +11,10 @@ export default function Expense(props) {
   const filterChangeHandler = (selectedProject) => {
     setFilterProject(selectedProject);
   };
-  const filteredExpense = props.expensesItems.filter(
-    (doc) => doc.projectName == filterProject
-  );
+  const filteredExpense =
+    filterProject === ""
+      ? props.expensesItems
+      : props.expensesItems.filter((doc) => doc.projectName === filterProject);
 
   return (
     <Card className="expenses">
@@ -23,8 +24,12 @@ export default function Expense(props) {
         expensesItems={props.expensesItems}
         projectItems={props.projectItems}
       />
-      <ExpenseChart expenses={filteredExpense} orginExpenses={props.expensesItems}/>
-      <ExpenseList items={filteredExpense} projectItems={props.projectItems}/>
+      <ExpenseChart
+        expenses={filteredExpense}
+        orginExpenses={props.expensesItems}
+        projectItems={props.projectItems}
+      />
+      <ExpenseList items={filteredExpense} projectItems={props.projectItems} />
     </Card>
   );
 }

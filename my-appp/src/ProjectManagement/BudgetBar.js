@@ -6,15 +6,16 @@ export default function BudgetBar(props) {
     barFillWidth =
       Math.round((props.data.budget / props.data.budget) * 100) + "%";
   }
+
   return (
     <div className="chart-budgetBar">
       <div className="chart-budgetBar__inner">
         <div
           className="chart-budgetBar__fill"
-          style={{ width: barFillWidth }}
+          style={{ width: barFillWidth, ...style }}
         ></div>
       </div>
-      <div className="chart-budgetBar__label">50%</div>
+      <div className="chart-budgetBar__label">{label}</div>
     </div>
   );
 }

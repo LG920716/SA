@@ -11,7 +11,7 @@ import {
   collection,
 } from "firebase/firestore";
 
-function Login({ setIsAuth }) {
+function Login({ setIsAuth, setLevel, setauthId }) {
   let navigate = useNavigate();
 
   const signInWithGoogle = () => {
@@ -21,7 +21,9 @@ function Login({ setIsAuth }) {
         localStorage.setItem("isAuth", true);
         localStorage.setItem("url", auth?.currentUser?.photoURL);
         localStorage.setItem("name", auth?.currentUser?.displayName);
+        localStorage.setItem("id", auth?.currentUser?.uid);
         setIsAuth(true);
+        setauthId(auth?.currentUser?.uid);
 
         const userAdd = async (level) => {
           try {
@@ -33,6 +35,7 @@ function Login({ setIsAuth }) {
               createAt: serverTimestamp(),
             });
             localStorage.setItem("level", level);
+            setLevel(level);
           } catch (err) {
             console.error(err);
           }
@@ -49,6 +52,7 @@ function Login({ setIsAuth }) {
             }
           } else {
             localStorage.setItem("level", account.data().level);
+            setLevel(account.data().level);
           }
         };
         checkHasAccount();
@@ -61,7 +65,7 @@ function Login({ setIsAuth }) {
   };
 
   return (
-    <div style={{marginTop:"-7%"}}>
+    <div style={{ marginTop: "-7%" }}>
       <div
         style={{
           display: "flex",

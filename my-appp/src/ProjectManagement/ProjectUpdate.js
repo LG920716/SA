@@ -1,31 +1,43 @@
-import { useState } from "react";
-import Card from "../Charge/UI/Card";
+import { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { db } from "../firebase-config";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import "./ProjectUpdate.css";
 
 export default function ProjectUpdate(props) {
     console.log(props)
-  const [EnterName, setEnterName] = useState(props.data.name);
-  const [Enterbudget, setEnterbudget] = useState(props.data.budget);
-  const [EnterDate, setEnterDate] = useState(props.data.date);
+  const [EnterName, setEnterName] = useState(props.data.projectData.name);
+  const [Enterbudget, setEnterbudget] = useState(props.data.projectData.budget);
+  const [EnterDate, setEnterDate] = useState(props.data.projectData.date.toDate());
   const [Enterdescription, setEnterdescription] = useState(
-    props.data.description
+    props.data.projectData.description
   );
+  const [formattedDate, setFormattedDate] = useState("");
 
-  const SubmitHandlar = (event) => {
+  useEffect(() => {
+    setFormattedDate(format(EnterDate, "yyyy-MM-dd"));
+  }, [EnterDate]);
+
+  const SubmitHandlar = async (event) => {
     event.preventDefault();
+    const projectDoc = doc(db, "projects", props.data.projectData.id);
 
-    const updateProjectData = {
+    await updateDoc(projectDoc, {
       name: EnterName,
       budget: +Enterbudget,
-      date: new Date(EnterDate),
+      date: EnterDate,
       description: Enterdescription,
-    };
+      updated_at: new Date()
+    });
 
-    props.onUpdateProject(updateProjectData);
+
+
+    props.onStopEditing();
     setEnterName("");
     setEnterbudget();
     setEnterDate("");
     setEnterdescription("");
+    setFormattedDate("");
   };
   return (
     <div className="update-project">
@@ -62,9 +74,13 @@ export default function ProjectUpdate(props) {
             <label>Date</label>
             <input
               type="date"
-              value={EnterDate}
+              value={formattedDate}
+              // onChange={(event) => {
+              //   setEnterDate(event.target.value);
+              // }}
               onChange={(event) => {
-                setEnterDate(event.target.value);
+                setFormattedDate(event.target.value);
+                setEnterDate(new Date(event.target.value));
               }}
             />
           </div>

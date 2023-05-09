@@ -1,6 +1,7 @@
 import "./ChartBar.css";
 
 export default function ChartBar(props) {
+  console.log(props);
   let barFillHeight = "0%";
   if (props.totalCash > 0) {
     barFillHeight = Math.round((props.value / props.totalCash) * 100) + "%";

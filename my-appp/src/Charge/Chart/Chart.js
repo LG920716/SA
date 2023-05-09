@@ -8,16 +8,15 @@ export default function Chart(props) {
   const totalCash = dataPointValue.reduce((acc, curr) => acc + curr, 0);
 
   return (
-    // <div className="chart">
-    // {props.dataPoints.map((dataPoint) => (
-    //     <ChartBar
-    //     key={dataPoint.label}
-    //     value={dataPoint.value}
-    //     totalCash={totalCash}
-    //     label={dataPoint.label}
-    //     />
-    // ))}
-    // </div>
-    <></>
+    <div className="chart">
+      {props.dataPoints.map((dataPoint) => (
+        <ChartBar
+          key={dataPoint.label}
+          value={dataPoint.value}
+          totalCash={totalCash}
+          label={dataPoint.label}
+        />
+      ))}
+    </div>
   );
 }

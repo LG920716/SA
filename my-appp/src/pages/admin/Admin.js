@@ -8,7 +8,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db, auth } from "../../firebase-config";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { alpha } from "@mui/material/styles";
@@ -36,7 +36,6 @@ const columns = [
   {
     field: "createAt",
     headerName: "創建時間",
-    description: "This column has a value getter and is not sortable.",
     width: 220,
     renderCell: (params) => {
       return <div>{moment(params.row.createAt.toDate()).format("LLL")}</div>;
@@ -59,8 +58,7 @@ const columns = [
 function Admin({ isAuth }) {
   const [rows, setRows] = useState([]);
   const [selected, setSelected] = useState([]);
-  const numSelected = selected.length;
-
+  console.log();
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 5,
     page: 0,
@@ -80,8 +78,10 @@ function Admin({ isAuth }) {
       level: "user",
     });
   };
+
   const mutiCheckUser = () => {
     selected.map((id) => CheckUser(id));
+    setSelected([]);
   };
   const deleteUser = (id, email) => {
     Swal.fire({
@@ -100,6 +100,7 @@ function Admin({ isAuth }) {
         };
         del();
         Swal.fire({
+          showConfirmButton: false,
           title: "刪除成功",
           text: `已刪除 ${email} 使用者`,
           icon: "success",
@@ -111,7 +112,7 @@ function Admin({ isAuth }) {
   const deleteMutiUser = () => {
     Swal.fire({
       title: "確定刪除?",
-      text: `將永久刪除這 ${numSelected} 位使用者`,
+      text: `將永久刪除這 ${selected.length} 位使用者`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -125,8 +126,9 @@ function Admin({ isAuth }) {
         };
         selected.map((id) => del(id));
         Swal.fire({
+          showConfirmButton: false,
           title: "刪除成功",
-          text: `已刪除這 ${numSelected} 位使用者`,
+          text: `已刪除這 ${selected.length} 位使用者`,
           icon: "success",
           timer: 1100,
         });
@@ -161,6 +163,7 @@ function Admin({ isAuth }) {
     if (level === "user" || level === "money") {
       alt();
       Swal.fire({
+        showConfirmButton: false,
         title: "更改成功",
         text: `已更改 ${email} 使用者為  ${level}`,
         icon: "success",
@@ -194,6 +197,7 @@ function Admin({ isAuth }) {
           alt();
           change();
           Swal.fire({
+            showConfirmButton: false,
             title: "移轉成功",
             text: `已將管理者權限移轉至 ${email} 使用者`,
             icon: "success",
@@ -251,47 +255,49 @@ function Admin({ isAuth }) {
   return (
     <center>
       <div style={{ height: 400, width: "90%" }}>
-        {
-          <Toolbar
-            sx={{
-              pl: { sm: 2 },
-              pr: { xs: 1, sm: 1 },
-              ...(numSelected > 0 && {
-                bgcolor: (theme) =>
-                  alpha(
-                    theme.palette.primary.main,
-                    theme.palette.action.activatedOpacity
-                  ),
-              }),
-            }}
-          >
-            {numSelected > 0 && (
-              <Typography
-                sx={{ flex: "1 1 100%" }}
-                color="inherit"
-                variant="subtitle1"
-                component="div"
-              >
-                {numSelected} selected
-              </Typography>
-            )}
+        {selected.length > 0 && (
+          <>
+            <Toolbar
+              sx={{
+                pl: { sm: 2 },
+                pr: { xs: 1, sm: 1 },
+                ...(selected.length > 0 && {
+                  bgcolor: (theme) =>
+                    alpha(
+                      theme.palette.primary.main,
+                      theme.palette.action.activatedOpacity
+                    ),
+                }),
+              }}
+            >
+              {selected.length > 0 && (
+                <Typography
+                  sx={{ flex: "1 1 100%" }}
+                  color="inherit"
+                  variant="subtitle1"
+                  component="div"
+                >
+                  {selected.length} selected
+                </Typography>
+              )}
 
-            {numSelected > 0 && (
-              <>
-                <Tooltip title="Check">
-                  <IconButton onClick={mutiCheckUser}>
-                    <i class="bi bi-check-lg"></i>
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Delete">
-                  <IconButton onClick={deleteMutiUser}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              </>
-            )}
-          </Toolbar>
-        }
+              {selected.length > 0 && (
+                <>
+                  <Tooltip title="Check">
+                    <IconButton onClick={mutiCheckUser}>
+                      <i class="bi bi-check-lg"></i>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Delete">
+                    <IconButton onClick={deleteMutiUser}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              )}
+            </Toolbar>
+          </>
+        )}
         <DataGrid
           rows={rows}
           columns={columns.concat(actionColumn)}
@@ -303,6 +309,7 @@ function Admin({ isAuth }) {
           onRowSelectionModelChange={(data) => {
             setSelected(data);
           }}
+          rowSelectionModel={selected}
           isRowSelectable={(params) => params.row.level !== "admin"}
         />
       </div>

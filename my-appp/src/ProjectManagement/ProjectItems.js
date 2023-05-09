@@ -3,6 +3,7 @@ import ProjectUpdate from "./ProjectUpdate";
 import BudgetBar from "./BudgetBar";
 import { db } from "../firebase-config";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+
 import "./ProjectItems.css";
 
 export default function ProjectItems(props) {
@@ -53,7 +54,7 @@ export default function ProjectItems(props) {
           {isEditing && (
             <ProjectUpdate
               data={props}
-              onUpdateProject={updateProjectHandler}
+              // onUpdateProject={updateProjectHandler}
               onStopEditing={stopEditingHandler}
             />
           )}

@@ -1,48 +1,37 @@
-.btn.btn-light{
-    background-color: rgb(255, 255, 255);
-    color: black;
-    border: 0px;
-    border-radius: 0px;
+.btn.btn-light {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border: 0px;
+  border-radius: 0px;
 }
-.btn.btn-light:hover{
-    background-color: #0e6cfd;
-    color: white;
-    border: 0px;
-    border-radius: 0px;
-    transition:0.2s;
+.btn.btn-light:hover {
+  background-color: #0e6cfd;
+  color: white;
+  border: 0px;
+  border-radius: 0px;
+  transition: 0.2s;
 }
-.grid{
-    max-width: "1200px";
-    display: grid;
-    gap:1rem;
-    grid-template-columns: repeat(3,1fr);
+.grid {
+  max-width: "1200px";
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
 }
-    @media(min-width: 25rem){
-     .card {grid-template-columns: repeat(1,1fr);}
-    }
-    @media(min-width: 1500px){
-     .card{grid-template-columns: repeat(3,1fr),}
-    }
-    .card{
-        display: flex;
-        justify-content: center;
-        height:22.6875rem;
-        background-color: white;
-        border-radius: 20px;
-        width: 96%;
-    }
-        @media(min-width: 500px){
-         .grid {grid-template-columns: repeat(1,1fr);}
-        }
-        @media(min-width: 750px){
-            .grid {grid-template-columns: repeat(2,1fr);}
-           }
-           @media(min-width: 1000px){
-            .grid {grid-template-columns: repeat(3,1fr);}
-           }
-           @media(min-width:1000px){
-            .btn-group{width:100%}
-           }
-           @media(min-width:750px){
-            .btn-group{width:30%}
-           }
+@media (min-width: 25rem) {
+  .card {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media (min-width: 1500px) {
+  .card {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.card {
+  display: flex;
+  justify-content: center;
+  height: 22.6875rem;
+  background-color: white;
+  border-radius: 20px;
+  width: 96%;
+}
