@@ -15,7 +15,7 @@ export default function DonutChart() {
       setProject(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getProject();
-  }, []);
+  }, [project]);
 
   return (
     <Card className="donut-chart">
