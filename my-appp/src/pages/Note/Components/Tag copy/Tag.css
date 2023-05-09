@@ -3,7 +3,7 @@
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 48px;
-  width: 480px;
+  width: 30rem;
   padding: 0 8px;
   border: 1px solid rgb(214, 216, 218);
   border-radius: 6px;
@@ -71,11 +71,11 @@
 }} */
 
 .color-picker-tab {
-  width: 270px;
+  width: 270ssssspx;
   /* background: rgb(231, 238, 250); */
   background: rgb(219, 226, 250);
   /* background: rgb(249, 239, 239); */
-  margin-left: 15px;
+  margin-left: 30rem;
   padding: 10px;
   position: absolute;
   border-radius: 10px;
