@@ -69,10 +69,14 @@ function MyVerticallyCenteredModal({
             <br></br>
             <select name="the_select" defaultValue={backgroundColor} onChange={(e) => setbackgroundColor(e.target.value)}>
               <option value="red">請選擇</option>
-              <option value="blue">藍色</option>
-              <option value="green">綠色</option> 
-              <option value="purple">紫色</option>
+              <option value="rgba(0, 128, 255, 0.5)">藍色</option>
+              <option value="rgba(255, 0, 0, 0.5)">橘色</option> 
+              <option value="rgba(128, 0, 255, 0.5)">紫色</option>
+              <option value="rgba(255, 165, 0, 0.5)">黃色</option>
+              <option value="rgba(128, 128, 128, 0.5)">灰色</option>
+              <option value="rgba(165, 42, 42, 0.5)">棕色</option>
             </select>
+
             <br></br>
           </div>
         </div>
@@ -116,9 +120,12 @@ function MyVerticallyCenteredModal({
             <br></br>
             <select name="the_select" onChange={(e) => setbackgroundColor(e.target.value)}>
               <option value="red">請選擇</option>
-              <option value="blue">藍色</option>
-              <option value="green">綠色</option> 
-              <option value="purple">紫色</option>
+              <option value="rgba(0, 128, 255, 0.5)">藍色</option>
+              <option value="rgba(255, 0, 0, 0.5)">橘色</option> 
+              <option value="rgba(128, 0, 255, 0.5)">紫色</option>
+              <option value="rgba(255, 165, 0, 0.5)">黃色</option>
+              <option value="rgba(128, 128, 128, 0.5)">灰色</option>
+              <option value="rgba(165, 42, 42, 0.5)">棕色</option>
             </select>
             <br></br>
           </div>      
