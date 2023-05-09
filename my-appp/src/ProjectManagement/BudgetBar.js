@@ -1,10 +1,21 @@
 import "./BudgetBar.css";
 
 export default function BudgetBar(props) {
-  let barFillWidth = "50%";
-  if (props.data.budget > 0) {
+  const filterData = props.data.chartDataPoints.filter(
+    (data) => data.label === props.data.projectData.name
+  );
+  let barFillWidth = "0%";
+  let label = barFillWidth;
+  let style = {backgroundColor: "#4826b9"};
+  if (filterData[0].budget > 0) {
     barFillWidth =
-      Math.round((props.data.budget / props.data.budget) * 100) + "%";
+      Math.round((filterData[0].value / filterData[0].budget) * 100) + "%";
+    
+    label = barFillWidth;
+  }
+  if (Math.round((filterData[0].value / filterData[0].budget) * 100) > 100) {
+    label = ">100%";
+    style = {backgroundColor: "#f00"};
   }
 
   return (
