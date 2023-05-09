@@ -15,13 +15,13 @@
 }
 .icon {
   display: flex;
-  width: 9%;
+  width: 7.5rem;
   justify-content: space-between;
 }
 
 .navbar-nav {
   color: rgb(255, 255, 255);
-  width: 40%;
+  width: 30rem;
   display: flex;
   justify-content: space-evenly;
 }
@@ -54,7 +54,7 @@
 }
 
 #root {
-  margin-top: 7%;
+  margin-top: 7rem;
 }
 .nav-logout {
   background-color: #0c6efd;

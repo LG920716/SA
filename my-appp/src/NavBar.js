@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { db, auth } from "./firebase-config";
+import MenuIcon from "@mui/icons-material/Menu";
+
 import {
   doc,
   getDoc,
@@ -122,6 +124,9 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
               {/* <NavLink className={"nav-link"} to="tag">
                 標籤
               </NavLink> */}
+              <button>
+                <MenuIcon />
+              </button>
             </div>
           </div>
           <div className="icon">
