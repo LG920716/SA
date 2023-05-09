@@ -75,10 +75,10 @@
   /* background: rgb(231, 238, 250); */
   background: rgb(219, 226, 250);
   /* background: rgb(249, 239, 239); */
-  margin-left: 5px;
+  margin-left: 15px;
   padding: 10px;
   position: absolute;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 .color-custom {
   position: absolute;

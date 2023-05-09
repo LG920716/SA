@@ -120,139 +120,144 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
 
   return (
     <>
-      <div className="tags-input">
-        <ul id="tags">
-          {tagList.map((tag, index) => (
-            <li key={index} className="tag" style={{ background: tag.color }}>
-              <span className="tag-title">{tag.tagName}</span>
-              <span
-                className="tag-close-icon"
-                onClick={() => removeTags(index)}
-              >
-                <i class="bi bi-x-circle-fill"></i>
-              </span>
-            </li>
-          ))}
-        </ul>
-        <div>
-          <input
-            type="text"
-            value={search}
-            onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
-          />
-          <ul class="list-group" style={{ position: "absolute", zIndex: "20" }}>
-            {searchDbTag
-              .filter((tags, i, arr) => {
-                return (
-                  search &&
-                  tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
-                  tags.tagName !== search
-                );
-              })
-              .map((tags) => (
-                <li
-                  class="list-group-item"
-                  onClick={() => {
-                    setColor(tags.color);
-                    setSearch(tags.tagName);
-                  }}
+      <div className="choose">
+        <div className="tags-input">
+          <ul id="tags">
+            {tagList.map((tag, index) => (
+              <li key={index} className="tag" style={{ background: tag.color }}>
+                <span className="tag-title">{tag.tagName}</span>
+                <span
+                  className="tag-close-icon"
+                  onClick={() => removeTags(index)}
                 >
-                  {tags.tagName}
-                </li>
-              ))}
+                  <i class="bi bi-x-circle-fill"></i>
+                </span>
+              </li>
+            ))}
           </ul>
-        </div>
-      </div>
-
-      {tagFrom !== "view" && (
-        <button
-          class="btn btn-primary"
-          onClick={() => setColorOpen(!colorOpen)}
-        >
-          <FormatColorFillIcon />
-        </button>
-      )}
-      {colorOpen && (
-        <div className="color-picker-tab">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            style={{ width: "250px" }}
-            centered
-          >
-            <Tab label={<ColorLensIcon />} value="1" />
-            <Tab label={<AccessTimeFilledIcon />} value="2" />
-          </Tabs>
-
-          {value === "1" && (
-            <div
-              style={{
-                background: " rgb(231, 238, 250)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "10px",
-                width: "250px",
-                borderRadius: "25px",
-                marginTop: "15px",
-              }}
+          <div>
+            <input
+              type="text"
+              value={search}
+              onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
+            />
+            <ul
+              class="list-group"
+              style={{ position: "absolute", zIndex: "20" }}
             >
-              <center>
+              {searchDbTag
+                .filter((tags, i, arr) => {
+                  return (
+                    search &&
+                    tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
+                    tags.tagName !== search
+                  );
+                })
+                .map((tags) => (
+                  <li
+                    class="list-group-item"
+                    onClick={() => {
+                      setColor(tags.color);
+                      setSearch(tags.tagName);
+                    }}
+                  >
+                    {tags.tagName}
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </div>
+
+        {tagFrom !== "view" && (
+          <button
+            class="btn btn-primary"
+            onClick={() => setColorOpen(!colorOpen)}
+          >
+            <FormatColorFillIcon />
+          </button>
+        )}
+        {colorOpen && (
+          <div className="color-picker-tab">
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              style={{ width: "250px" }}
+              centered
+            >
+              <Tab label={<ColorLensIcon />} value="1" />
+              <Tab label={<AccessTimeFilledIcon />} value="2" />
+            </Tabs>
+
+            {value === "1" && (
+              <div
+                style={{
+                  background: " rgb(231, 238, 250)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  width: "250px",
+                  borderRadius: "25px",
+                  marginTop: "15px",
+                }}
+              >
+                <center>
+                  <CirclePicker
+                    colors={colorListDefault}
+                    color={color}
+                    onChange={(colors) => {
+                      setColor(colors.hex);
+                    }}
+                  />
+                </center>
+              </div>
+            )}
+            {value === "2" && (
+              <div
+                style={{
+                  background: " rgb(231, 238, 250)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  width: "250px",
+                  borderRadius: "25px",
+                  marginTop: "15px",
+                }}
+              >
                 <CirclePicker
-                  colors={colorListDefault}
+                  colors={colorTotalList}
                   color={color}
                   onChange={(colors) => {
                     setColor(colors.hex);
                   }}
                 />
-              </center>
-            </div>
-          )}
-          {value === "2" && (
+                <i
+                  class="bi bi-plus-circle-fill"
+                  style={{ fontSize: "25px" }}
+                  onClick={() => setColorCustomOpen(!colorCustomOpen)}
+                ></i>
+              </div>
+            )}
+          </div>
+        )}
+        {colorCustomOpen && (
+          <div className="color-custom">
             <div
-              style={{
-                background: " rgb(231, 238, 250)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "10px",
-                width: "250px",
-                borderRadius: "25px",
-                marginTop: "15px",
+              className="blocker"
+              onClick={() => setColorCustomOpen(!colorCustomOpen)}
+            ></div>
+            <ChromePicker
+              color={color}
+              onChange={(colors) => {
+                setColor(colors.hex);
               }}
-            >
-              <CirclePicker
-                colors={colorTotalList}
-                color={color}
-                onChange={(colors) => {
-                  setColor(colors.hex);
-                }}
-              />
-              <i
-                class="bi bi-plus-circle-fill"
-                style={{ fontSize: "25px" }}
-                onClick={() => setColorCustomOpen(!colorCustomOpen)}
-              ></i>
-            </div>
-          )}
-        </div>
-      )}
-      {colorCustomOpen && (
-        <div className="color-custom">
-          <div
-            className="blocker"
-            onClick={() => setColorCustomOpen(!colorCustomOpen)}
-          ></div>
-          <ChromePicker
-            color={color}
-            onChange={(colors) => {
-              setColor(colors.hex);
-            }}
-          />
-        </div>
-      )}
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 };
