@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment";
+import "./pop.css";
 
 function MyVerticallyCenteredModal({
   modalStatus,
@@ -36,17 +37,18 @@ function MyVerticallyCenteredModal({
               <label>起始日期</label>
               <br></br>
               <input
+                className="form-control"
                 type="datetime-local"
                 defaultValue={localStartDate}
                 onChange={(e) => setStartDate(new Date(e.target.value))}
               />
-              <br></br>
               <label></label>
             </div>
             <div className="form-group">
               <label>結束日期</label>
               <br></br>
               <input
+                className="form-control"
                 type="datetime-local"
                 defaultValue={localEndDate}
                 onChange={(e) => setEndDate(new Date(e.target.value))}
@@ -57,8 +59,8 @@ function MyVerticallyCenteredModal({
             <div className="form-group">
               <label>標題</label>
               <input
-                value={eventInput}
                 className="form-control"
+                value={eventInput}
                 placeholder="標題..."
                 onChange={(e) => setEventInput(e.target.value)}
               />
@@ -68,6 +70,7 @@ function MyVerticallyCenteredModal({
               <label>顯示顏色</label>
               <br></br>
               <select
+                className="form-control"
                 name="the_select"
                 defaultValue={backgroundColor}
                 onChange={(e) => setbackgroundColor(e.target.value)}
@@ -90,11 +93,11 @@ function MyVerticallyCenteredModal({
               <label>起始日期</label>
               <br></br>
               <input
+                className="form-control"
                 type="datetime-local"
                 defaultValue={localStartDate}
                 onChange={(e) => setStartDate(new Date(e.target.value))}
               />
-              <br></br>
               <label></label>
             </div>
             <div className="form-group">
@@ -102,10 +105,10 @@ function MyVerticallyCenteredModal({
               <br></br>
               <input
                 type="datetime-local"
+                className="form-control"
                 defaultValue={localEndDate}
                 onChange={(e) => setEndDate(new Date(e.target.value))}
               />
-              <br></br>
               <label></label>
             </div>
             <div className="form-group">
@@ -121,8 +124,8 @@ function MyVerticallyCenteredModal({
             </div>
             <div className="form-group">
               <label>顯示顏色</label>
-              <br></br>
               <select
+                className="form-control"
                 name="the_select"
                 onChange={(e) => setbackgroundColor(e.target.value)}
               >

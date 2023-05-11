@@ -9,13 +9,14 @@ import "./DonutChart.css";
 
 export default function DonutChart() {
   const [project, setProject] = useState([]);
+
   useEffect(() => {
     const getProject = async () => {
       const data = await getDocs(projectsCollectionRef);
       setProject(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getProject();
-  }, [project]);
+  }, []);
 
   return (
     <Card className="donut-chart">

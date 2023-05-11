@@ -125,7 +125,7 @@ export default function Calendars({ isAuth }) {
     }).then((result) => {
       if (result.isConfirmed) {
         setModalStatus(false);
-    setDelStatus(false);
+        setDelStatus(false);
         const del = async () => {
           await deleteDoc(doc(db, "events", id));
         };
@@ -163,15 +163,21 @@ export default function Calendars({ isAuth }) {
         <div className="py-4 border-bottom">
           <div className="form-title text-center">
             <h1>行事曆</h1>
-            <div style={{display:"flex",justifyContent:"flex-end" ,right:"0"}}>
-            <input
-            className="btn btn-primary1"
-              type="button"
-              value="新增活動"
-              onClick={() =>
-                handleSlotSelectEvent({ start: today, end: tomorrow })
-              }
-            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                right: "0",
+              }}
+            >
+              <input
+                className="btn btn-primary1"
+                type="button"
+                value="新增活動"
+                onClick={() =>
+                  handleSlotSelectEvent({ start: today, end: tomorrow })
+                }
+              />
             </div>
           </div>
         </div>
@@ -202,7 +208,9 @@ export default function Calendars({ isAuth }) {
           setEventInput={setEventInput}
           handleSave={handleSave}
           delStatus={delStatus}
-          handleDelete={() => {deletehandle(eventId)}}
+          handleDelete={() => {
+            deletehandle(eventId);
+          }}
           eventId={eventId}
           handleEdit={handleEdit}
           setEndDate={setEndDate}
