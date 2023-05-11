@@ -28,7 +28,7 @@
     grid-template-columns: repeat(1, 1fr);
   }
 }
-@media (min-width: 750px) {
+@media (min-width: 50%) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
