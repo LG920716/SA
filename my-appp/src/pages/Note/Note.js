@@ -53,6 +53,7 @@ function Note({ level }) {
           <div style={{ display: "flex" }}>
             <select
               class="form-select orderArr"
+              style={{ cursor: "pointer" }}
               value={orderArr}
               onChange={selectChange}
             >

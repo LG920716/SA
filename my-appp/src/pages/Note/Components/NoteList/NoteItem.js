@@ -37,11 +37,7 @@ function NoteItem({ title, body, id, noteList, setNoteList }) {
   };
 
   return (
-    <div
-      key={id}
-      className="card"
-      style={{ borderRadius: "20px 20px 20px 20px", border: 0 }}
-    >
+    <div key={id} className="card" style={{ borderRadius: "20px", border: 0 }}>
       <div className="form-group">
         <input
           className="form-control"
@@ -93,7 +89,7 @@ function NoteItem({ title, body, id, noteList, setNoteList }) {
         </div>
         <div
           class="note-tool tool-flex"
-          style={{ borderRadius: " 0 0 20px 0" }}
+          style={{ borderRadius: " 0 0 20px 0", cursor: "pointer" }}
           onClick={() => {
             deleteNote(id);
           }}

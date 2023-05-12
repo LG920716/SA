@@ -6,18 +6,20 @@ const SearchBar = ({ noteList, setNoteListFilter }) => {
 
   const searchNotes = () => {
     setNoteListFilter(
-      noteList.filter(
-        (notes) =>
-          {
-            return notes.title.toLowerCase().includes(search.toLowerCase()) ||
-            notes.body
-              .replace(/<\/?.+?>/g, "")
-              .replace(/ /g, "")
-              .toLowerCase()
-              .includes(search.toLowerCase())||
-              notes.tag.map((x)=>x.tagName).filter((x)=>x.toLowerCase().includes(search.toLowerCase())).length>0
-          }
-      )
+      noteList.filter((notes) => {
+        return (
+          notes.title.toLowerCase().includes(search.toLowerCase()) ||
+          notes.body
+            .replace(/<\/?.+?>/g, "")
+            .replace(/ /g, "")
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          notes.tag
+            .map((x) => x.tagName)
+            .filter((x) => x.toLowerCase().includes(search.toLowerCase()))
+            .length > 0
+        );
+      })
     );
   };
 
@@ -48,7 +50,7 @@ const SearchBar = ({ noteList, setNoteListFilter }) => {
         <input
           style={{ width: "100%" }}
           type="text"
-          placeholder="關鍵字尋找"
+          placeholder="請輸入關鍵字"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

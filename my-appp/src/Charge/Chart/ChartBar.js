@@ -9,7 +9,7 @@ export default function ChartBar(props) {
   const fixedBarWidth = "20px";
   return (
     <div className="chart-bar">
-      <div className="chart-bar__inner">
+      <div style={{ width: fixedBarWidth }} className="chart-bar__inner">
         <div
           className="chart-bar__fill"
           style={{ height: barFillHeight, width: fixedBarWidth }}
