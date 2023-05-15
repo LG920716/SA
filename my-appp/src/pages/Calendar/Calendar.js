@@ -8,6 +8,7 @@ import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./Calendar.css";
+import AddIcon from "@mui/icons-material/Add";
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -173,7 +174,7 @@ export default function Calendars({ isAuth }) {
               <input
                 className="btn btn-primary1"
                 type="button"
-                value="新增活動"
+                value="新增活動 "
                 onClick={() =>
                   handleSlotSelectEvent({ start: today, end: tomorrow })
                 }

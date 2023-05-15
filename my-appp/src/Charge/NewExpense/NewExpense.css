@@ -12,22 +12,23 @@
 }
 
 .new-expense button {
+  justify-content: center;
   font: inherit;
   cursor: pointer;
-  height: 1.25rem;
+  height: 3rem;
   display: flex;
+  font-size: 20px;
   align-items: center;
-  padding: 1rem 2rem;
-  border: 1px solid #40005d;
-  background-color: #40005d;
+  padding-right: 0.8rem;
+  border: 0;
+  background-color: #0c6efd;
   color: white;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .new-expense button:hover,
 .new-expense button:active {
-  background-color: #510674;
-  border-color: #510674;
+  background-color: #0857cd;
 }
 
 .new-expense button.alternative {

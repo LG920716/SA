@@ -4,6 +4,7 @@ import ProjectForm from "./ProjectForm";
 import { db, projectsCollectionRef } from "../../firebase-config";
 import { collection, addDoc, getDoc } from "firebase/firestore";
 import { async } from "@firebase/util";
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 
 const NewProject = (props) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,7 +30,9 @@ const NewProject = (props) => {
   return (
     <div className="new-project">
       {!isEditing && (
-        <button onClick={isEditingHandler} className='bt-right'>Add New Project</button>
+        <button onClick={isEditingHandler} className="bt-right">
+          <DashboardCustomizeIcon /> &nbsp; 新增專案
+        </button>
       )}
       {isEditing && (
         <ProjectForm

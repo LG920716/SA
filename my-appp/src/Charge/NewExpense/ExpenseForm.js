@@ -25,7 +25,7 @@ export default function ExpenseForm(props) {
   };
 
   return (
-    <form onSubmit={SubmitHandlar}>
+    <form onSubmit={SubmitHandlar} className="form2">
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
@@ -84,13 +84,16 @@ export default function ExpenseForm(props) {
 
       <div className="new-expense__actions" style={{ display: "Flex" }}>
         <button
+          className="new-expense__actions-button"
           type="button"
           style={{ marginRight: "1rem" }}
           onClick={props.onStopEditing}
         >
           取消
         </button>
-        <button type="sumbit">新增</button>
+        <button className="sumbit-button" type="sumbit">
+          新增
+        </button>
       </div>
     </form>
   );

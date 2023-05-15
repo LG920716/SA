@@ -2,6 +2,7 @@ import { useState } from "react";
 import { expensesCollectionRef } from "../../firebase-config";
 import { addDoc } from "firebase/firestore";
 import "./NewExpense.css";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ExpenseForm from "./ExpenseForm";
 
 const NewExpense = (props) => {
@@ -28,7 +29,13 @@ const NewExpense = (props) => {
   };
   return (
     <div className="new-expense">
-      {!isEditing && <button onClick={isEditingHandler}>新增開支</button>}
+      {!isEditing && (
+        <button onClick={isEditingHandler}>
+          <AttachMoneyIcon />
+          新增開支
+        </button>
+      )}
+
       {isEditing && (
         <ExpenseForm
           onSaveExpenseData={saveExpenseDataHandler}

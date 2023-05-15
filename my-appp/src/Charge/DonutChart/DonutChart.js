@@ -19,28 +19,30 @@ export default function DonutChart() {
   }, []);
 
   return (
-    <Card className="donut-chart">
-      <Chart
-        type="donut"
-        width={550}
-        height={550}
-        series={project.map((doc) => doc.budget)}
-        options={{
-          labels: project.map((doc) => doc.name),
-          title: { text: "edw" },
-          plotOptions: {
-            pie: {
-              donut: {
-                labels: {
-                  show: true,
-                  total: { show: true, text: "total money" },
+    <div style={{ minWidth: "40%" }}>
+      <Card className="donut-chart">
+        <Chart
+          type="donut"
+          width={550}
+          height={550}
+          series={project.map((doc) => doc.budget)}
+          options={{
+            labels: project.map((doc) => doc.name),
+            title: { text: "" },
+            plotOptions: {
+              pie: {
+                donut: {
+                  labels: {
+                    show: true,
+                    total: { show: true, text: "total money" },
+                  },
                 },
               },
             },
-          },
-        }}
-      />
-      <NewProject />
-    </Card>
+          }}
+        />
+        <NewProject />
+      </Card>
+    </div>
   );
 }
