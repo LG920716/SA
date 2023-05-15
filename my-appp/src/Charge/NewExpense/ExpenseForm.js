@@ -81,11 +81,16 @@ export default function ExpenseForm(props) {
           </datalist>
         </div>
       </div>
-      <div className="new-expense__actions">
-        <button type="button" onClick={props.onStopEditing}>
-          Cencel
+
+      <div className="new-expense__actions" style={{ display: "Flex" }}>
+        <button
+          type="button"
+          style={{ marginRight: "1rem" }}
+          onClick={props.onStopEditing}
+        >
+          取消
         </button>
-        <button type="sumbit">New Expense</button>
+        <button type="sumbit">新增</button>
       </div>
     </form>
   );
