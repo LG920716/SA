@@ -71,8 +71,8 @@ function Note({ level }) {
           </div>
           <Link to={"/create"}>
             <button type="button" class="btn btn-primary1">
+              <AddIcon style={{ marginTop: "-2px", marginLeft: "-5px" }} />
               新增文件
-              <AddIcon style={{ marginTop: "-5px" }} />
             </button>
           </Link>
         </div>

@@ -178,8 +178,8 @@ export default function Calendars({ isAuth }) {
                   handleSlotSelectEvent({ start: today, end: tomorrow })
                 }
               >
+                <AddIcon style={{ marginTop: "-2px", marginLeft: "-5px" }} />
                 新增行程
-                <AddIcon style={{ marginTop: "-5px" }} />
               </button>
             </div>
           </div>
