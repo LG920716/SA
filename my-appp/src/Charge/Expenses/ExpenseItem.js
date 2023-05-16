@@ -6,6 +6,8 @@ import Card from "../UI/Card";
 import "./ExpenseItem.css";
 import ExpenseUpdate from "./ExpenseUpdate";
 import Swal from "sweetalert2";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function ExpenseItem(props) {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,9 +29,9 @@ export default function ExpenseItem(props) {
       text: `刪除此支出`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "刪除",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "確認刪除",
       cancelButtonText: "取消",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -54,26 +56,29 @@ export default function ExpenseItem(props) {
         <div className="expense-item__description">
           <h2>{props.name}</h2>
           <div className="expense-item__price">${props.amount}</div>
-          <button type="button" onClick={isEditingHandler}>
-            update
-          </button>
-          {isEditing && (
-            <ExpenseUpdate
-              data={props}
-              // onUpdateExpense={updateExpenseHandler}
-              onStopEditing={stopEditingHandler}
-              projectItems={props.projectItems}
-            />
-          )}
-          <button
-            type="button"
-            onClick={() => {
-              // deleteExpenseHandler(props.id);
-              deleteProject(props.id);
-            }}
-          >
-            delete
-          </button>
+          <div>
+            <button type="button" onClick={isEditingHandler}>
+              <EditIcon />
+            </button>
+            {isEditing && (
+              <ExpenseUpdate
+                data={props}
+                // onUpdateExpense={updateExpenseHandler}
+                onStopEditing={stopEditingHandler}
+                projectItems={props.projectItems}
+              />
+            )}
+            <button
+              className="delete-button"
+              type="button"
+              onClick={() => {
+                // deleteExpenseHandler(props.id);
+                deleteProject(props.id);
+              }}
+            >
+              <DeleteIcon />
+            </button>
+          </div>
         </div>
       </Card>
     </li>

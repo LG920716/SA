@@ -1,11 +1,10 @@
 .expense-date {
   display: flex;
   flex-direction: column;
+  font-weight: 900;
   width: 5.5rem;
   height: 5.5rem;
-  border: 2px solid #2c2c2c;
-  background-color: white;
-  color: rgb(82, 82, 82);
+  color: rgb(0, 0, 0);
   border-radius: 12px;
   align-items: center;
   justify-content: center;

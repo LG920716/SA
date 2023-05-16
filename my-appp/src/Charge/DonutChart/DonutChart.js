@@ -34,7 +34,7 @@ export default function DonutChart() {
                 donut: {
                   labels: {
                     show: true,
-                    total: { show: true, text: "total money" },
+                    total: { show: true, text: "總金額" },
                   },
                 },
               },

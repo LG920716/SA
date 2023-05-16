@@ -107,9 +107,9 @@ function Admin({ authId }) {
       text: `永久刪除 ${email} 使用者`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "刪除",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "確認刪除",
       cancelButtonText: "取消",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -133,9 +133,9 @@ function Admin({ authId }) {
       text: `將永久刪除這 ${selected.length} 位使用者`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "刪除",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "確認刪除",
       cancelButtonText: "取消",
     }).then((result) => {
       if (result.isConfirmed) {
