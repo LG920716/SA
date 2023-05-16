@@ -3,9 +3,9 @@
   flex-direction: column;
   width: 5.5rem;
   height: 5.5rem;
-  border: 1px solid #ececec;
-  background-color: #2a2a2a;
-  color: white;
+  border: 2px solid #2c2c2c;
+  background-color: white;
+  color: rgb(82, 82, 82);
   border-radius: 12px;
   align-items: center;
   justify-content: center;

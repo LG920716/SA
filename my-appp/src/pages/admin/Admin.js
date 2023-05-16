@@ -273,7 +273,14 @@ function Admin({ authId }) {
 
   return (
     <center>
-      <div style={{ height: 400, width: "90%" }}>
+      <div
+        style={{
+          height: 400,
+          width: "90%",
+          borderRadius: "10px",
+          boxShadow: "0 1px 5px #4a4a4a40",
+        }}
+      >
         {selected.length > 0 && (
           <>
             <Toolbar

@@ -59,10 +59,18 @@ function Edit() {
             body={body}
             setBody={setBody}
           />
-          <button class="btn btn-primary" onClick={updateEditNote}>
-            修改
-          </button>
-          <Tag tagList={tagList} setTagList={setTagList} tagFrom={"edit"} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "1rem",
+            }}
+          >
+            <Tag tagList={tagList} setTagList={setTagList} tagFrom={"edit"} />
+            <button class="btn btn-primary" onClick={updateEditNote}>
+              修改
+            </button>
+          </div>
         </div>
       </div>
     </div>

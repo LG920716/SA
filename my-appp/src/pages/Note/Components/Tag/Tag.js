@@ -120,7 +120,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
 
   return (
     <>
-      <div className="choose">
+      <div className="choose" style={{}}>
         <div className="tags-input">
           <ul id="tags">
             {tagList.map((tag, index) => (
@@ -135,6 +135,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
               </li>
             ))}
           </ul>
+
           <div>
             <input
               type="text"
@@ -249,6 +250,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
               className="blocker"
               onClick={() => setColorCustomOpen(!colorCustomOpen)}
             ></div>
+
             <ChromePicker
               color={color}
               onChange={(colors) => {

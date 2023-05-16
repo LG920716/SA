@@ -171,14 +171,16 @@ export default function Calendars({ isAuth }) {
                 right: "0",
               }}
             >
-              <input
+              <button
                 className="btn btn-primary1"
                 type="button"
-                value="新增活動 "
                 onClick={() =>
                   handleSlotSelectEvent({ start: today, end: tomorrow })
                 }
-              />
+              >
+                新增行程
+                <AddIcon style={{ marginTop: "-5px" }} />
+              </button>
             </div>
           </div>
         </div>
