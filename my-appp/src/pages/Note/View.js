@@ -71,7 +71,6 @@ function View() {
             <label></label>
           </div>
           <div>
-            <Tag tagFrom={"view"} tagList={tagList} />
             <Link to={"../edit/" + id}>
               <button type="button" class="note-tool" style={{ width: "60px" }}>
                 <EditIcon />

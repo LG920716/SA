@@ -34,14 +34,18 @@ function Create() {
             body={body}
             setBody={setBody}
           />
-          <button
-            class="btn btn-primary"
-            onClick={createNote}
-            style={{ position: "absolute", marginTop: "3.5rem" }}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "1rem",
+            }}
           >
-            新增
-          </button>
-          <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
+            <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
+            <button class="btn btn-primary" onClick={createNote}>
+              新增
+            </button>
+          </div>
         </div>
       </div>
     </div>
