@@ -37,7 +37,7 @@ export default function Calendars({ isAuth }) {
   const handleSave = async () => {
     setModalStatus(false);
     if (!eventInput) {
-      return alert("請輸入title");
+      return alert("請輸入標題");
     }
     try {
       await addDoc(eventsCollectionRef, {

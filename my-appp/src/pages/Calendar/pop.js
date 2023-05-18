@@ -67,7 +67,7 @@ function MyVerticallyCenteredModal({
               <br></br>
             </div>
             <div className="form-group">
-              <label>顯示顏色</label>
+              <label>標籤顏色</label>
               <br></br>
               <select
                 className="form-control"
@@ -76,12 +76,12 @@ function MyVerticallyCenteredModal({
                 onChange={(e) => setbackgroundColor(e.target.value)}
               >
                 <option value="red">請選擇</option>
-                <option value="#">藍色</option>
-                <option value="rgba(255, 0, 0, 0.5)">橘色</option>
+                <option value="rgba(29, 131, 220, 0.8)">藍色</option>
+                <option value="rgba(249, 105, 14, 1)">橘色</option>
                 <option value="rgba(128, 0, 255, 0.5)">紫色</option>
-                <option value="rgba(255, 165, 0, 0.5)">黃色</option>
-                <option value="rgba(128, 128, 128, 0.5)">灰色</option>
-                <option value="rgba(165, 42, 42, 0.5)">棕色</option>
+                <option value="rgba(38, 166, 91, 1)">綠色</option>
+                <option value="rgba(152, 152, 152, 1)">灰色</option>
+                <option value="rgba(167, 101, 0, 1)">棕色</option>
               </select>
 
               <br></br>
@@ -123,19 +123,19 @@ function MyVerticallyCenteredModal({
               <br></br>
             </div>
             <div className="form-group">
-              <label>顯示顏色</label>
+              <label>標籤顏色</label>
               <select
                 className="form-control"
                 name="the_select"
                 onChange={(e) => setbackgroundColor(e.target.value)}
               >
                 <option value="red">請選擇</option>
-                <option value="rgba(0, 128, 255, 0.5)">藍色</option>
-                <option value="rgba(255, 0, 0, 0.5)">橘色</option>
+                <option value="rgba(29, 131, 220, 0.8)">藍色</option>
+                <option value="rgba(249, 105, 14, 1)">橘色</option>
                 <option value="rgba(128, 0, 255, 0.5)">紫色</option>
-                <option value="rgba(255, 165, 0, 0.5)">黃色</option>
-                <option value="rgba(128, 128, 128, 0.5)">灰色</option>
-                <option value="rgba(165, 42, 42, 0.5)">棕色</option>
+                <option value="rgba(38, 166, 91, 1)">綠色</option>
+                <option value="rgba(152, 152, 152, 1)">灰色</option>
+                <option value="rgba(167, 101, 0, 1)">棕色</option>
               </select>
               <br></br>
             </div>

@@ -96,3 +96,11 @@
   width: 6.25rem !important;
   text-align: center !important;
 }
+.rbc-agenda-date-cell,
+.rbc-agenda-time-cell {
+  background-color: #fff;
+}
+.rbc-agenda-event-cell {
+  color: white;
+  font-weight: 900;
+}
