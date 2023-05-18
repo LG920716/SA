@@ -185,42 +185,44 @@ export default function Calendars({ isAuth }) {
           </div>
         </div>
         <br></br>
-        <Calendar
-          views={["day", "week", "month", "agenda"]}
-          selectable
-          locale="zh"
-          localizer={localizer}
-          defaultDate={new Date()}
-          defaultView="month"
-          events={eventsData}
-          style={{ height: "100%" }}
-          eventPropGetter={(event) => ({
-            style: {
-              backgroundColor: event.backgroundColor,
-            },
-          })}
-          onSelectEvent={hanldeOnSelectEvent}
-          onSelectSlot={handleSlotSelectEvent}
-        />
-        <MyVerticallyCenteredModal
-          modalStatus={modalStatus}
-          handleClose={handleClose}
-          startDate={startDate}
-          endDate={endDate}
-          eventInput={eventInput}
-          setEventInput={setEventInput}
-          handleSave={handleSave}
-          delStatus={delStatus}
-          handleDelete={() => {
-            deletehandle(eventId);
-          }}
-          eventId={eventId}
-          handleEdit={handleEdit}
-          setEndDate={setEndDate}
-          setStartDate={setStartDate}
-          backgroundColor={backgroundColor}
-          setbackgroundColor={setbackgroundColor}
-        />
+        <div className="CalendarContainer reveal-effect">
+          <Calendar
+            views={["day", "week", "month", "agenda"]}
+            selectable
+            locale="zh"
+            localizer={localizer}
+            defaultDate={new Date()}
+            defaultView="month"
+            events={eventsData}
+            style={{ height: "100%" }}
+            eventPropGetter={(event) => ({
+              style: {
+                backgroundColor: event.backgroundColor,
+              },
+            })}
+            onSelectEvent={hanldeOnSelectEvent}
+            onSelectSlot={handleSlotSelectEvent}
+          />
+          <MyVerticallyCenteredModal
+            modalStatus={modalStatus}
+            handleClose={handleClose}
+            startDate={startDate}
+            endDate={endDate}
+            eventInput={eventInput}
+            setEventInput={setEventInput}
+            handleSave={handleSave}
+            delStatus={delStatus}
+            handleDelete={() => {
+              deletehandle(eventId);
+            }}
+            eventId={eventId}
+            handleEdit={handleEdit}
+            setEndDate={setEndDate}
+            setStartDate={setStartDate}
+            backgroundColor={backgroundColor}
+            setbackgroundColor={setbackgroundColor}
+          />
+        </div>
       </div>
     </center>
   );

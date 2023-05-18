@@ -11,8 +11,11 @@
 }
 .btn.btn.btn-primary1 {
   background-color: #0c6dfd;
+  border-radius: 10px;
+  font-weight: 900;
   color: white;
   font-size: 16px;
+  height: 2.6rem;
 }
 .btn.btn.btn-primary1:hover {
   background-color: #0957cd;

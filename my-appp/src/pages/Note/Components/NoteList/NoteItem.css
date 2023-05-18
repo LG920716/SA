@@ -20,7 +20,21 @@
   width: 98%;
   height: 98%;
   margin: auto;
+  opacity: 0;
+  animation: revealCard 0.7s ease-in-out forwards;
 }
+
+@keyframes revealCard {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .note-item-tool {
   width: 100%;
   display: flex;

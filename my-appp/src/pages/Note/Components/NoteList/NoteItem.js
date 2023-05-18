@@ -6,8 +6,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import "./NoteItem.css";
 import Swal from "sweetalert2";
+import React, { useEffect } from "react";
 
 function NoteItem({ title, body, id, noteList, setNoteList }) {
+  useEffect(() => {
+    // Add the 'reveal' class to the card after the component mounts
+    const card = document.getElementById(id);
+    card.classList.add("reveal");
+    return () => {
+      // Remove the 'reveal' class when the component unmounts
+      card.classList.remove("reveal");
+    };
+  }, [id]);
+
   const deleteNote = (id, email) => {
     Swal.fire({
       title: "確定刪除?",
@@ -37,7 +48,12 @@ function NoteItem({ title, body, id, noteList, setNoteList }) {
   };
 
   return (
-    <div key={id} className="card" style={{ borderRadius: "20px", border: 0 }}>
+    <div
+      key={id}
+      id={id}
+      className="card"
+      style={{ borderRadius: "20px", border: 0 }}
+    >
       <div className="form-group">
         <input
           className="form-control"

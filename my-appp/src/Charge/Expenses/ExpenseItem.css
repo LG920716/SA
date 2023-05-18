@@ -5,6 +5,14 @@
   padding: 0.5rem;
   margin: 1rem 0;
   background-color: #ffffff;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+
+.expense-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 .expense-item__description {
   display: flex;

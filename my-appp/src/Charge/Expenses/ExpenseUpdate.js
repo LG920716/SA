@@ -28,7 +28,7 @@ export default function ExpenseUpdate(props) {
       amount: +EnterAmount,
       date: EnterDate,
       projectName: EnterPropject,
-      updated_at: new Date()
+      updated_at: new Date(),
     });
 
     props.onStopEditing();
@@ -45,7 +45,7 @@ export default function ExpenseUpdate(props) {
       <form onSubmit={SubmitHandlar}>
         <div className="update-expense__controls">
           <div className="update-expense__control">
-            <label>Name</label>
+            <label>名稱</label>
             <input
               type="text"
               value={EnterName}
@@ -57,7 +57,7 @@ export default function ExpenseUpdate(props) {
         </div>
         <div className="update-expense__controls">
           <div className="update-expense__control">
-            <label>Budget</label>
+            <label>預算</label>
             <input
               type="number"
               min="1"
@@ -71,20 +71,20 @@ export default function ExpenseUpdate(props) {
         </div>
         <div className="update-expense__controls">
           <div className="update-expense__control">
-            <label>Date</label>
+            <label>日期</label>
             <input
               type="date"
               value={formattedDate}
-          onChange={(event) => {
-            setFormattedDate(event.target.value);
-            setEnterDate(new Date(event.target.value));
-          }}
+              onChange={(event) => {
+                setFormattedDate(event.target.value);
+                setEnterDate(new Date(event.target.value));
+              }}
             />
           </div>
         </div>
         <div className="update-expense__controls">
           <div className="update-expense__control">
-            <label>project</label>
+            <label>專案</label>
             <input
               type="text"
               value={EnterPropject}
@@ -101,10 +101,12 @@ export default function ExpenseUpdate(props) {
           </div>
         </div>
         <div className="update-expense__actions">
-          <button type="button" onClick={props.onStopEditing}>
-            Cencel
+          <button className="canel" type="button" onClick={props.onStopEditing}>
+            取消
           </button>
-          <button type="submit">update expense</button>
+          <button className="confirm" type="submit">
+            更新支出
+          </button>
         </div>
       </form>
     </Card>
