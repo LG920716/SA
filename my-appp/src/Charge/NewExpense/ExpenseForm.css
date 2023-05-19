@@ -24,11 +24,21 @@
 .new-expense__actions {
   text-align: center;
 }
-.new-expense__actions-button {
-  padding: 0.8rem;
-}
 .sumbit-button {
   padding: 0.8rem;
+  background-color: #0c6efd !important;
+  color: white !important;
+}
+.sumbit-button:hover {
+  background-color: #0958cf !important;
+}
+.cancel-button {
+  padding: 0.8rem;
+  background-color: transparent !important;
+  color: #0c6efd !important;
+}
+.cancel-button:hover {
+  background-color: rgb(224, 224, 224) !important;
 }
 .form2 {
   display: flex;

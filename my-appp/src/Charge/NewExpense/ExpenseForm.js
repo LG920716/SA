@@ -28,7 +28,7 @@ export default function ExpenseForm(props) {
     <form onSubmit={SubmitHandlar} className="form2">
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Title</label>
+          <label>標題</label>
           <input
             type="text"
             value={EnterTitle}
@@ -40,7 +40,7 @@ export default function ExpenseForm(props) {
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Amount</label>
+          <label>金額</label>
           <input
             type="number"
             min="1"
@@ -54,7 +54,7 @@ export default function ExpenseForm(props) {
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Date</label>
+          <label>日期</label>
           <input
             type="date"
             value={EnterDate}
@@ -66,7 +66,7 @@ export default function ExpenseForm(props) {
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>project</label>
+          <label>專案</label>
           <input
             type="text"
             list="project-list"
@@ -84,7 +84,7 @@ export default function ExpenseForm(props) {
 
       <div className="new-expense__actions" style={{ display: "Flex" }}>
         <button
-          className="new-expense__actions-button"
+          className="cancel-button"
           type="button"
           style={{ marginRight: "1rem" }}
           onClick={props.onStopEditing}

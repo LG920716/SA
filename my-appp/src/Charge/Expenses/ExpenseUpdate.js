@@ -57,7 +57,7 @@ export default function ExpenseUpdate(props) {
         </div>
         <div className="update-expense__controls">
           <div className="update-expense__control">
-            <label>預算</label>
+            <label>支出</label>
             <input
               type="number"
               min="1"

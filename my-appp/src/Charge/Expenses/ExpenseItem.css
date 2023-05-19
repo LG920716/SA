@@ -12,6 +12,7 @@
 
 .expense-item.revealed {
   opacity: 1;
+
   transform: translateY(0);
 }
 .expense-item__description {
@@ -33,6 +34,7 @@
   color: rgb(0, 0, 0);
   border-radius: 5px 0px 0px 5px;
   margin-right: 0rem;
+  z-index: 99;
 }
 .expense-item__description .delete-button {
   background-color: rgb(255, 255, 255);
