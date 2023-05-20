@@ -48,7 +48,9 @@
   width: 20rem;
   max-width: 100%;
 }
-
+.update-expense__control {
+  width: 100%;
+}
 .update-expense__actions {
   text-align: right;
 }

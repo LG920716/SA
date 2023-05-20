@@ -84,22 +84,25 @@ export default function ExpenseUpdate(props) {
         </div>
         <div className="update-expense__controls">
           <div className="update-expense__control">
-            <label>專案</label>
-            <input
-              type="text"
+            <label>活動</label>
+
+            <select
+              className="form-select"
               value={EnterPropject}
-              list="expense-list"
               onChange={(event) => {
                 setEnterProject(event.target.value);
               }}
-            />
-            <datalist id="expense-list">
+            >
+              <option value="">選擇活動</option>
               {props.projectItems.map((doc) => (
-                <option value={doc.name} key={doc.id} />
+                <option value={doc.name} key={doc.id}>
+                  {doc.name}
+                </option>
               ))}
-            </datalist>
+            </select>
           </div>
         </div>
+
         <div className="update-expense__actions">
           <button className="canel" type="button" onClick={props.onStopEditing}>
             取消

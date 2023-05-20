@@ -1,8 +1,6 @@
 .chart-budgetBar {
   height: 1rem;
   width: 50rem;
-  position: absolute;
-  top: 50%;
   display: flex;
   align-items: center;
 }

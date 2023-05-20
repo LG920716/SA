@@ -1,0 +1,11 @@
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  margin-bottom: 0.5rem;
+}
+.modal-content {
+  width: 80%;
+  left: 50%;
+  transform: translate(-50%);
+}
