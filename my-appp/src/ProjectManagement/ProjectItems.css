@@ -52,4 +52,9 @@ li button:active {
 .css-ahj2mt-MuiTypography-root {
   font-weight: 500 !important;
   font-size: 25px !important;
+  padding: 0.6rem;
+  border-radius: 12px;
+}
+.css-1elwnq4-MuiPaper-root-MuiAccordion-root.Mui-expanded {
+  margin: 0px !important;
 }
