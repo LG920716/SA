@@ -67,7 +67,11 @@ function Edit() {
             }}
           >
             <Tag tagList={tagList} setTagList={setTagList} tagFrom={"edit"} />
-            <button class="btn btn-primary" onClick={updateEditNote}>
+            <button
+              class="btn btn-primary"
+              onClick={updateEditNote}
+              style={{ fontWeight: "900" }}
+            >
               修改
             </button>
           </div>

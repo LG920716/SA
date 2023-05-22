@@ -8,7 +8,7 @@ import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./Calendar.css";
-import AddIcon from "@mui/icons-material/Add";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -178,7 +178,7 @@ export default function Calendars({ isAuth }) {
                   handleSlotSelectEvent({ start: today, end: tomorrow })
                 }
               >
-                <AddIcon style={{ marginTop: "-2px", marginLeft: "-5px" }} />
+                <CalendarMonthIcon className="addcal" />
                 新增行程
               </button>
             </div>

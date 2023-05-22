@@ -1,5 +1,7 @@
 import { auth } from "../../firebase-config";
 import { signOut } from "firebase/auth";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { ForkRight } from "@mui/icons-material";
 
 function Logout({ setIsAuth }) {
   const signUserOut = () => {
@@ -14,7 +16,14 @@ function Logout({ setIsAuth }) {
       });
   };
 
-  return <div onClick={signUserOut}>登出</div>;
+  return (
+    <div onClick={signUserOut} style={{}}>
+      <LogoutIcon
+        style={{ marginBottom: "1px", marginRight: "6px", fontWeight: "500" }}
+      />
+      登出
+    </div>
+  );
 }
 
 export default Logout;

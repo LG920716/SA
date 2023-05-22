@@ -21,7 +21,7 @@
   cursor: pointer;
   font-weight: bold;
   color: white;
-  border-radius: 12px;
+  border-radius: 0.6rem;
   margin-right: 1rem;
 }
 
@@ -58,6 +58,7 @@
   background-color: transparent;
   border: 0;
   color: #0c6efd;
+  margin-right: 5px;
 }
 
 .update-expense button.canel:hover {

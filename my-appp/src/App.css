@@ -53,27 +53,31 @@
 
 .icon {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  width: 9rem;
 }
 
 .logout {
   margin-left: 0.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-logout {
-  background-color: #0c6efd;
+  background-color: transparent;
+  color: #0c6efd;
   height: 1.875rem;
-  border-radius: 5px;
-  width: 3.75rem;
+  width: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
   text-decoration: none;
+  font-weight: 500;
 }
 .nav-logout:hover {
-  color: white;
-  background-color: #0659d6;
+  color: #0b51b8;
+  transition: 0.1s;
 }
 .navbar-expand-sm {
   border-bottom: 0;
