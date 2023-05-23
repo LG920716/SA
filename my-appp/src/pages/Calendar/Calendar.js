@@ -8,7 +8,6 @@ import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./Calendar.css";
-import AddIcon from "@mui/icons-material/Add";
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -34,31 +33,35 @@ export default function Calendars({ isAuth }) {
       navigate("/login");
     }
   }, []);
+
   const handleSave = async () => {
     setModalStatus(false);
     if (!eventInput) {
-      return alert("請輸入標題");
+      return alert("請輸入活動名稱");
+    }
+    if (startDate >= endDate) {
+      return alert("開始時間必須早於結束時間");
     }
     try {
-      await addDoc(eventsCollectionRef, {
+      const newEventRef = await addDoc(eventsCollectionRef, {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor || "rgba(29, 131, 220, 0.8)", 
       });
-      setEventsData([
-        ...eventsData,
-        {
-          start: startDate,
-          end: endDate,
-          title: eventInput,
-          backgroundColor: backgroundColor,
-        },
-      ]);
+      const newEvent = {
+        start: startDate,
+        end: endDate,
+        title: eventInput,
+        backgroundColor: backgroundColor || "rgba(29, 131, 220, 0.8)", 
+        id: newEventRef.id,
+      };
+      setEventsData((prevData) => [...prevData, newEvent]);
     } catch (err) {
       console.error(err);
     }
   };
+  
   const getEvents = async () => {
     const data = await getDocs(eventsCollectionRef);
     console.log(data);
@@ -79,13 +82,16 @@ export default function Calendars({ isAuth }) {
   console.log("endDate", endDate);
   console.log(endDate > startDate);
   console.log("backgroundColor", backgroundColor);
+
   useEffect(() => {
     getEvents();
   }, []);
+
   const handleClose = () => {
     setModalStatus(false);
     setDelStatus(false);
   };
+
   const handleSlotSelectEvent = (slotInfo) => {
     setStartDate(slotInfo.start);
     setEndDate(slotInfo.end);
@@ -93,6 +99,7 @@ export default function Calendars({ isAuth }) {
     setModalStatus(true);
     setEventInput("");
   };
+
   const hanldeOnSelectEvent = (e) => {
     setDelStatus(true);
     setStartDate(e.start);
@@ -102,17 +109,7 @@ export default function Calendars({ isAuth }) {
     setEventId(e.id);
     setModalStatus(true);
   };
-  // const handleDelete = async () => {
-  //   setModalStatus(false);
-  //   setDelStatus(false);
-  //   const eventDocRef = doc(db, "events", eventId);
-  //   try {
-  //     await deleteDoc(eventDocRef);
-  //     getEvents();
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+
   const deletehandle = (id) => {
     Swal.fire({
       title: "確定刪除?",
@@ -127,23 +124,28 @@ export default function Calendars({ isAuth }) {
       if (result.isConfirmed) {
         setModalStatus(false);
         setDelStatus(false);
-        const del = async () => {
-          await deleteDoc(doc(db, "events", id));
-        };
-        del();
-        Swal.fire({
-          showConfirmButton: false,
-          title: "刪除成功",
-          text: `已刪除行程`,
-          icon: "success",
-          timer: 1100,
+        deleteDoc(doc(db, "events", id)).then(() => {
+          setEventsData((prevData) =>
+            prevData.filter((event) => event.id !== id)
+          );
+          Swal.fire({
+            showConfirmButton: false,
+            title: "刪除成功",
+            text: `已刪除行程`,
+            icon: "success",
+            timer: 1100,
+          });
         });
       }
     });
   };
+  
   const handleEdit = async () => {
     setModalStatus(false);
     setDelStatus(false);
+    if (startDate >= endDate) {
+      return alert("開始時間必須早於結束時間");
+    }
     const eventDocRef = doc(db, "events", eventId);
     try {
       await updateDoc(eventDocRef, {
@@ -152,7 +154,20 @@ export default function Calendars({ isAuth }) {
         title: eventInput,
         backgroundColor: backgroundColor,
       });
-      getEvents();
+      setEventsData((prevData) =>
+        prevData.map((event) => {
+          if (event.id === eventId) {
+            return {
+              ...event,
+              start: startDate,
+              end: endDate,
+              title: eventInput,
+              backgroundColor: backgroundColor,
+            };
+          }
+          return event;
+        })
+      );
     } catch (err) {
       console.error(err);
     }
@@ -164,65 +179,53 @@ export default function Calendars({ isAuth }) {
         <div className="py-4 border-bottom">
           <div className="form-title text-center">
             <h1>行事曆</h1>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                right: "0",
-              }}
-            >
-              <button
-                className="btn btn-primary1"
-                type="button"
-                onClick={() =>
-                  handleSlotSelectEvent({ start: today, end: tomorrow })
-                }
-              >
-                <AddIcon style={{ marginTop: "-2px", marginLeft: "-5px" }} />
-                新增行程
-              </button>
+            <div style={{display:"flex",justifyContent:"flex-end" ,right:"0"}}>
+            <input
+            className="btn btn-primary1"
+              type="button"
+              value="新增活動"
+              onClick={() =>
+                handleSlotSelectEvent({ start: today, end: tomorrow })
+              }
+            />
             </div>
           </div>
         </div>
         <br></br>
-        <div className="CalendarContainer reveal-effect">
-          <Calendar
-            views={["day", "week", "month", "agenda"]}
-            selectable
-            locale="zh"
-            localizer={localizer}
-            defaultDate={new Date()}
-            defaultView="month"
-            events={eventsData}
-            style={{ height: "100%" }}
-            eventPropGetter={(event) => ({
-              style: {
-                backgroundColor: event.backgroundColor,
-              },
-            })}
-            onSelectEvent={hanldeOnSelectEvent}
-            onSelectSlot={handleSlotSelectEvent}
-          />
-          <MyVerticallyCenteredModal
-            modalStatus={modalStatus}
-            handleClose={handleClose}
-            startDate={startDate}
-            endDate={endDate}
-            eventInput={eventInput}
-            setEventInput={setEventInput}
-            handleSave={handleSave}
-            delStatus={delStatus}
-            handleDelete={() => {
-              deletehandle(eventId);
-            }}
-            eventId={eventId}
-            handleEdit={handleEdit}
-            setEndDate={setEndDate}
-            setStartDate={setStartDate}
-            backgroundColor={backgroundColor}
-            setbackgroundColor={setbackgroundColor}
-          />
-        </div>
+        <Calendar
+          views={["day", "week", "month", "agenda"]}
+          selectable
+          locale="zh"
+          localizer={localizer}
+          defaultDate={new Date()}
+          defaultView="month"
+          events={eventsData}
+          style={{ height: "100%" }}
+          eventPropGetter={(event) => ({
+            style: {
+              backgroundColor: event.backgroundColor,
+            },
+          })}
+          onSelectEvent={hanldeOnSelectEvent}
+          onSelectSlot={handleSlotSelectEvent}
+        />
+        <MyVerticallyCenteredModal
+          modalStatus={modalStatus}
+          handleClose={handleClose}
+          startDate={startDate}
+          endDate={endDate}
+          eventInput={eventInput}
+          setEventInput={setEventInput}
+          handleSave={handleSave}
+          delStatus={delStatus}
+          handleDelete={() => {deletehandle(eventId)}}
+          eventId={eventId}
+          handleEdit={handleEdit}
+          setEndDate={setEndDate}
+          setStartDate={setStartDate}
+          backgroundColor={backgroundColor}
+          setbackgroundColor={setbackgroundColor}
+        />
       </div>
     </center>
   );
