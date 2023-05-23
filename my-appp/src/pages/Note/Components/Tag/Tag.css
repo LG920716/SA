@@ -76,7 +76,7 @@
   background: rgb(219, 226, 250);
   /* background: rgb(249, 239, 239); */
   margin-top: -7.8125rem;
-  margin-left: 23.125rem;
+  left: 31%;
   padding: 10px;
   position: absolute;
   border-radius: 10px;
@@ -98,4 +98,15 @@
 .choose {
   display: flex;
   justify-content: "space-evenly";
+}
+.color-custom {
+  position: absolute;
+  left: 33%;
+}
+.btn.btn-primary {
+  max-height: 48px;
+}
+li.tag {
+  margin-top: 5px;
+  margin-bottom: -1px;
 }

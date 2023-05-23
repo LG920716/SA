@@ -31,7 +31,7 @@ const NewProject = (props) => {
     <div className="new-project">
       {!isEditing && (
         <button onClick={isEditingHandler} className="bt-right">
-          <DashboardCustomizeIcon /> &nbsp; 新增專案
+          <DashboardCustomizeIcon /> &nbsp; 新增活動
         </button>
       )}
       {isEditing && (

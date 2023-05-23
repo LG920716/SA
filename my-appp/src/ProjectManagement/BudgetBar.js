@@ -15,7 +15,7 @@ export default function BudgetBar(props) {
   }
   if (Math.round((filterData[0].value / filterData[0].budget) * 100) > 100) {
     label = ">100%";
-    style = { backgroundColor: "#f00" };
+    style = { backgroundColor: "#F83A3A" };
   }
 
   return (

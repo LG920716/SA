@@ -136,44 +136,40 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
             ))}
           </ul>
 
-          <div>
-            <input
-              type="text"
-              value={search}
-              onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
-            />
-            <ul
-              class="list-group"
-              style={{ position: "absolute", zIndex: "20" }}
-            >
-              {searchDbTag
-                .filter((tags, i, arr) => {
-                  return (
-                    search &&
-                    tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
-                    tags.tagName !== search
-                  );
-                })
-                .map((tags) => (
-                  <li
-                    class="list-group-item"
-                    onClick={() => {
-                      setColor(tags.color);
-                      setSearch(tags.tagName);
-                    }}
-                  >
-                    {tags.tagName}
-                  </li>
-                ))}
-            </ul>
-          </div>
+          <input
+            type="text"
+            value={search}
+            onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
+          />
+          <ul class="list-group" style={{ position: "absolute", zIndex: "20" }}>
+            {searchDbTag
+              .filter((tags, i, arr) => {
+                return (
+                  search &&
+                  tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
+                  tags.tagName !== search
+                );
+              })
+              .map((tags) => (
+                <li
+                  class="list-group-item"
+                  onClick={() => {
+                    setColor(tags.color);
+                    setSearch(tags.tagName);
+                  }}
+                >
+                  {tags.tagName}
+                </li>
+              ))}
+          </ul>
         </div>
 
         {tagFrom !== "view" && (
           <button
             class="btn btn-primary"
+            style={{ marginLeft: "5px" }}
             onClick={() => setColorOpen(!colorOpen)}
           >
             <FormatColorFillIcon />
@@ -181,15 +177,17 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
         )}
         {colorOpen && (
           <div className="color-picker-tab">
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              style={{ width: "250px" }}
-              centered
-            >
-              <Tab label={<ColorLensIcon />} value="1" />
-              <Tab label={<AccessTimeFilledIcon />} value="2" />
-            </Tabs>
+            <div>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                style={{ width: "250px" }}
+                centered
+              >
+                <Tab label={<ColorLensIcon />} value="1" />
+                <Tab label={<AccessTimeFilledIcon />} value="2" />
+              </Tabs>
+            </div>
 
             {value === "1" && (
               <div
