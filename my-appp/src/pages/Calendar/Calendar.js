@@ -8,6 +8,10 @@ import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./Calendar.css";
+<<<<<<< HEAD
+=======
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+>>>>>>> 8e94f0afed8f0310d9ea2c0af8c2b1cadd1d99b0
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -179,6 +183,7 @@ export default function Calendars({ isAuth }) {
         <div className="py-4 border-bottom">
           <div className="form-title text-center">
             <h1>行事曆</h1>
+<<<<<<< HEAD
             <div style={{display:"flex",justifyContent:"flex-end" ,right:"0"}}>
             <input
             className="btn btn-primary1"
@@ -188,6 +193,25 @@ export default function Calendars({ isAuth }) {
                 handleSlotSelectEvent({ start: today, end: tomorrow })
               }
             />
+=======
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                right: "0",
+              }}
+            >
+              <button
+                className="btn btn-primary1"
+                type="button"
+                onClick={() =>
+                  handleSlotSelectEvent({ start: today, end: tomorrow })
+                }
+              >
+                <CalendarMonthIcon className="addcal" />
+                新增行程
+              </button>
+>>>>>>> 8e94f0afed8f0310d9ea2c0af8c2b1cadd1d99b0
             </div>
           </div>
         </div>

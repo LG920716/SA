@@ -9,6 +9,11 @@
   margin: auto;
   justify-content: center;
 }
+.addicon {
+  margin-top: -3px;
+  margin-left: -2px;
+  margin-right: 3px;
+}
 .btn.btn.btn-primary1 {
   background-color: #0c6dfd;
   border-radius: 10px;

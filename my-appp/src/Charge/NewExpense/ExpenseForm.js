@@ -66,7 +66,7 @@ export default function ExpenseForm(props) {
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>專案</label>
+          <label>活動</label>
           <input
             type="text"
             list="project-list"
@@ -82,7 +82,7 @@ export default function ExpenseForm(props) {
         </div>
       </div>
 
-      <div className="new-expense__actions" style={{ display: "Flex" }}>
+      <div className="new-expense__actions">
         <button
           className="cancel-button"
           type="button"

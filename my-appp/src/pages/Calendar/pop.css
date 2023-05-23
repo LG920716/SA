@@ -9,3 +9,18 @@
   left: 50%;
   transform: translate(-50%);
 }
+.delete-cal {
+  font-style: normal;
+  font-weight: 900;
+  background-color: rgb(255, 255, 255);
+  color: #0c6efd;
+  border: 0;
+  height: 38px;
+}
+.delete-cal:hover {
+  background-color: rgb(203, 203, 203);
+  color: #0c6efd;
+}
+.btn-primary {
+  border-radius: 0.6rem;
+}

@@ -80,36 +80,30 @@ function MyVerticallyCenteredModal({
           <div className="form-group">
             <div className="form-group">
               <label>起始日期</label>
-              <br></br>
               <input
                 className="form-control"
                 type="datetime-local"
                 defaultValue={localStartDate}
                 onChange={(e) => setStartDate(new Date(e.target.value))}
               />
-              <label></label>
             </div>
             <div className="form-group">
               <label>結束日期</label>
-              <br></br>
               <input
                 type="datetime-local"
                 className="form-control"
                 defaultValue={localEndDate}
                 onChange={(e) => setEndDate(new Date(e.target.value))}
               />
-              <label></label>
             </div>
             <div className="form-group">
               <label>標題</label>
-              <br></br>
               <input
                 value={eventInput}
                 className="form-control"
                 placeholder="標題..."
                 onChange={(e) => setEventInput(e.target.value)}
               />
-              <br></br>
             </div>
             <div className="form-group">
               <label>標籤顏色</label>
@@ -126,7 +120,6 @@ function MyVerticallyCenteredModal({
                 <option value="rgba(152, 152, 152, 1)">灰色</option>
                 <option value="rgba(167, 101, 0, 1)">棕色</option>
               </select>
-              <br></br>
             </div>
           </div>
         )}
@@ -134,14 +127,22 @@ function MyVerticallyCenteredModal({
       <Modal.Footer style={{ border: "none" }}>
         {delStatus ? (
           <>
-            <Button onClick={handleEdit}>修改</Button>
-            <Button onClick={handleDelete}>
-              <i className="bi bi-trash3"></i>
+            <Button className="delete-cal" onClick={handleDelete}>
+              刪除
+            </Button>
+            <Button style={{ fontWeight: "900" }} onClick={handleEdit}>
+              修改
             </Button>
           </>
         ) : (
+<<<<<<< HEAD
           <><Button onClick={handleSave}>新增</Button>
           </>
+=======
+          <Button style={{ fontWeight: "900" }} onClick={handleSave}>
+            新增
+          </Button>
+>>>>>>> 8e94f0afed8f0310d9ea2c0af8c2b1cadd1d99b0
         )}
       </Modal.Footer>
     </Modal>

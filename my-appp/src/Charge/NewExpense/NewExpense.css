@@ -3,11 +3,11 @@
   padding: 1rem;
   margin: auto;
   height: 3rem;
-  width: 95%;
+  width: 92%;
   border-radius: 12px;
   text-align: center;
   display: flex;
-  justify-content: start;
+  justify-content: end;
   align-items: center;
 }
 
