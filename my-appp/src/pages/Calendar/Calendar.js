@@ -8,10 +8,7 @@ import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./Calendar.css";
-<<<<<<< HEAD
-=======
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
->>>>>>> 8e94f0afed8f0310d9ea2c0af8c2b1cadd1d99b0
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -19,7 +16,8 @@ const localizer = momentLocalizer(moment);
 export default function Calendars({ isAuth }) {
   const [eventsData, setEventsData] = useState([]);
   const [modalStatus, setModalStatus] = useState(false);
-  const [eventInput, setEventInput] = useState("");
+  const [delStatus, setDelStatus] = useState(false);
+  const [eventId, setEventId] = useState("");
 
   const today = new Date();
   const tomorrow = new Date();
@@ -27,8 +25,7 @@ export default function Calendars({ isAuth }) {
 
   const [startDate, setStartDate] = useState(new Date(today));
   const [endDate, setEndDate] = useState(new Date(tomorrow));
-  const [eventId, setEventId] = useState("");
-  const [delStatus, setDelStatus] = useState(false);
+  const [eventInput, setEventInput] = useState("");
   const [backgroundColor, setbackgroundColor] = useState("red");
 
   let navigate = useNavigate();
@@ -51,13 +48,13 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: backgroundColor || "rgba(29, 131, 220, 0.8)", 
+        backgroundColor: backgroundColor || "rgba(29, 131, 220, 0.8",
       });
       const newEvent = {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: backgroundColor || "rgba(29, 131, 220, 0.8)", 
+        backgroundColor: backgroundColor || "rgba(29, 131, 220, 0.8",
         id: newEventRef.id,
       };
       setEventsData((prevData) => [...prevData, newEvent]);
@@ -65,7 +62,7 @@ export default function Calendars({ isAuth }) {
       console.error(err);
     }
   };
-  
+
   const getEvents = async () => {
     const data = await getDocs(eventsCollectionRef);
     console.log(data);
@@ -117,7 +114,7 @@ export default function Calendars({ isAuth }) {
   const deletehandle = (id) => {
     Swal.fire({
       title: "確定刪除?",
-      text: `確定刪除此行程`,
+      text: "確定刪除此行程",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -135,7 +132,7 @@ export default function Calendars({ isAuth }) {
           Swal.fire({
             showConfirmButton: false,
             title: "刪除成功",
-            text: `已刪除行程`,
+            text: "已刪除行程",
             icon: "success",
             timer: 1100,
           });
@@ -143,7 +140,7 @@ export default function Calendars({ isAuth }) {
       }
     });
   };
-  
+
   const handleEdit = async () => {
     setModalStatus(false);
     setDelStatus(false);
@@ -183,17 +180,6 @@ export default function Calendars({ isAuth }) {
         <div className="py-4 border-bottom">
           <div className="form-title text-center">
             <h1>行事曆</h1>
-<<<<<<< HEAD
-            <div style={{display:"flex",justifyContent:"flex-end" ,right:"0"}}>
-            <input
-            className="btn btn-primary1"
-              type="button"
-              value="新增活動"
-              onClick={() =>
-                handleSlotSelectEvent({ start: today, end: tomorrow })
-              }
-            />
-=======
             <div
               style={{
                 display: "flex",
@@ -203,20 +189,25 @@ export default function Calendars({ isAuth }) {
             >
               <button
                 className="btn btn-primary1"
-                type="button"
                 onClick={() =>
                   handleSlotSelectEvent({ start: today, end: tomorrow })
                 }
               >
-                <CalendarMonthIcon className="addcal" />
-                新增行程
+                <CalendarMonthIcon
+                  style={{
+                    marginTop: "-3px",
+                    marginRight: "3px",
+                    marginLeft: "-3px",
+                  }}
+                />
+                新增活動
               </button>
->>>>>>> 8e94f0afed8f0310d9ea2c0af8c2b1cadd1d99b0
             </div>
           </div>
         </div>
         <br></br>
         <Calendar
+          className="CalendarContainer"
           views={["day", "week", "month", "agenda"]}
           selectable
           locale="zh"
@@ -242,7 +233,9 @@ export default function Calendars({ isAuth }) {
           setEventInput={setEventInput}
           handleSave={handleSave}
           delStatus={delStatus}
-          handleDelete={() => {deletehandle(eventId)}}
+          handleDelete={() => {
+            deletehandle(eventId);
+          }}
           eventId={eventId}
           handleEdit={handleEdit}
           setEndDate={setEndDate}

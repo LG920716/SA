@@ -67,7 +67,7 @@ function MyVerticallyCenteredModal({
                 defaultValue={backgroundColor}
                 onChange={(e) => setbackgroundColor(e.target.value)}
               >
-                <option value="rgba(29, 131, 220, 0.8)">藍色</option>
+                <option value="rgba(29, 131, 220, 0.😎">藍色</option>
                 <option value="rgba(249, 105, 14, 1)">橘色</option>
                 <option value="rgba(128, 0, 255, 0.5)">紫色</option>
                 <option value="rgba(38, 166, 91, 1)">綠色</option>
@@ -111,9 +111,9 @@ function MyVerticallyCenteredModal({
                 className="form-control"
                 name="the_select"
                 onChange={(e) => setbackgroundColor(e.target.value)}
-                defaultValue="rgba(29, 131, 220, 0.8)"
+                defaultValue="rgba(29, 131, 220, 0.😎"
               >
-                <option value="rgba(29, 131, 220, 0.8)">藍色</option>
+                <option value="rgba(29, 131, 220, 0.😎">藍色</option>
                 <option value="rgba(249, 105, 14, 1)">橘色</option>
                 <option value="rgba(128, 0, 255, 0.5)">紫色</option>
                 <option value="rgba(38, 166, 91, 1)">綠色</option>
@@ -127,22 +127,15 @@ function MyVerticallyCenteredModal({
       <Modal.Footer style={{ border: "none" }}>
         {delStatus ? (
           <>
-            <Button className="delete-cal" onClick={handleDelete}>
-              刪除
-            </Button>
-            <Button style={{ fontWeight: "900" }} onClick={handleEdit}>
-              修改
+            <Button onClick={handleEdit}>修改</Button>
+            <Button onClick={handleDelete}>
+              <i className="bi bi-trash3"></i>
             </Button>
           </>
         ) : (
-<<<<<<< HEAD
-          <><Button onClick={handleSave}>新增</Button>
+          <>
+            <Button onClick={handleSave}>新增</Button>
           </>
-=======
-          <Button style={{ fontWeight: "900" }} onClick={handleSave}>
-            新增
-          </Button>
->>>>>>> 8e94f0afed8f0310d9ea2c0af8c2b1cadd1d99b0
         )}
       </Modal.Footer>
     </Modal>
