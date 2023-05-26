@@ -265,9 +265,7 @@ export default function Calendars({ isAuth }) {
               >
                 <CalendarMonthIcon
                   style={{
-                    marginTop: "-3px",
-                    marginRight: "3px",
-                    marginLeft: "-3px",
+                    margin: "-3px 3px 0px -3px",
                   }}
                 />
                 新增活動
