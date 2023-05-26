@@ -27,6 +27,9 @@ export default function Calendars({ isAuth }) {
   const [endDate, setEndDate] = useState(new Date(tomorrow));
   const [eventInput, setEventInput] = useState("");
   const [backgroundColor, setbackgroundColor] = useState("red");
+  const [tagList, setTagList] = useState([]);
+
+  const [searchInput, setSearchInput] = useState("");
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -48,13 +51,15 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: backgroundColor || "rgba(29, 131, 220, 0.8",
+        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        tag: tagList ? tagList : [],
       });
       const newEvent = {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: backgroundColor || "rgba(29, 131, 220, 0.8",
+        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        tag: tagList ? tagList : [],
         id: newEventRef.id,
       };
       setEventsData((prevData) => [...prevData, newEvent]);
@@ -62,27 +67,50 @@ export default function Calendars({ isAuth }) {
       console.error(err);
     }
   };
+  
 
   const getEvents = async () => {
-    const data = await getDocs(eventsCollectionRef);
-    console.log(data);
-    setEventsData(
-      data.docs.map((doc) => ({
-        start: doc.data().start.toDate(),
-        end: doc.data().end.toDate(),
-        title: doc.data().title,
-        id: doc.id,
-        backgroundColor: doc.data().backgroundColor,
-      }))
-    );
+    try {
+      const data = await getDocs(eventsCollectionRef);
+      if (data.docs && data.docs.length > 0) {
+        let filteredEvents = data.docs.map((doc) => ({
+          start: doc.data().start.toDate(),
+          end: doc.data().end.toDate(),
+          title: doc.data().title,
+          id: doc.id,
+          backgroundColor: doc.data().backgroundColor,
+          tag: doc.data().tag,
+        }));
+        
+        if (searchInput.trim() !== "") {
+          filteredEvents = filteredEvents.filter(
+            (event) =>
+              event.title.includes(searchInput) ||
+              event.tag.some((tag) => tag.tagName.includes(searchInput))
+          );
+        }
+        
+        setEventsData(filteredEvents);
+      } else {
+        setEventsData([]);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
+  
+  useEffect(() => {
+    getEvents();
+  }, [searchInput]);    
 
   console.log("eventId", eventId);
   console.log("title", eventInput);
   console.log("startDate", startDate);
   console.log("endDate", endDate);
-  console.log(endDate > startDate);
+  console.log("tag", tagList);
   console.log("backgroundColor", backgroundColor);
+  console.log(endDate > startDate);
+  
 
   useEffect(() => {
     getEvents();
@@ -97,16 +125,18 @@ export default function Calendars({ isAuth }) {
     setStartDate(slotInfo.start);
     setEndDate(slotInfo.end);
     setbackgroundColor(slotInfo.backgroundColor);
+    setTagList([]);
     setModalStatus(true);
     setEventInput("");
   };
 
-  const hanldeOnSelectEvent = (e) => {
+  const handleOnSelectEvent = (e) => {
     setDelStatus(true);
     setStartDate(e.start);
     setEndDate(e.end);
     setEventInput(e.title);
     setbackgroundColor(e.backgroundColor);
+    setTagList(e.tag);
     setEventId(e.id);
     setModalStatus(true);
   };
@@ -153,7 +183,8 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: backgroundColor,
+        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        tag: tagList ? tagList : [],
       });
       setEventsData((prevData) =>
         prevData.map((event) => {
@@ -163,7 +194,8 @@ export default function Calendars({ isAuth }) {
               start: startDate,
               end: endDate,
               title: eventInput,
-              backgroundColor: backgroundColor,
+              backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+              tag: tagList ? tagList : [],
             };
           }
           return event;
@@ -173,7 +205,36 @@ export default function Calendars({ isAuth }) {
       console.error(err);
     }
   };
-
+  
+/*
+  const handleEventDrop = async (event) => {
+    const { id, start, end } = event;
+  
+    // 在这里可以调用更新事件的逻辑，例如使用Firebase进行数据更新
+    try {
+      const eventDocRef = doc(db, "events", id);
+      await updateDoc(eventDocRef, {
+        start,
+        end,
+      });
+      setEventsData((prevData) =>
+        prevData.map((ev) => {
+          if (ev.id === id) {
+            return {
+              ...ev,
+              start,
+              end,
+            };
+          }
+          return ev;
+        })
+      );
+      console.log("Event dropped:", event);
+    } catch (error) {
+      console.error(error);
+    }
+  };  
+*/
   return (
     <center className="Calendar">
       <div>
@@ -187,6 +248,15 @@ export default function Calendars({ isAuth }) {
                 right: "0",
               }}
             >
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                  getEvents(); // 執行搜尋功能
+                }}
+                placeholder="以標籤或活動名稱搜尋"
+              />
               <button
                 className="btn btn-primary1"
                 onClick={() =>
@@ -209,7 +279,7 @@ export default function Calendars({ isAuth }) {
         <Calendar
           className="CalendarContainer"
           views={["day", "week", "month", "agenda"]}
-          selectable
+          selectable = {true}
           locale="zh"
           localizer={localizer}
           defaultDate={new Date()}
@@ -221,8 +291,9 @@ export default function Calendars({ isAuth }) {
               backgroundColor: event.backgroundColor,
             },
           })}
-          onSelectEvent={hanldeOnSelectEvent}
+          onSelectEvent={handleOnSelectEvent}
           onSelectSlot={handleSlotSelectEvent}
+          //onEventDrop={handleEventDrop}
         />
         <MyVerticallyCenteredModal
           modalStatus={modalStatus}
@@ -240,10 +311,11 @@ export default function Calendars({ isAuth }) {
           handleEdit={handleEdit}
           setEndDate={setEndDate}
           setStartDate={setStartDate}
-          backgroundColor={backgroundColor}
-          setbackgroundColor={setbackgroundColor}
+          tagList={tagList}
+          setTagList={setTagList}
         />
       </div>
     </center>
   );
 }
+

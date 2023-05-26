@@ -2,6 +2,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment";
 import "./pop.css";
+import Tag from "./Tag";
+
 
 function MyVerticallyCenteredModal({
   modalStatus,
@@ -16,8 +18,8 @@ function MyVerticallyCenteredModal({
   delStatus,
   handleEdit,
   handleDelete,
-  backgroundColor,
-  setbackgroundColor,
+  tagList,
+  setTagList,
 }) {
   const localStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
   const localEndDate = moment(endDate).format("YYYY-MM-DDTHH:mm");
@@ -60,20 +62,8 @@ function MyVerticallyCenteredModal({
               />
             </div>
             <div className="form-group">
-              <label>標籤顏色</label>
-              <select
-                className="form-select"
-                name="the_select"
-                defaultValue={backgroundColor}
-                onChange={(e) => setbackgroundColor(e.target.value)}
-              >
-                <option value="rgba(29, 131, 220, 0.😎">藍色</option>
-                <option value="rgba(249, 105, 14, 1)">橘色</option>
-                <option value="rgba(128, 0, 255, 0.5)">紫色</option>
-                <option value="rgba(38, 166, 91, 1)">綠色</option>
-                <option value="rgba(152, 152, 152, 1)">灰色</option>
-                <option value="rgba(167, 101, 0, 1)">棕色</option>
-              </select>
+              <label>活動標籤</label>
+              <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
             </div>
           </div>
         ) : (
@@ -106,20 +96,8 @@ function MyVerticallyCenteredModal({
               />
             </div>
             <div className="form-group">
-              <label>標籤顏色</label>
-              <select
-                className="form-control"
-                name="the_select"
-                onChange={(e) => setbackgroundColor(e.target.value)}
-                defaultValue="rgba(29, 131, 220, 0.😎"
-              >
-                <option value="rgba(29, 131, 220, 0.😎">藍色</option>
-                <option value="rgba(249, 105, 14, 1)">橘色</option>
-                <option value="rgba(128, 0, 255, 0.5)">紫色</option>
-                <option value="rgba(38, 166, 91, 1)">綠色</option>
-                <option value="rgba(152, 152, 152, 1)">灰色</option>
-                <option value="rgba(167, 101, 0, 1)">棕色</option>
-              </select>
+              <label>活動標籤</label>
+              <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
             </div>
           </div>
         )}
