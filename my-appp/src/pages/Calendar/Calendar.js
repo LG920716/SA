@@ -23,9 +23,9 @@ export default function Calendars({ isAuth }) {
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
 
+  const [eventInput, setEventInput] = useState("");
   const [startDate, setStartDate] = useState(new Date(today));
   const [endDate, setEndDate] = useState(new Date(tomorrow));
-  const [eventInput, setEventInput] = useState("");
   const [backgroundColor, setbackgroundColor] = useState("red");
   const [tagList, setTagList] = useState([]);
 
@@ -67,37 +67,31 @@ export default function Calendars({ isAuth }) {
       console.error(err);
     }
   };
-  
 
   const getEvents = async () => {
     try {
       const data = await getDocs(eventsCollectionRef);
-      if (data.docs && data.docs.length > 0) {
-        let filteredEvents = data.docs.map((doc) => ({
-          start: doc.data().start.toDate(),
-          end: doc.data().end.toDate(),
-          title: doc.data().title,
-          id: doc.id,
-          backgroundColor: doc.data().backgroundColor,
-          tag: doc.data().tag,
-        }));
-        
-        if (searchInput.trim() !== "") {
-          filteredEvents = filteredEvents.filter(
-            (event) =>
-              event.title.includes(searchInput) ||
-              event.tag.some((tag) => tag.tagName.includes(searchInput))
-          );
-        }
-        
-        setEventsData(filteredEvents);
-      } else {
-        setEventsData([]);
+      let filteredEvents = data.docs.map((doc) => ({
+        start: doc.data().start.toDate(),
+        end: doc.data().end.toDate(),
+        title: doc.data().title,
+        id: doc.id,
+        backgroundColor: doc.data().backgroundColor,
+        tag: doc.data().tag,
+      }));
+      
+      if (searchInput.trim() !== "") {
+        filteredEvents = filteredEvents.filter(
+          (event) =>
+            event.title.includes(searchInput) ||
+            event.tag.some((tag) => tag.tagName.includes(searchInput))
+        );
       }
+      setEventsData(filteredEvents.length > 0 ? filteredEvents : []);
     } catch (err) {
       console.error(err);
     }
-  };
+  };  
   
   useEffect(() => {
     getEvents();
@@ -110,11 +104,6 @@ export default function Calendars({ isAuth }) {
   console.log("tag", tagList);
   console.log("backgroundColor", backgroundColor);
   console.log(endDate > startDate);
-  
-
-  useEffect(() => {
-    getEvents();
-  }, []);
 
   const handleClose = () => {
     setModalStatus(false);
@@ -176,6 +165,9 @@ export default function Calendars({ isAuth }) {
     setDelStatus(false);
     if (startDate >= endDate) {
       return alert("開始時間必須早於結束時間");
+    }
+    if (!eventInput) {
+      return alert("請輸入活動名稱");
     }
     const eventDocRef = doc(db, "events", eventId);
     try {
@@ -253,7 +245,7 @@ export default function Calendars({ isAuth }) {
                 value={searchInput}
                 onChange={(e) => {
                   setSearchInput(e.target.value);
-                  getEvents(); // 執行搜尋功能
+                  getEvents(); 
                 }}
                 placeholder="以標籤或活動名稱搜尋"
               />
@@ -265,7 +257,9 @@ export default function Calendars({ isAuth }) {
               >
                 <CalendarMonthIcon
                   style={{
-                    margin: "-3px 3px 0px -3px",
+                    marginTop: "-3px",
+                    marginRight: "3px",
+                    marginLeft: "-3px",
                   }}
                 />
                 新增活動
