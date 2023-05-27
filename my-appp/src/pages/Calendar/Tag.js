@@ -63,23 +63,24 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     const DbcolorList = DbcolorListArray.filter(
       (item, i, arr) => arr.indexOf(item) === i
     );
-
     setColorDbList(DbcolorList);
     setColorTotalList(DbcolorList);
     setColorTagDbCount(getCount(DbcolorListArray));
     setColorTagCount(getCount(colorListArray));
   }, [searchDbTagWait]);
   console.log("!!!", colorDbList);
-  const handleChange = (newValue) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const removeTags = (index) => {
     if (
       tagList.filter((tag) => tag.color === tagList[index].color).length === 1
     ) {
       if (
         (tagFrom === "create" || tagFrom === "edit") &&
-        colorDbList.filter((color) => color === tagList[index].color).length === 0
+        colorDbList.filter((color) => color === tagList[index].color).length ===
+          0
       ) {
         setColorTotalList(
           colorTotalList.filter((color) => color !== tagList[index].color)
@@ -87,7 +88,8 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
         setColor("#0052cc");
       } else if (
         tagFrom === "edit" &&
-        colorTagDbCount[tagList[index].color] === colorTagCount[tagList[index].color]
+        colorTagDbCount[tagList[index].color] ===
+          colorTagCount[tagList[index].color]
       ) {
         console.log("!!!ww", colorTagDbCount[tagList[index].color]);
         console.log("!!!ww123", colorTagCount[tagList[index].color]);
@@ -100,14 +102,15 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
         setColor("#0052cc");
       }
     }
-
     setTagList(tagList.filter((_, tagIntex) => tagIntex !== index));
   };
 
   const addTags = (event) => {
     if (event.target.value !== "") {
       setTagList([{ tagName: event.target.value, color }]);
-      setColorTotalList([color]);
+      if (colorTotalList.filter((colors) => colors === color).length === 0) {
+        setColorTotalList([...colorTotalList, color]);
+      }
       event.target.value = "";
       setSearch("");
     }
@@ -130,45 +133,40 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
               </li>
             ))}
           </ul>
-
-          <div>
-            <input
-              type="text"
-              value={search}
-              onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
-            />
-            <ul
-              class="list-group"
-              style={{ position: "absolute", zIndex: "20" }}
-            >
-              {searchDbTag
-                .filter((tags, i, arr) => {
-                  return (
-                    search &&
-                    tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
-                    tags.tagName !== search
-                  );
-                })
-                .map((tags) => (
-                  <li
-                    class="list-group-item"
-                    onClick={() => {
-                      setColor(tags.color);
-                      setSearch(tags.tagName);
-                    }}
-                  >
-                    {tags.tagName}
-                  </li>
-                ))}
-            </ul>
-          </div>
+          <input
+            type="text"
+            value={search}
+            onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
+          />
+          <ul class="list-group" style={{ position: "absolute", zIndex: "20" }}>
+            {searchDbTag
+              .filter((tags) => {
+                return (
+                  search &&
+                  tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
+                  tags.tagName !== search
+                );
+              })
+              .map((tags) => (
+                <li
+                  class="list-group-item"
+                  onClick={() => {
+                    setColor(tags.color);
+                    setSearch(tags.tagName);
+                  }}
+                >
+                  {tags.tagName}
+                </li>
+              ))}
+          </ul>
         </div>
 
         {tagFrom !== "view" && (
           <button
             class="btn btn-primary"
+            style={{ marginLeft: "5px" }}
             onClick={() => setColorOpen(!colorOpen)}
           >
             <FormatColorFillIcon />
@@ -176,16 +174,17 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
         )}
         {colorOpen && (
           <div className="color-picker-tab">
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              style={{ width: "250px" }}
-              centered
-            >
-              <Tab label={<ColorLensIcon />} value="1" />
-              <Tab label={<AccessTimeFilledIcon />} value="2" />
-            </Tabs>
-
+            <div>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                style={{ width: "250px" }}
+                centered
+              >
+                <Tab label={<ColorLensIcon />} value="1" />
+                <Tab label={<AccessTimeFilledIcon />} value="2" />
+              </Tabs>
+            </div>
             {value === "1" && (
               <div
                 style={{
@@ -245,7 +244,6 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
               className="blocker"
               onClick={() => setColorCustomOpen(!colorCustomOpen)}
             ></div>
-
             <ChromePicker
               color={color}
               onChange={(colors) => {
