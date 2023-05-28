@@ -10,6 +10,8 @@ export default function ExpenseForm(props) {
   const [EnterIOE, setEnterIOE] = useState("");
   const [EnterProject, setEnterProject] = useState("一般收支");
   const [EnterType, setEnterType] = useState("");
+  const [EnterDescription, setEnterDescription] = useState("");
+  const [level, setLevel] = useState(localStorage.getItem("level"));
 
   const SubmitHandlar = (event) => {
     event.preventDefault();
@@ -21,6 +23,7 @@ export default function ExpenseForm(props) {
       project: EnterProject,
       type: EnterType,
       IOE: EnterIOE,
+      description: EnterDescription
     };
 
     props.onSaveExpenseData(expenseData);
@@ -31,6 +34,7 @@ export default function ExpenseForm(props) {
     setEnterType("");
     setEnterType("");
     setEnterIOE("");
+    setEnterDescription("");
   };
 
   return (
@@ -47,6 +51,18 @@ export default function ExpenseForm(props) {
           />
         </div>
       </div>
+      {level !== "money" && <div className="new-expense__controls">
+        <div className="new-expense__control">
+          <label>敘述</label>
+          <input
+            type="text"
+            value={EnterDescription}
+            onChange={(event) => {
+              setEnterDescription(event.target.value);
+            }}
+          />
+        </div>
+      </div>}
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>金額</label>

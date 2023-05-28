@@ -7,6 +7,7 @@ import ExpenseForm from "./ExpenseForm";
 
 const NewExpense = (props) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [level, setLevel] = useState(localStorage.getItem("level"));
 
   const isEditingHandler = () => {
     setIsEditing(true);
@@ -15,7 +16,8 @@ const NewExpense = (props) => {
     setIsEditing(false);
   };
   const saveExpenseDataHandler = async (enterExpenseData) => {
-    console.log(enterExpenseData);
+    // console.log(enterExpenseData);
+    const status = level == "money" ? 1 : 0;
 
     await addDoc(expensesCollectionRef, {
       name: enterExpenseData.name,
@@ -25,7 +27,9 @@ const NewExpense = (props) => {
       created_at: new Date(),
       updated_at: new Date(),
       type: enterExpenseData.type,
-      IOE: enterExpenseData.IOE
+      IOE: enterExpenseData.IOE,
+      description: enterExpenseData.description,
+      status: status,
     });
     setIsEditing(false);
   };

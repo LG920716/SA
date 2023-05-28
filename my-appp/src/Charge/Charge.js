@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import Expenses from "./Expenses/Expenses";
-import NewExpense from "./NewExpense/NewExpense";
-import DonutChart from "./DonutChart/DonutChart";
 import {
   projectsCollectionRef,
   expensesCollectionRef,
 } from "../firebase-config";
 import { getDocs } from "firebase/firestore";
+import InvoiceList from "./SendInvoice/InvoiceList";
 
 export default function Charge() {
+  const [level, setLevel] = useState(localStorage.getItem("level"));
   const [project, setProject] = useState([]);
   const [expenses, setExpenses] = useState([]);
   useEffect(() => {
@@ -25,12 +25,10 @@ export default function Charge() {
     };
     getExpense();
   }, []);
-  // console.log(expenses);
 
   return (
     <div>
-      <DonutChart />
-      {/* <NewExpense expensesItems={expenses} projectItems={project} /> */}
+      {level == "money" && <InvoiceList expensesItems={expenses}/>}
       <Expenses expensesItems={expenses} projectItems={project} />
     </div>
   );

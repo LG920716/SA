@@ -6,6 +6,7 @@ import {
 } from "../firebase-config";
 import { getDocs } from "firebase/firestore";
 import "./Project.css";
+import DonutChart from "../Charge/DonutChart/DonutChart";
 
 export default function Project() {
   const [project, setProject] = useState([]);
@@ -42,10 +43,13 @@ export default function Project() {
   }, chartDataPoints);
 
   return (
-    <ul class="accordion">
-      {project.map((doc) => (
-        <ProjectItems projectData={doc} chartDataPoints={chartDataPoints} />
-      ))}
-    </ul>
+    <div>
+      <DonutChart />
+      <ul class="accordion">
+        {project.map((doc) => (
+          <ProjectItems projectData={doc} chartDataPoints={chartDataPoints} />
+        ))}
+      </ul>
+    </div>
   );
 }

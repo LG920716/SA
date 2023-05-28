@@ -22,6 +22,9 @@ export default function Expense(props) {
     if (filteredExpenses !== "" && !doc.name.includes(filteredExpenses)) {
       return false;
     }
+    if(doc.status == 0){
+      return false;
+    }
     return true;
   });
   
