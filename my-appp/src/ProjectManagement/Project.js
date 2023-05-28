@@ -13,7 +13,7 @@ export default function Project() {
       setProject(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
     };
     getProject();
-  },[project]);
+  },[]);
   useEffect(() => {
     const getExpense = async () => {
       const data = await getDocs(expensesCollectionRef);

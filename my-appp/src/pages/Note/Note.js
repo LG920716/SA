@@ -9,6 +9,7 @@ import { notesCollectionRef } from "../../firebase-config";
 import searchNote from "./Components/Search/search.svg";
 import { useNavigate } from "react-router-dom";
 
+
 function Note({ level }) {
   const [noteList, setNoteList] = useState([]);
   const [noteListFilter, setNoteListFilter] = useState([]);
@@ -74,6 +75,7 @@ function Note({ level }) {
               <AddIcon />
             </button>
           </Link>
+          
         </div>
 
         <Link to={"/create"}>

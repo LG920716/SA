@@ -4,6 +4,7 @@ import { notesCollectionRef } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import Editor from "./Components/Editor/Editor";
 import Tag from "./Components/Tag/Tag";
+import Editor1 from "./testEd"
 
 function Create() {
   const [title, setTitle] = useState("");
@@ -34,6 +35,7 @@ function Create() {
             body={body}
             setBody={setBody}
           />
+          <Editor1/>
           <button
             class="btn btn-primary"
             onClick={createNote}
