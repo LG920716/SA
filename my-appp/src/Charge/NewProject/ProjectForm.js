@@ -1,10 +1,13 @@
 import { useState } from "react";
 import "./ProjectForm.css";
+import Color from "../Tag/Color";
 
 export default function ProjectForm(props) {
   const [EnterName, setEnterName] = useState("");
   const [EnterBudget, setEnterBudget] = useState();
   const [EnterDate, setEnterDate] = useState("");
+  const [EnterColor, setEnterColor] = useState("");
+  const [ChromePicker, setChromePicker] = useState(false);
   const [EnterDescription, setEnterDescription] = useState("");
 
   const SubmitHandlar = (event) => {
@@ -15,6 +18,7 @@ export default function ProjectForm(props) {
       budget: +EnterBudget,
       date: new Date(EnterDate),
       description: EnterDescription,
+      color: EnterColor
     };
 
     props.onSaveProjectData(projectData);
@@ -22,7 +26,16 @@ export default function ProjectForm(props) {
     setEnterBudget("");
     setEnterDate("");
     setEnterDescription("");
+    setEnterColor("");
   };
+
+  const changeColorHandler = color => {
+    setEnterColor(color);
+  }
+
+  const ChromePickerHandler = () => {
+    setChromePicker(true);
+  }
 
   return (
     <form onSubmit={SubmitHandlar}>
@@ -81,11 +94,10 @@ export default function ProjectForm(props) {
           <label>Tag</label>
           <input
             type="text"
-            value={EnterDescription}
-            onChange={(event) => {
-                setEnterDescription(event.target.value);
-            }}
+            value={EnterColor}
+            onClick={ChromePickerHandler}
           />
+          {ChromePicker && <Color changeColor={changeColorHandler}/>}
         </div>
       </div>
       <div className="new-project__actions">
