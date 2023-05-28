@@ -77,7 +77,7 @@ function View() {
                 class="note-tool"
                 style={{
                   width: "60px",
-                  height: "50px",
+                  height: "41.59px",
                   borderRadius: "5px 0px 0px 5px",
                 }}
               >
@@ -90,7 +90,7 @@ function View() {
                 class="note-tool"
                 style={{
                   width: "60px",
-                  height: "50px",
+                  height: "41.59px",
                   borderRadius: "0px 5px 5px 0px",
                 }}
               >

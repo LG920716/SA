@@ -51,14 +51,16 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        backgroundColor:
+          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
         tag: tagList ? tagList : [],
       });
       const newEvent = {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        backgroundColor:
+          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
         tag: tagList ? tagList : [],
         id: newEventRef.id,
       };
@@ -79,7 +81,7 @@ export default function Calendars({ isAuth }) {
         backgroundColor: doc.data().backgroundColor,
         tag: doc.data().tag,
       }));
-      
+
       if (searchInput.trim() !== "") {
         filteredEvents = filteredEvents.filter(
           (event) =>
@@ -91,11 +93,11 @@ export default function Calendars({ isAuth }) {
     } catch (err) {
       console.error(err);
     }
-  };  
-  
+  };
+
   useEffect(() => {
     getEvents();
-  }, [searchInput]);    
+  }, [searchInput]);
 
   console.log("eventId", eventId);
   console.log("title", eventInput);
@@ -175,7 +177,8 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        backgroundColor:
+          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
         tag: tagList ? tagList : [],
       });
       setEventsData((prevData) =>
@@ -186,7 +189,10 @@ export default function Calendars({ isAuth }) {
               start: startDate,
               end: endDate,
               title: eventInput,
-              backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+              backgroundColor:
+                tagList.length > 0
+                  ? tagList[0].color
+                  : "rgba(29, 131, 220, 0.8)",
               tag: tagList ? tagList : [],
             };
           }
@@ -197,8 +203,8 @@ export default function Calendars({ isAuth }) {
       console.error(err);
     }
   };
-  
-/*
+
+  /*
   const handleEventDrop = async (event) => {
     const { id, start, end } = event;
   
@@ -236,18 +242,19 @@ export default function Calendars({ isAuth }) {
             <div
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "space-between",
                 right: "0",
               }}
             >
               <input
+                className="calen-search"
                 type="text"
                 value={searchInput}
                 onChange={(e) => {
                   setSearchInput(e.target.value);
-                  getEvents(); 
+                  getEvents();
                 }}
-                placeholder="以標籤或活動名稱搜尋"
+                placeholder="搜尋標籤或活動名稱"
               />
               <button
                 className="btn btn-primary1"
@@ -271,7 +278,7 @@ export default function Calendars({ isAuth }) {
         <Calendar
           className="CalendarContainer"
           views={["day", "week", "month", "agenda"]}
-          selectable = {true}
+          selectable={true}
           locale="zh"
           localizer={localizer}
           defaultDate={new Date()}
@@ -310,4 +317,3 @@ export default function Calendars({ isAuth }) {
     </center>
   );
 }
-
