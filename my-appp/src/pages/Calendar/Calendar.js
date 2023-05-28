@@ -8,8 +8,8 @@ import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./Calendar.css";
+import ColorSelectOption from "./colorSelect";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { CirclePicker } from "react-color";
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -276,14 +276,7 @@ export default function Calendars({ isAuth }) {
                 }}
                 placeholder="以標籤或活動名稱搜尋"
               />
-              <CirclePicker
-                colors={colorListDefault}
-                color={color}
-                onChange={(colors) => {
-                  setColor(colors.hex);
-                  getEvents();
-                }}
-              />
+              <ColorSelectOption color={color} setColor={setColor} />
               <button 
                 className="btn btn-primary1"
                 onClick={() => {
