@@ -7,13 +7,14 @@ import Tabs from "@mui/material/Tabs";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
-import { eventsCollectionRef } from "../../firebase-config";
+import { eventsCollectionRef , projectsCollectionRef} from "../../firebase-config";
 import { getDocs } from "firebase/firestore";
 
 const Tag = ({ tagList, setTagList, tagFrom }) => {
   const [searchDbTag, setSearchDbTag] = useState([]);
   const [searchDbTagWait, setSearchDbTagWait] = useState([]);
   const [colorDbList, setColorDbList] = useState([]);
+  const [colorprojectList, setColorprojectList] = useState([]);
   const [colorTotalList, setColorTotalList] = useState([]);
   const [color, setColor] = useState("#0052cc");
   const [value, setValue] = useState("1");
@@ -47,15 +48,19 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
   useEffect(() => {
     const getTags = async () => {
       const data = await getDocs(eventsCollectionRef);
+      const data2 = await getDocs(projectsCollectionRef);
       const list = data.docs.map((doc) => doc.data().tag);
       const tags = list.reduce((accumulator, currentValue) => {
         return accumulator.concat(currentValue);
       });
+      const ColorprojectArray = data2.docs.map((doc) => doc.data().color)
       setSearchDbTag(tags);
       setSearchDbTagWait(tags);
+      setColorprojectList(ColorprojectArray);
     };
     getTags();
   }, []);
+
   console.log(searchDbTag);
   useEffect(() => {
     const DbcolorListArray = searchDbTag.map((tag) => tag.color);
@@ -63,12 +68,17 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     const DbcolorList = DbcolorListArray.filter(
       (item, i, arr) => arr.indexOf(item) === i
     );
-    setColorDbList(DbcolorList);
-    setColorTotalList(DbcolorList);
+    const colorProjectList = colorprojectList.filter((color) => color && !DbcolorList.includes(color));
+    const mergedColorList = DbcolorList.concat(colorProjectList);
+    const updatedColorDbList = mergedColorList.filter((color, index) => mergedColorList.indexOf(color) === index);
+    setColorDbList(updatedColorDbList);
+    setColorTotalList(updatedColorDbList);
     setColorTagDbCount(getCount(DbcolorListArray));
     setColorTagCount(getCount(colorListArray));
   }, [searchDbTagWait]);
+  
   console.log("!!!", colorDbList);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -79,8 +89,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     ) {
       if (
         (tagFrom === "create" || tagFrom === "edit") &&
-        colorDbList.filter((color) => color === tagList[index].color).length ===
-          0
+        colorDbList.filter((color) => color === tagList[index].color).length === 0
       ) {
         setColorTotalList(
           colorTotalList.filter((color) => color !== tagList[index].color)
@@ -109,7 +118,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     if (event.target.value !== "") {
       setTagList([{ tagName: event.target.value, color }]);
       if (colorTotalList.filter((colors) => colors === color).length === 0) {
-        setColorTotalList([...colorTotalList, color]);
+        setColorTotalList([...colorDbList, color]);
       }
       event.target.value = "";
       setSearch("");
