@@ -284,19 +284,26 @@ export default function Calendars({ isAuth }) {
                   getEvents();
                 }}
               />
+              <button 
+                className="btn btn-primary1"
+                onClick={() => {
+                setColor("")
+                getEvents();
+              }}>重新設定顏色
+              </button>
               <button
                 className="btn btn-primary1"
                 onClick={() =>
                   handleSlotSelectEvent({ start: today, end: tomorrow })
                 }
               >
-                <CalendarMonthIcon
-                  style={{
-                    marginTop: "-3px",
-                    marginRight: "3px",
-                    marginLeft: "-3px",
-                  }}
-                />
+              <CalendarMonthIcon
+                style={{
+                marginTop: "-3px",
+                marginRight: "3px",
+                marginLeft: "-3px",
+                }}
+              />
                 新增活動
               </button>
             </div>
