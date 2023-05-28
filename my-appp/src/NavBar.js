@@ -4,20 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { db, auth } from "./firebase-config";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-
-import {
-  doc,
-  getDoc,
-  getDocs,
-  collection,
-  onSnapshot,
-} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
-function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
+function NavBar({ isAuth, setIsAuth, level, setLevel, url }) {
   let navigate = useNavigate();
-
+  console.log("Navunnnn");
   const levelList = ["admin", "money", "user"];
 
   const signUserOut = () => {
@@ -26,59 +18,29 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
         localStorage.clear();
         setIsAuth(false);
         window.location.pathname = "/login";
-        console.log("offfff");
       })
       .catch((err) => {
         console.error(err);
       });
   };
-
+  console.log("url", auth?.currentUser?.photoURL);
   const getLevel = async () => {
-    const data = await getDoc(doc(db, "users", authId));
-    !data.data() ? signUserOut() : setLevel(data.data().level);
-    console.log("runnnnnn");
+    try {
+      const data = await getDoc(doc(db, "users", auth?.currentUser?.uid));
+      !data.data() ? signUserOut() : setLevel(data.data().level);
+      localStorage.setItem("level", data.data().level);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // useEffect(() => {
-  //   console.log("on");
-  //   if (!isAuth) {
-  //     navigate("/login");
-  //   } else if (!authId) {
-  //     console.log(authId);
-  //     return;
-  //   } else {
-  //     console.log("oning");
-  //     const levelRef = doc(db, "users", authId);
-  //     const unSub = onSnapshot(levelRef, (snapShot) => {
-  //       if (!snapShot.data()) {
-  //         signUserOut();
-  //       } else {
-  //         console.log(snapShot.data());
-  //         setLevel(snapShot.data().level);
-  //         localStorage.setItem("level", level);
-  //         snapShot.data().level === "unCheck"
-  //           ? navigate("/nonUser")
-  //           : navigate("/");
-  //       }
-  //     });
-
-  //     return () => {
-  //       console.log("off");
-  //       unSub();
-  //     };
-  //   }
-  // }, []);
   const time = 1000 * 60 * 10;
-  console.log(level);
+
   useEffect(() => {
-    console.log("start");
     // const timeoutID = setInterval(() => getLevel(), time);
     if (!isAuth) {
       navigate("/login");
       // clearInterval(timeoutID);
-      console.log("end");
-    } else if (!level) {
-      signUserOut();
     } else if (!levelList.includes(level)) {
       navigate("/nonUser");
     }
@@ -121,11 +83,7 @@ function NavBar({ isAuth, setIsAuth, level, setLevel, authId }) {
               </Nav>
             </div>
             <div className="icon">
-              <img
-                src={localStorage.getItem("url")}
-                className="avatar"
-                alt="User Avatar"
-              />
+              <img src={url} className="avatar" alt="User Avatar" />
               <div className="logout">
                 <a className="nav-item nav-logout" href="#">
                   <Logout setIsAuth={setIsAuth} />

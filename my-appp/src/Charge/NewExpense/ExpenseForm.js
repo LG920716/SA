@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./ExpenseForm.css";
 
+
 export default function ExpenseForm(props) {
   const [EnterTitle, setEnterTitle] = useState("");
   const [EnterAmount, setEnterAmount] = useState();
@@ -19,7 +20,7 @@ export default function ExpenseForm(props) {
       date: new Date(EnterDate),
       project: EnterProject,
       type: EnterType,
-      IOE: EnterIOE
+      IOE: EnterIOE,
     };
 
     props.onSaveExpenseData(expenseData);
@@ -100,7 +101,7 @@ export default function ExpenseForm(props) {
             }}
           />
           <datalist id="project-list">
-          <option value="一般收支" key="0" />
+            <option value="一般收支" key="0" />
             {props.projectItems.map((doc) => (
               <option value={doc.name} key={doc.id} />
             ))}

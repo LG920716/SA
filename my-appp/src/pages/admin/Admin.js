@@ -8,6 +8,8 @@ import {
   doc,
   deleteDoc,
   getDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase-config";
 import moment from "moment";
@@ -19,6 +21,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../Note/Components/Search/search";
 
 const columns = [
   {
@@ -57,30 +60,33 @@ const columns = [
   },
 ];
 
-function Admin({ authId }) {
+function Admin({ setLevel }) {
   const [rows, setRows] = useState([]);
   const [selected, setSelected] = useState([]);
-  console.log();
+  const [rowListFilter, setRowListFilter] = useState([]);
+  const [orderArr, setOrderArr] = useState("all");
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 5,
     page: 0,
   });
-
+  console.log(orderArr);
   let navigate = useNavigate();
+  const q = query(collection(db, "users"), where("level", "==", orderArr));
   const adminRef = collection(db, "users");
+
   useEffect(() => {
-    const unSub = onSnapshot(adminRef, (snapShot) => {
+    const unSub = onSnapshot(orderArr === "all" ? adminRef : q, (snapShot) => {
       setRows(snapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
     return () => {
       unSub();
     };
-  }, []);
+  }, [orderArr]);
 
   useEffect(() => {
-    const getNoteEdit = async () => {
+    const getUser = async () => {
       try {
-        const docSnap = await getDoc(doc(db, "users", authId));
+        const docSnap = await getDoc(doc(db, "users", auth?.currentUser?.uid));
         if (docSnap.data().level !== "admin") {
           navigate("/");
         }
@@ -88,7 +94,7 @@ function Admin({ authId }) {
         console.log(error);
       }
     };
-    getNoteEdit();
+    getUser();
   }, []);
 
   const CheckUser = async (id) => {
@@ -101,6 +107,7 @@ function Admin({ authId }) {
     selected.map((id) => CheckUser(id));
     setSelected([]);
   };
+
   const deleteUser = (id, email) => {
     Swal.fire({
       title: "確定刪除?",
@@ -127,6 +134,7 @@ function Admin({ authId }) {
       }
     });
   };
+
   const deleteMutiUser = () => {
     Swal.fire({
       title: "確定刪除?",
@@ -153,6 +161,7 @@ function Admin({ authId }) {
       }
     });
   };
+
   const changeLevel = async (id, email) => {
     const { value: level } = await Swal.fire({
       text: `更改 ${email} 使用者之權限`,
@@ -204,7 +213,8 @@ function Admin({ authId }) {
               doc(
                 db,
                 "users",
-                rows.filter((rows) => rows.level === "admin")[0].id
+                auth?.currentUser?.uid
+                // rows.filter((rows) => rows.level === "admin")[0].id
               ),
               {
                 level: "user",
@@ -214,6 +224,8 @@ function Admin({ authId }) {
 
           alt();
           change();
+          setLevel("user");
+          localStorage.setItem("level", "user");
           navigate("/");
           Swal.fire({
             showConfirmButton: false,
@@ -273,12 +285,38 @@ function Admin({ authId }) {
 
   return (
     <center>
+      <SearchBar
+        noteList={rows}
+        setNoteListFilter={setRowListFilter}
+        searchFrom={"admin"}
+      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginRight: "5%",
+        }}
+      >
+        <select
+          class="form-select orderArr"
+          style={{ cursor: "pointer", marginRight: "0px" }}
+          value={orderArr}
+          onChange={(e) => setOrderArr(e.target.value)}
+        >
+          <option value="all">全部</option>
+          <option value="unCheck">unCheck</option>
+          <option value="user">user</option>
+          <option value="money">money</option>
+          <option value="admin">admin</option>
+        </select>
+      </div>
       <div
         style={{
           height: 400,
           width: "90%",
           borderRadius: "10px",
           boxShadow: "0 1px 5px #4a4a4a40",
+          marginTop: "30px",
         }}
       >
         {selected.length > 0 && (
@@ -325,7 +363,7 @@ function Admin({ authId }) {
           </>
         )}
         <DataGrid
-          rows={rows}
+          rows={rowListFilter}
           columns={columns.concat(actionColumn)}
           paginationModel={paginationModel}
           onPaginationModelChange={setPaginationModel}

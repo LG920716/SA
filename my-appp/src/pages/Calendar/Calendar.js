@@ -8,8 +8,8 @@ import MyVerticallyCenteredModal from "./pop";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./Calendar.css";
+import ColorSelectOption from "./colorSelect";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { CirclePicker } from "react-color";
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -32,21 +32,6 @@ export default function Calendars({ isAuth }) {
 
   const [searchInput, setSearchInput] = useState("");
   const [color, setColor] = useState("");
-  
-  const colorListDefault = [
-    "#0052cc",
-    "#8ed1fc",
-    "#0693e3",
-    "#ff6900",
-    "#fcb900",
-    "#0097a7",
-    "#7bdcb5",
-    "#00d084",
-    "#eb144c",
-    "#f78da7",
-    "#9900ef",
-    "#9575cd",
-  ];
   
   let navigate = useNavigate();
   useEffect(() => {
@@ -276,27 +261,27 @@ export default function Calendars({ isAuth }) {
                 }}
                 placeholder="以標籤或活動名稱搜尋"
               />
-              <CirclePicker
-                colors={colorListDefault}
-                color={color}
-                onChange={(colors) => {
-                  setColor(colors.hex);
-                  getEvents();
-                }}
-              />
+              <ColorSelectOption color={color} setColor={setColor} />
+              <button 
+                className="btn btn-primary1"
+                onClick={() => {
+                setColor("")
+                getEvents();
+              }}>重新設定顏色
+              </button>
               <button
                 className="btn btn-primary1"
                 onClick={() =>
                   handleSlotSelectEvent({ start: today, end: tomorrow })
                 }
               >
-                <CalendarMonthIcon
-                  style={{
-                    marginTop: "-3px",
-                    marginRight: "3px",
-                    marginLeft: "-3px",
-                  }}
-                />
+              <CalendarMonthIcon
+                style={{
+                marginTop: "-3px",
+                marginRight: "3px",
+                marginLeft: "-3px",
+                }}
+              />
                 新增活動
               </button>
             </div>

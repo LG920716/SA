@@ -7,8 +7,12 @@ import Tabs from "@mui/material/Tabs";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
-import { notesCollectionRef } from "../../../../firebase-config";
+import {
+  notesCollectionRef,
+  projectsCollectionRef,
+} from "../../../../firebase-config";
 import { getDocs } from "firebase/firestore";
+import PaidIcon from "@mui/icons-material/Paid";
 
 const Tag = ({ tagList, setTagList, tagFrom }) => {
   const [searchDbTag, setSearchDbTag] = useState([]);
@@ -22,7 +26,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
   const [search, setSearch] = useState("");
   const [colorTagDbCount, setColorTagDbCount] = useState([]);
   const [colorTagCount, setColorTagCount] = useState([]);
-  const [test, setTest] = useState([]);
+  const [projectList, setProjectList] = useState([]);
 
   const colorListDefault = [
     "#0052cc",
@@ -45,8 +49,8 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     }, {});
   };
 
-  useEffect(() => {
-    const getTags = async () => {
+  const getTags = async () => {
+    try {
       const data = await getDocs(notesCollectionRef);
       const list = data.docs.map((doc) => doc.data().tag);
       const tags = list.reduce((accumulator, currentValue) => {
@@ -54,9 +58,21 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
       });
       setSearchDbTag(tags);
       setSearchDbTagWait(tags);
-    };
+
+      const project = await getDocs(projectsCollectionRef);
+      const projectList = project.docs
+        .map((doc) => doc.data().color)
+        .map((color) => color);
+      setProjectList(projectList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
     getTags();
   }, []);
+
   console.log(searchDbTag);
   useEffect(() => {
     const DbcolorListArray = searchDbTag.map((tag) => tag.color);
@@ -64,13 +80,13 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     const DbcolorList = DbcolorListArray.filter(
       (item, i, arr) => arr.indexOf(item) == i
     );
-
+    console.log(":::::::::::::::::::::::::", getCount(DbcolorListArray));
     setColorDbList(DbcolorList);
     setColorTotalList(DbcolorList);
     setColorTagDbCount(getCount(DbcolorListArray));
     setColorTagCount(getCount(colorListArray));
   }, [searchDbTagWait]);
-  console.log("!!!", colorDbList);
+  console.log("!!!", colorTagDbCount);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -108,62 +124,124 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
   };
 
   const addTags = (event) => {
-    if (event.target.value !== "") {
+    if (
+      event.target.value !== "" &&
+      [
+        ...new Set(
+          [...tagList, { tagName: event.target.value, color }]
+            .map((obj) => {
+              const { color, tagName, ...rest } = obj;
+              return { tagName, color, ...rest };
+            })
+            .map((item) => JSON.stringify(item))
+        ),
+      ].length ===
+        tagList.length + 1
+    ) {
       setTagList([...tagList, { tagName: event.target.value, color }]);
       if (colorTotalList.filter((colors) => colors === color).length === 0) {
         setColorTotalList([...colorTotalList, color]);
       }
-      event.target.value = "";
-      setSearch("");
     }
+    event.target.value = "";
+    setSearch("");
   };
 
   return (
     <>
-      <div className="choose" style={{}}>
+      <div className="choose">
         <div className="tags-input">
           <ul id="tags">
             {tagList.map((tag, index) => (
               <li key={index} className="tag" style={{ background: tag.color }}>
                 <span className="tag-title">{tag.tagName}</span>
-                <span
-                  className="tag-close-icon"
-                  onClick={() => removeTags(index)}
-                >
-                  <i class="bi bi-x-circle-fill"></i>
-                </span>
+                {tagFrom !== "view" && (
+                  <span
+                    className="tag-close-icon"
+                    onClick={() => removeTags(index)}
+                  >
+                    <i class="bi bi-x-circle-fill"></i>
+                  </span>
+                )}
               </li>
             ))}
           </ul>
+          {tagFrom !== "view" && (
+            <div>
+              <input
+                type="text"
+                value={search}
+                onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
+              />
+              <ul
+                class="list-group"
+                style={{ position: "absolute", zIndex: "20" }}
+              >
+                {[
+                  ...new Set(
+                    searchDbTag
+                      .map((obj) => {
+                        const { color, tagName, ...rest } = obj;
+                        return { tagName, color, ...rest };
+                      })
+                      .filter((tags) => {
+                        return (
+                          search &&
+                          tags.tagName
+                            .toLowerCase()
+                            .includes(search.toLowerCase()) &&
+                          tags.tagName !== search
+                        );
+                      })
 
-          <input
-            type="text"
-            value={search}
-            onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
-          />
-          <ul class="list-group" style={{ position: "absolute", zIndex: "20" }}>
-            {searchDbTag
-              .filter((tags, i, arr) => {
-                return (
-                  search &&
-                  tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
-                  tags.tagName !== search
-                );
-              })
-              .map((tags) => (
-                <li
-                  class="list-group-item"
-                  onClick={() => {
-                    setColor(tags.color);
-                    setSearch(tags.tagName);
-                  }}
-                >
-                  {tags.tagName}
-                </li>
-              ))}
-          </ul>
+                      .map((item) => JSON.stringify(item))
+                  ),
+                ]
+                  .filter(
+                    (x) =>
+                      !tagList
+                        .map((obj) => {
+                          const { color, tagName, ...rest } = obj;
+                          return { tagName, color, ...rest };
+                        })
+                        .map((item) => JSON.stringify(item))
+                        .includes(x)
+                  )
+
+                  .map((item) => JSON.parse(item))
+                  .map((tags, index) => (
+                    <li
+                      class="list-group-item"
+                      onClick={() => {
+                        setColor(tags.color);
+                        setSearch(tags.tagName);
+                      }}
+                      key={index}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        <div>{tags.tagName}</div>
+                        <div
+                          style={{
+                            background: tags.color,
+                            height: "10px",
+                            width: "10px",
+                            borderRadius: "50%",
+                            marginTop: "8px",
+                            marginLeft: "5px",
+                          }}
+                        ></div>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {tagFrom !== "view" && (
@@ -181,11 +259,12 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
               <Tabs
                 value={value}
                 onChange={handleChange}
-                style={{ width: "250px" }}
+                style={{ width: "269px" }}
                 centered
               >
                 <Tab label={<ColorLensIcon />} value="1" />
-                <Tab label={<AccessTimeFilledIcon />} value="2" />
+                <Tab label={<PaidIcon />} value="2" />
+                <Tab label={<AccessTimeFilledIcon />} value="3" />
               </Tabs>
             </div>
 
@@ -197,7 +276,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
                   justifyContent: "center",
                   alignItems: "center",
                   padding: "10px",
-                  width: "250px",
+                  width: "263px",
                   borderRadius: "25px",
                   marginTop: "15px",
                 }}
@@ -221,7 +300,31 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
                   justifyContent: "center",
                   alignItems: "center",
                   padding: "10px",
-                  width: "250px",
+                  width: "263px",
+                  borderRadius: "25px",
+                  marginTop: "15px",
+                }}
+              >
+                <center>
+                  <CirclePicker
+                    colors={projectList}
+                    color={color}
+                    onChange={(colors) => {
+                      setColor(colors.hex);
+                    }}
+                  />
+                </center>
+              </div>
+            )}
+            {value === "3" && (
+              <div
+                style={{
+                  background: " rgb(231, 238, 250)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  width: "263px",
                   borderRadius: "25px",
                   marginTop: "15px",
                 }}
@@ -238,6 +341,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
                   style={{ fontSize: "25px" }}
                   onClick={() => setColorCustomOpen(!colorCustomOpen)}
                 ></i>
+                {/* colorListDefault.concat(projectList).includes(color) */}
               </div>
             )}
           </div>

@@ -1,7 +1,7 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useRef } from "react";
 import Login from "./pages/Auth/Login";
 import Create from "./pages/Note/Create";
 import Edit from "./pages/Note/Edit";
@@ -9,9 +9,7 @@ import Note from "./pages/Note/Note";
 import View from "./pages/Note/View";
 import Calendars from "./pages/Calendar/Calendar";
 import Charge from "./Charge/Charge";
-import { NavLink } from "react-router-dom";
 import Admin from "./pages/admin/Admin";
-import Tag from "./pages/Note/Components/Tag/Tag";
 import NavBar from "./NavBar";
 import NonUser from "./pages/NonUser/NonUser";
 import Project from "./ProjectManagement/Project";
@@ -19,12 +17,10 @@ import Project from "./ProjectManagement/Project";
 function App() {
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
   const [level, setLevel] = useState(localStorage.getItem("level"));
-  const [authId, setauthId] = useState(localStorage.getItem("id"));
+  const [url, setUrl] = useState(localStorage.getItem("url"));
+  const [notePage, setNotePage] = useState(localStorage.getItem("noteWay"));
 
-  const [tagList, setTagList] = useState([
-    { tagName: "abc", color: "#0052cc" },
-    { tagName: "HHH", color: "#8ed1fc" },
-  ]);
+  const [tagList, setTagList] = useState([]);
 
   return (
     <Router>
@@ -33,7 +29,7 @@ function App() {
         level={level}
         isAuth={isAuth}
         setLevel={setLevel}
-        authId={authId}
+        url={url}
       />
       <Routes>
         <Route
@@ -42,31 +38,31 @@ function App() {
             <Login
               setIsAuth={setIsAuth}
               setLevel={setLevel}
-              setauthId={setauthId}
+              setUrl={setUrl}
+              setNotePage={setNotePage}
             />
           }
         />
-        <Route path="/" element={<Note level={level} />} />
+        <Route
+          path="/"
+          element={
+            <Note notePage={notePage} setNotePage={setNotePage} level={level} />
+          }
+        />
         <Route path="/create" element={<Create />} />
         <Route path="/edit/:id" element={<Edit />} />
-        <Route path="/view/:id" element={<View />} />
+        <Route
+          path="/view/:id"
+          element={<View notePage={notePage} level={level} />}
+        />
         <Route path="/calendar" element={<Calendars isAuth={isAuth} />} />
         <Route path="/charge" element={<Charge />} />
         <Route path="/ProjectManagement" element={<Project />} />
-        <Route
-          path="/admin"
-          element={<Admin authId={authId} level={level} />}
-        />
+        <Route path="/admin" element={<Admin setLevel={setLevel} />} />
         <Route
           path="/nonUser"
           element={
             <NonUser setIsAuth={setIsAuth} level={level} isAuth={isAuth} />
-          }
-        />
-        <Route
-          path="/tag"
-          element={
-            <Tag tagList={tagList} setTagList={setTagList} tagFrom={"edit"} />
           }
         />
       </Routes>
