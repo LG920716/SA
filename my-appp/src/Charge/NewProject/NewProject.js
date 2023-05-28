@@ -21,6 +21,7 @@ const NewProject = (props) => {
       budget: enterProjectDate.budget,
       date: enterProjectDate.date,
       description: enterProjectDate.description,
+      color: enterProjectDate.color,
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -31,7 +32,7 @@ const NewProject = (props) => {
     <div className="new-project">
       {!isEditing && (
         <button onClick={isEditingHandler} className="bt-right">
-          <DashboardCustomizeIcon /> &nbsp; 新增專案
+          <DashboardCustomizeIcon /> &nbsp; 新增活動
         </button>
       )}
       {isEditing && (

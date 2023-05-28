@@ -24,6 +24,8 @@ const NewExpense = (props) => {
       projectName: enterExpenseData.project,
       created_at: new Date(),
       updated_at: new Date(),
+      type: enterExpenseData.type,
+      IOE: enterExpenseData.IOE
     });
     setIsEditing(false);
   };

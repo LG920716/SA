@@ -36,6 +36,8 @@
   background-color: transparent;
   border: 0;
   color: #0c6efd;
+  margin-right: 6px;
+  border-radius: 0.6rem;
 }
 .update-project button.canel:hover {
   background-color: #e1e1e1;

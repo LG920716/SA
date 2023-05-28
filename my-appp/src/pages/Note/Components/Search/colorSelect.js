@@ -72,7 +72,7 @@ const ColorSelectOption = ({ color, setColor }) => {
         {colorOpen && (
           <div
             className="color-picker-tab"
-            style={{ marginLeft: "52px", marginTop: "0px" }}
+            style={{ marginLeft: "-82px", marginTop: "0px", zIndex: "10" }}
           >
             <Tabs
               value={value}
@@ -97,15 +97,18 @@ const ColorSelectOption = ({ color, setColor }) => {
                   marginTop: "15px",
                 }}
               >
-                <center>
-                  <CirclePicker
-                    colors={projectList}
-                    color={color}
-                    onChange={(colors) => {
-                      setColor(colors.hex);
-                    }}
-                  />
-                </center>
+                <CirclePicker
+                  colors={projectList}
+                  color={color}
+                  onChange={(colors) => {
+                    setColor(colors.hex);
+                  }}
+                />
+                <i
+                  class="bi bi-plus-circle-fill"
+                  style={{ fontSize: "25px" }}
+                  onClick={() => setColor("")}
+                ></i>
               </div>
             )}
             {value === "2" && (
@@ -128,7 +131,11 @@ const ColorSelectOption = ({ color, setColor }) => {
                     setColor(colors.hex);
                   }}
                 />
-
+                <i
+                  class="bi bi-plus-circle-fill"
+                  style={{ fontSize: "25px" }}
+                  onClick={() => setColor("")}
+                ></i>
                 {/* colorListDefault.concat(projectList).includes(color) */}
               </div>
             )}

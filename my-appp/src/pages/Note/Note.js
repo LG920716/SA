@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SearchBar from "./Components/Search/search";
 import "./Note.css";
 import AddIcon from "@mui/icons-material/Add";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import { getDocs, orderBy, query, collection } from "firebase/firestore";
 import searchNote from "./Components/Search/img/search.svg";
 import trash from "./Components/Search/img/trash.svg";
@@ -100,7 +101,7 @@ function Note({ notePage, setNotePage, level }) {
 
             <Link to={"/create"}>
               <button type="button" class="btn btn-primary1">
-                <AddIcon style={{ marginTop: "-2px", marginLeft: "-5px" }} />
+                <NoteAddIcon className="addicon" />
                 新增文件
               </button>
             </Link>

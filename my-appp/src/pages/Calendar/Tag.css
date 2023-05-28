@@ -12,7 +12,7 @@
   flex: 1;
   width: 20rem;
   border: none;
-  height: 38px !important;
+  height: 46px;
   font-size: 14px;
   padding: 0 0 0;
   &:focus {
@@ -76,7 +76,7 @@
   background: rgb(219, 226, 250);
   /* background: rgb(249, 239, 239); */
   margin-top: -7.8125rem;
-  left: 31%;
+  margin-left: 23.125rem;
   padding: 10px;
   position: absolute;
   border-radius: 10px;
@@ -98,15 +98,4 @@
 .choose {
   display: flex;
   justify-content: "space-evenly";
-}
-.color-custom {
-  position: absolute;
-  left: 33%;
-}
-.btn.btn-primary {
-  max-height: 48px;
-}
-li.tag {
-  margin-top: 5px;
-  margin-bottom: -1px;
 }

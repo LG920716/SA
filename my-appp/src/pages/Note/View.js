@@ -110,7 +110,11 @@ function View({ notePage, level }) {
                 <button
                   type="button"
                   class="note-tool"
-                  style={{ width: "60px" }}
+                  style={{
+                    width: "60px",
+                    height: "41.59px",
+                    borderRadius: "5px 0px 0px 5px",
+                  }}
                 >
                   <EditIcon />
                 </button>
@@ -118,7 +122,15 @@ function View({ notePage, level }) {
             )}
 
             <Link to={"../"}>
-              <button type="button" class="note-tool" style={{ width: "60px" }}>
+              <button
+                type="button"
+                class="note-tool"
+                style={{
+                  width: "60px",
+                  height: "41.59px",
+                  borderRadius: "0px 5px 5px 0px",
+                }}
+              >
                 <FullscreenExitIcon />
               </button>
             </Link>

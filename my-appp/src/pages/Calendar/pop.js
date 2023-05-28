@@ -2,6 +2,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment";
 import "./pop.css";
+import Tag from "./Tag";
+
 
 function MyVerticallyCenteredModal({
   modalStatus,
@@ -14,11 +16,10 @@ function MyVerticallyCenteredModal({
   eventInput,
   handleSave,
   delStatus,
-  eventId,
   handleEdit,
   handleDelete,
-  backgroundColor,
-  setbackgroundColor,
+  tagList,
+  setTagList,
 }) {
   const localStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
   const localEndDate = moment(endDate).format("YYYY-MM-DDTHH:mm");
@@ -61,74 +62,42 @@ function MyVerticallyCenteredModal({
               />
             </div>
             <div className="form-group">
-              <label>標籤顏色</label>
-              <select
-                className="form-select"
-                name="the_select"
-                defaultValue={backgroundColor}
-                onChange={(e) => setbackgroundColor(e.target.value)}
-              >
-                <option value="red">請選擇</option>
-                <option value="rgba(29, 131, 220, 0.8)">藍色</option>
-                <option value="rgba(249, 105, 14, 1)">橘色</option>
-                <option value="rgba(128, 0, 255, 0.5)">紫色</option>
-                <option value="rgba(38, 166, 91, 1)">綠色</option>
-                <option value="rgba(152, 152, 152, 1)">灰色</option>
-                <option value="rgba(167, 101, 0, 1)">棕色</option>
-              </select>
+              <label>活動標籤</label>
+              <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
             </div>
           </div>
         ) : (
           <div className="form-group">
             <div className="form-group">
               <label>起始日期</label>
-              <br></br>
               <input
                 className="form-control"
                 type="datetime-local"
                 defaultValue={localStartDate}
                 onChange={(e) => setStartDate(new Date(e.target.value))}
               />
-              <label></label>
             </div>
             <div className="form-group">
               <label>結束日期</label>
-              <br></br>
               <input
                 type="datetime-local"
                 className="form-control"
                 defaultValue={localEndDate}
                 onChange={(e) => setEndDate(new Date(e.target.value))}
               />
-              <label></label>
             </div>
             <div className="form-group">
               <label>標題</label>
-              <br></br>
               <input
                 value={eventInput}
                 className="form-control"
                 placeholder="標題..."
                 onChange={(e) => setEventInput(e.target.value)}
               />
-              <br></br>
             </div>
             <div className="form-group">
-              <label>標籤顏色</label>
-              <select
-                className="form-control"
-                name="the_select"
-                onChange={(e) => setbackgroundColor(e.target.value)}
-              >
-                <option value="red">請選擇</option>
-                <option value="rgba(29, 131, 220, 0.8)">藍色</option>
-                <option value="rgba(249, 105, 14, 1)">橘色</option>
-                <option value="rgba(128, 0, 255, 0.5)">紫色</option>
-                <option value="rgba(38, 166, 91, 1)">綠色</option>
-                <option value="rgba(152, 152, 152, 1)">灰色</option>
-                <option value="rgba(167, 101, 0, 1)">棕色</option>
-              </select>
-              <br></br>
+              <label>活動標籤</label>
+              <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
             </div>
           </div>
         )}
@@ -142,7 +111,9 @@ function MyVerticallyCenteredModal({
             </Button>
           </>
         ) : (
-          <Button onClick={handleSave}>新增</Button>
+          <>
+            <Button onClick={handleSave}>新增</Button>
+          </>
         )}
       </Modal.Footer>
     </Modal>
