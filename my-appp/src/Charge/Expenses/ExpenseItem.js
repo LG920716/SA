@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { db } from "../../firebase-config";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import ExpenseDate from "./ExpenseDate";
@@ -6,25 +6,41 @@ import Card from "../UI/Card";
 import "./ExpenseItem.css";
 import ExpenseUpdate from "./ExpenseUpdate";
 import Swal from "sweetalert2";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function ExpenseItem(props) {
   const [isEditing, setIsEditing] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const expenseItemRef = useRef(null);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const expenseItemPosition =
+        expenseItemRef.current.getBoundingClientRect().top;
+      const revealPosition = window.innerHeight - 100;
+
+      setIsRevealed(expenseItemPosition < revealPosition);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const isEditingHandler = () => {
     setIsEditing(true);
   };
+
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
-  // console.log(props);
-  // const deleteExpenseHandler = async (id) => {
-  //   const expenseDoc = doc(db, "expenses", id);
-  //   await deleteDoc(expenseDoc);
-  // };
+
   const deleteProject = (id) => {
     Swal.fire({
       title: "確定刪除?",
-      text: `刪除此支出`,
+      text: "刪除此支出",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -40,40 +56,42 @@ export default function ExpenseItem(props) {
         Swal.fire({
           showConfirmButton: false,
           title: "刪除成功",
-          text: `已刪除支出`,
+          text: "已刪除支出",
           icon: "success",
           timer: 1100,
         });
       }
     });
   };
+
   return (
-    <li>
-      <Card className="expense-item">
+    <li ref={expenseItemRef}>
+      {isEditing && (
+        <ExpenseUpdate
+          data={props}
+          onStopEditing={stopEditingHandler}
+          projectItems={props.projectItems}
+        />
+      )}
+      <Card className={`expense-item ${isRevealed ? "revealed" : ""}`}>
         <ExpenseDate date={props.date} />
         <div className="expense-item__description">
           <h2>{props.name}</h2>
           <div className="expense-item__price">${props.amount}</div>
-          <button type="button" onClick={isEditingHandler}>
-            update
-          </button>
-          {isEditing && (
-            <ExpenseUpdate
-              data={props}
-              // onUpdateExpense={updateExpenseHandler}
-              onStopEditing={stopEditingHandler}
-              projectItems={props.projectItems}
-            />
-          )}
-          <button
-            type="button"
-            onClick={() => {
-              // deleteExpenseHandler(props.id);
-              deleteProject(props.id);
-            }}
-          >
-            delete
-          </button>
+          <div>
+            <button type="button" onClick={isEditingHandler}>
+              <EditIcon />
+            </button>
+            <button
+              className="delete-button"
+              type="button"
+              onClick={() => {
+                deleteProject(props.id);
+              }}
+            >
+              <DeleteIcon />
+            </button>
+          </div>
         </div>
       </Card>
     </li>

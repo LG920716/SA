@@ -3,12 +3,20 @@ import { format } from "date-fns";
 import { db } from "../firebase-config";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import "./ProjectUpdate.css";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 export default function ProjectUpdate(props) {
-    console.log(props)
+  console.log(props);
   const [EnterName, setEnterName] = useState(props.data.projectData.name);
   const [Enterbudget, setEnterbudget] = useState(props.data.projectData.budget);
-  const [EnterDate, setEnterDate] = useState(props.data.projectData.date.toDate());
+  const [EnterDate, setEnterDate] = useState(
+    props.data.projectData.date.toDate()
+  );
   const [Enterdescription, setEnterdescription] = useState(
     props.data.projectData.description
   );
@@ -27,10 +35,8 @@ export default function ProjectUpdate(props) {
       budget: +Enterbudget,
       date: EnterDate,
       description: Enterdescription,
-      updated_at: new Date()
+      updated_at: new Date(),
     });
-
-
 
     props.onStopEditing();
     setEnterName("");
@@ -40,70 +46,75 @@ export default function ProjectUpdate(props) {
     setFormattedDate("");
   };
   return (
-    <div className="update-project">
-      <span className="overlay"></span>
-      <form onSubmit={SubmitHandlar}>
-        <div className="update-project__controls">
-          <div className="update-project__control">
-            <label>Name</label>
-            <input
-              type="text"
-              value={EnterName}
-              onChange={(event) => {
-                setEnterName(event.target.value);
-              }}
-            />
-          </div>
+    <Card className="update-card1" sx={{ minWidth: 275 }}>
+      <CardContent>
+        <div className="update-project">
+          <form onSubmit={SubmitHandlar}>
+            <div className="update-project__controls">
+              <div className="update-project__control">
+                <label>名稱</label>
+                <input
+                  type="text"
+                  value={EnterName}
+                  onChange={(event) => {
+                    setEnterName(event.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="update-project__controls">
+              <div className="update-project__control">
+                <label>預算</label>
+                <input
+                  type="number"
+                  min="1"
+                  step="1"
+                  value={Enterbudget}
+                  onChange={(event) => {
+                    setEnterbudget(event.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="update-project__controls">
+              <div className="update-project__control">
+                <label>日期</label>
+                <input
+                  type="date"
+                  value={EnterDate}
+                  onChange={(event) => {
+                    setEnterDate(event.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="update-project__controls">
+              <div className="update-project__control">
+                <label>內容</label>
+                <input
+                  type="text"
+                  value={Enterdescription}
+                  onChange={(event) => {
+                    setEnterdescription(event.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="update-project__actions">
+              <button
+                type="button"
+                className="canel"
+                onClick={props.onStopEditing}
+              >
+                取消
+              </button>
+              <button type="submit" className="confirm">
+                更新專案
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="update-project__controls">
-          <div className="update-project__control">
-            <label>Budget</label>
-            <input
-              type="number"
-              min="1"
-              step="1"
-              value={Enterbudget}
-              onChange={(event) => {
-                setEnterbudget(event.target.value);
-              }}
-            />
-          </div>
-        </div>
-        <div className="update-project__controls">
-          <div className="update-project__control">
-            <label>Date</label>
-            <input
-              type="date"
-              value={formattedDate}
-              // onChange={(event) => {
-              //   setEnterDate(event.target.value);
-              // }}
-              onChange={(event) => {
-                setFormattedDate(event.target.value);
-                setEnterDate(new Date(event.target.value));
-              }}
-            />
-          </div>
-        </div>
-        <div className="update-project__controls">
-          <div className="update-project__control">
-            <label>Description</label>
-            <input
-              type="text"
-              value={Enterdescription}
-              onChange={(event) => {
-                setEnterdescription(event.target.value);
-              }}
-            />
-          </div>
-        </div>
-        <div className="update-project__actions">
-          <button type="button" onClick={props.onStopEditing}>
-            Cencel
-          </button>
-          <button type="submit">update project</button>
-        </div>
-      </form>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

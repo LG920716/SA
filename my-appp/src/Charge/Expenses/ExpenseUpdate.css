@@ -1,21 +1,8 @@
-/* .overlay {
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.3);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  pointer-events: none;
-} */
-
 .update-expense {
   /* line-height: 0; */
-  background-color: #a892ee;
+  background-color: #ffffff;
   padding: 1rem;
   margin: 2rem auto;
-  width: 50rem;
   max-width: 95%;
   border-radius: 12px;
   text-align: center;
@@ -24,35 +11,18 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 2;
 }
 
 .update-expense button {
   font: inherit;
+  height: 2.6rem;
+  font-size: 16px;
   cursor: pointer;
-  padding: 1rem 2rem;
-  border: 1px solid #40005d;
-  background-color: #40005d;
+  font-weight: bold;
   color: white;
-  border-radius: 12px;
+  border-radius: 0.6rem;
   margin-right: 1rem;
-}
-
-.update-expense button:hover,
-.update-expense button:active {
-  background-color: #510674;
-  border-color: #510674;
-}
-
-.update-expense button.alternative {
-  color: #220131;
-  border-color: transparent;
-  background-color: transparent;
-}
-
-.update-expense button.alternative:hover,
-.update-expense button.alternative:active {
-  background-color: #ddb3f8;
 }
 
 .update-expense__controls {
@@ -78,7 +48,26 @@
   width: 20rem;
   max-width: 100%;
 }
-
+.update-expense__control {
+  width: 100%;
+}
 .update-expense__actions {
   text-align: right;
+}
+.update-expense button.canel {
+  background-color: transparent;
+  border: 0;
+  color: #0c6efd;
+  margin-right: 5px;
+}
+
+.update-expense button.canel:hover {
+  background-color: #e1e1e1;
+}
+.update-expense button.confirm {
+  background-color: #0c6efd;
+  border: 0;
+}
+.update-expense button.confirm:hover {
+  background-color: #0a53c1;
 }

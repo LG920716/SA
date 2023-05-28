@@ -7,7 +7,7 @@ import Tabs from "@mui/material/Tabs";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
-import { notesCollectionRef } from "../../../../firebase-config";
+import { eventsCollectionRef } from "../../firebase-config";
 import { getDocs } from "firebase/firestore";
 
 const Tag = ({ tagList, setTagList, tagFrom }) => {
@@ -22,7 +22,6 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
   const [search, setSearch] = useState("");
   const [colorTagDbCount, setColorTagDbCount] = useState([]);
   const [colorTagCount, setColorTagCount] = useState([]);
-  const [test, setTest] = useState([]);
 
   const colorListDefault = [
     "#0052cc",
@@ -47,7 +46,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
 
   useEffect(() => {
     const getTags = async () => {
-      const data = await getDocs(notesCollectionRef);
+      const data = await getDocs(eventsCollectionRef);
       const list = data.docs.map((doc) => doc.data().tag);
       const tags = list.reduce((accumulator, currentValue) => {
         return accumulator.concat(currentValue);
@@ -62,9 +61,8 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     const DbcolorListArray = searchDbTag.map((tag) => tag.color);
     const colorListArray = tagList.map((tag) => tag.color);
     const DbcolorList = DbcolorListArray.filter(
-      (item, i, arr) => arr.indexOf(item) == i
+      (item, i, arr) => arr.indexOf(item) === i
     );
-
     setColorDbList(DbcolorList);
     setColorTotalList(DbcolorList);
     setColorTagDbCount(getCount(DbcolorListArray));
@@ -74,6 +72,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const removeTags = (index) => {
     if (
       tagList.filter((tag) => tag.color === tagList[index].color).length === 1
@@ -103,13 +102,12 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
         setColor("#0052cc");
       }
     }
-
     setTagList(tagList.filter((_, tagIntex) => tagIntex !== index));
   };
 
   const addTags = (event) => {
     if (event.target.value !== "") {
-      setTagList([...tagList, { tagName: event.target.value, color }]);
+      setTagList([{ tagName: event.target.value, color }]);
       if (colorTotalList.filter((colors) => colors === color).length === 0) {
         setColorTotalList([...colorTotalList, color]);
       }
@@ -135,7 +133,6 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
               </li>
             ))}
           </ul>
-
           <input
             type="text"
             value={search}
@@ -145,7 +142,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
           />
           <ul class="list-group" style={{ position: "absolute", zIndex: "20" }}>
             {searchDbTag
-              .filter((tags, i, arr) => {
+              .filter((tags) => {
                 return (
                   search &&
                   tags.tagName.toLowerCase().includes(search.toLowerCase()) &&
@@ -188,7 +185,6 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
                 <Tab label={<AccessTimeFilledIcon />} value="2" />
               </Tabs>
             </div>
-
             {value === "1" && (
               <div
                 style={{
@@ -248,7 +244,6 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
               className="blocker"
               onClick={() => setColorCustomOpen(!colorCustomOpen)}
             ></div>
-
             <ChromePicker
               color={color}
               onChange={(colors) => {

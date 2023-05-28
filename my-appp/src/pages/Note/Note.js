@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import SearchBar from "./Components/Search/search";
 import "./Note.css";
 import AddIcon from "@mui/icons-material/Add";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
+
 import { getDocs, orderBy, query } from "firebase/firestore";
 import { notesCollectionRef } from "../../firebase-config";
 import searchNote from "./Components/Search/search.svg";
@@ -54,6 +56,7 @@ function Note({ level }) {
           <div style={{ display: "flex" }}>
             <select
               class="form-select orderArr"
+              style={{ cursor: "pointer" }}
               value={orderArr}
               onChange={selectChange}
             >
@@ -71,8 +74,8 @@ function Note({ level }) {
           </div>
           <Link to={"/create"}>
             <button type="button" class="btn btn-primary1">
+              <NoteAddIcon className="addicon" />
               新增文件
-              <AddIcon />
             </button>
           </Link>
           

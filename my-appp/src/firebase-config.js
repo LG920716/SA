@@ -24,6 +24,7 @@ import { getStorage } from "firebase/storage";
 //   appId: "1:6825246139:web:54676a96fd11fd42e7189e",
 //   measurementId: "G-8BF2ZQCM7N",
 // };
+
 const firebaseConfig = {
   apiKey: "AIzaSyAEd6TVkA2r3yg8NHmsh2A5ld2SJlq7iJA",
   authDomain: "sa-project-d7a1c.firebaseapp.com",
@@ -34,6 +35,16 @@ const firebaseConfig = {
   appId: "1:181071305167:web:4ed90139c5ddb5fa445aba",
   measurementId: "G-Q77ZV6W9X4"
 };
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyA9R1YugPwcxETx_lU2jhD92_Ogc_OsgXk",
+//   authDomain: "sa-css.firebaseapp.com",
+//   projectId: "sa-css",
+//   storageBucket: "sa-css.appspot.com",
+//   messagingSenderId: "1060226801896",
+//   appId: "1:1060226801896:web:5172196924fe242669295d",
+//   measurementId: "G-5TD1B1DBP7",
+// };
 
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
@@ -46,3 +57,4 @@ export const notesCollectionRef = collection(db, "notes");
 export const eventsCollectionRef = collection(db, "events");
 export const projectsCollectionRef = collection(db, "projects");
 export const expensesCollectionRef = collection(db, "expenses");
+export const moneyCollectionRef = collection(db, "money");

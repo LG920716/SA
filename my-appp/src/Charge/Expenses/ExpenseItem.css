@@ -4,9 +4,17 @@
   align-items: center;
   padding: 0.5rem;
   margin: 1rem 0;
-  background-color: #4b4b4b;
+  background-color: #ffffff;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
 }
 
+.expense-item.revealed {
+  opacity: 1;
+
+  transform: translateY(0);
+}
 .expense-item__description {
   display: flex;
   flex-direction: column;
@@ -20,17 +28,24 @@
 .expense-item__description button {
   font: inherit;
   cursor: pointer;
-  border: 1px solid #40005d;
-  background-color: #40005d;
-  color: white;
-  border-radius: 12px;
-  margin-right: 1rem;
+  border: 0;
+  background-color: #ffffff;
+  font-weight: bolder;
+  color: rgb(0, 0, 0);
+  border-radius: 5px 0px 0px 5px;
+  margin-right: 0rem;
+  z-index: 99;
 }
-
+.expense-item__description .delete-button {
+  background-color: rgb(255, 255, 255);
+  border-radius: 0px 5px 5px 0px;
+}
 .expense-item__description button:hover,
 .expense-item__description button:active {
-  background-color: #510674;
-  border-color: #510674;
+  background-color: #0c6efd;
+  color: white;
+  transition: 0.2s;
+  border: 0;
 }
 
 .expense-item__description button.alternative {
@@ -49,17 +64,17 @@
   font-size: 1rem;
   flex: 1;
   margin: 0 1rem;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .expense-item__price {
   font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background-color: #40005d;
-  border: 1px solid white;
+  font-weight: 900;
+  font-family: "lato";
+  color: rgb(0, 0, 0);
+  background-color: transparent;
+  border-bottom: 3px solid #0c6efd;
   padding: 0.5rem;
-  border-radius: 12px;
 }
 
 @media (min-width: 580px) {
@@ -72,10 +87,12 @@
 
   .expense-item__description h2 {
     font-size: 1.25rem;
+    font-weight: 900;
   }
 
   .expense-item__price {
     font-size: 1.25rem;
     padding: 0.5rem 1.5rem;
+    margin-right: -0.5rem;
   }
 }

@@ -9,10 +9,18 @@
   margin: auto;
   justify-content: center;
 }
+.addicon {
+  margin-top: -3px;
+  margin-left: -2px;
+  margin-right: 3px;
+}
 .btn.btn.btn-primary1 {
   background-color: #0c6dfd;
+  border-radius: 10px;
+  font-weight: 900;
   color: white;
   font-size: 16px;
+  height: 2.6rem;
 }
 .btn.btn.btn-primary1:hover {
   background-color: #0957cd;
@@ -37,6 +45,7 @@
   padding: 25px 15px 30px 15px;
   border-radius: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 1px 8px rgba(74, 74, 74, 0.25);
 }
 .note-filter-tool {
   display: flex;
@@ -58,17 +67,18 @@
   height: 5.625rem;
   z-index: 99;
 }
+
 @media (min-width: 500px) {
   .grid {
     grid-template-columns: repeat(1, 1fr);
   }
 }
-@media (min-width: 560px) {
+@media (min-width: 600px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 900px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }

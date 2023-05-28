@@ -71,14 +71,29 @@ function View() {
             <label></label>
           </div>
           <div>
-            <Tag tagFrom={"view"} tagList={tagList} />
             <Link to={"../edit/" + id}>
-              <button type="button" class="note-tool" style={{ width: "60px" }}>
+              <button
+                type="button"
+                class="note-tool"
+                style={{
+                  width: "60px",
+                  height: "50px",
+                  borderRadius: "5px 0px 0px 5px",
+                }}
+              >
                 <EditIcon />
               </button>
             </Link>
             <Link to={"../"}>
-              <button type="button" class="note-tool" style={{ width: "60px" }}>
+              <button
+                type="button"
+                class="note-tool"
+                style={{
+                  width: "60px",
+                  height: "50px",
+                  borderRadius: "0px 5px 5px 0px",
+                }}
+              >
                 <FullscreenExitIcon />
               </button>
             </Link>

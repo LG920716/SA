@@ -10,26 +10,29 @@
 } */
 
 .new-project button {
-  font: inherit;
   cursor: pointer;
-  padding: 1rem 2rem;
-  border: 1px solid #40005d;
-  background-color: #40005d;
+  padding: 0.7rem 0.7rem;
+  background-color: #0c6efd;
+  border: 0;
+  font-weight: 900;
+  font-size: 16px;
   color: white;
-  border-radius: 12px;
+  border-radius: 10px;
   margin-right: 1rem;
 }
 
-.new-project .bt-right{
+.new-project .bt-right {
+  display: flex;
+  align-items: center;
   right: 1rem;
   bottom: 1rem;
   position: absolute;
+  height: 2.6rem;
 }
 
 .new-project button:hover,
 .new-project button:active {
-  background-color: #510674;
-  border-color: #510674;
+  background-color: #0554ca;
 }
 
 .new-project button.alternative {

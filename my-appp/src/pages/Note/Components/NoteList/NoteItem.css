@@ -16,7 +16,25 @@
 .card {
   background-color: white;
   border-radius: 0 0 20px 20px;
+  box-shadow: 0 1px 8px rgba(123, 123, 123, 0.25);
+  width: 98%;
+  height: 98%;
+  margin: auto;
+  opacity: 0;
+  animation: revealCard 0.7s ease-in-out forwards;
 }
+
+@keyframes revealCard {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .note-item-tool {
   width: 100%;
   display: flex;
@@ -28,7 +46,7 @@
     grid-template-columns: repeat(1, 1fr);
   }
 }
-@media (min-width: 750px) {
+@media (min-width: 50%) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -47,4 +65,20 @@
   .btn-group {
     width: 30%;
   }
+}
+.swal2-styled.swal2-confirm {
+  background-color: #fd0e0e !important;
+  font-weight: 900;
+  font-size: 16px;
+  padding: 0.6rem 0.75rem !important;
+  border-radius: 6px !important;
+  order: 1;
+}
+.swal2-styled.swal2-cancel {
+  font-weight: 900;
+  font-size: 16px;
+  padding: 0.6rem 0.75rem !important;
+  border-radius: 6px !important;
+  background-color: transparent !important;
+  color: #0e6cfd !important;
 }

@@ -76,6 +76,18 @@ export default function ProjectForm(props) {
           />
         </div>
       </div>
+      <div className="new-project__controls">
+        <div className="new-project__control">
+          <label>Tag</label>
+          <input
+            type="text"
+            value={EnterDescription}
+            onChange={(event) => {
+                setEnterDescription(event.target.value);
+            }}
+          />
+        </div>
+      </div>
       <div className="new-project__actions">
         <button type="button" onClick={props.onStopEditing}>
           Cencel

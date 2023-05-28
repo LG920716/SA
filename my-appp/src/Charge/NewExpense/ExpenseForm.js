@@ -29,10 +29,10 @@ export default function ExpenseForm(props) {
   };
 
   return (
-    <form onSubmit={SubmitHandlar}>
+    <form onSubmit={SubmitHandlar} className="form2">
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Title</label>
+          <label>標題</label>
           <input
             type="text"
             value={EnterTitle}
@@ -44,7 +44,7 @@ export default function ExpenseForm(props) {
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Amount</label>
+          <label>金額</label>
           <input
             type="number"
             min="1"
@@ -58,7 +58,7 @@ export default function ExpenseForm(props) {
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Date</label>
+          <label>日期</label>
           <input
             type="date"
             value={EnterDate}
@@ -70,7 +70,7 @@ export default function ExpenseForm(props) {
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>project</label>
+          <label>活動</label>
           <input
             type="text"
             list="project-list"
@@ -107,11 +107,19 @@ export default function ExpenseForm(props) {
           </datalist>
         </div>
       </div>
+
       <div className="new-expense__actions">
-        <button type="button" onClick={props.onStopEditing}>
-          Cencel
+        <button
+          className="cancel-button"
+          type="button"
+          style={{ marginRight: "1rem" }}
+          onClick={props.onStopEditing}
+        >
+          取消
         </button>
-        <button type="sumbit">New Expense</button>
+        <button className="sumbit-button" type="sumbit">
+          新增
+        </button>
       </div>
     </form>
   );

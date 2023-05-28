@@ -22,5 +22,41 @@
 }
 
 .new-expense__actions {
-  text-align: right;
+  text-align: center;
+  display: flex;
+  width: 90%;
+  margin-right: 1rem;
+
+  justify-content: end;
+}
+.sumbit-button {
+  padding: 0.8rem;
+  background-color: #0c6efd !important;
+  color: white !important;
+}
+.sumbit-button:hover {
+  background-color: #0958cf !important;
+}
+.cancel-button {
+  padding: 0.8rem;
+  background-color: transparent !important;
+  color: #0c6efd !important;
+  margin-right: 5px !important;
+}
+.cancel-button:hover {
+  background-color: rgb(224, 224, 224) !important;
+}
+.form2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
+  background-color: rgb(255, 255, 255);
+  height: 430px;
+  width: 358px;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
 }
