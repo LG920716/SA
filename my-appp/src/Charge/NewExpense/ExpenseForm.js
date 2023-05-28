@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./ExpenseForm.css";
-import ExpenseButton from "./ExpenseButton";
 
 export default function ExpenseForm(props) {
   const [EnterTitle, setEnterTitle] = useState("");

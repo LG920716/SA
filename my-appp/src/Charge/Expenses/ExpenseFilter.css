@@ -1,6 +1,8 @@
 .expenses-filter {
   color: white;
   padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .expenses-filter__control {

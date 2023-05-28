@@ -30,7 +30,7 @@ export default function Charge() {
   return (
     <div>
       <DonutChart />
-      <NewExpense expensesItems={expenses} projectItems={project} />
+      {/* <NewExpense expensesItems={expenses} projectItems={project} /> */}
       <Expenses expensesItems={expenses} projectItems={project} />
     </div>
   );

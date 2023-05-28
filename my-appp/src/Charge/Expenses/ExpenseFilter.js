@@ -1,8 +1,13 @@
 import "./ExpenseFilter.css";
+import NewExpense from "../NewExpense/NewExpense";
 
 const ExpensesFilter = (props) => {
   const dropdownChangeHandler = (event) => {
     props.onChangeFilter(event.target.value);
+  };
+
+  const searchChangeHandler = (event) => {
+    props.onSearch(event.target.value);
   };
   return (
     <div className="expenses-filter">
@@ -17,6 +22,14 @@ const ExpensesFilter = (props) => {
           ))}
         </select>
       </div>
+      <div className="search">
+        <label>搜尋:</label>
+        <input type="text" onChange={searchChangeHandler} />
+      </div>
+      <NewExpense
+        expensesItems={props.expensesItems}
+        projectItems={props.projectItems}
+      />
     </div>
   );
 };
