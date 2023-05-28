@@ -21,6 +21,7 @@ const NewProject = (props) => {
       budget: enterProjectDate.budget,
       date: enterProjectDate.date,
       description: enterProjectDate.description,
+      color: enterProjectDate.color,
       created_at: new Date(),
       updated_at: new Date(),
     });

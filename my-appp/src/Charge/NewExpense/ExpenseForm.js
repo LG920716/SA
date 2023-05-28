@@ -6,7 +6,9 @@ export default function ExpenseForm(props) {
   const [EnterTitle, setEnterTitle] = useState("");
   const [EnterAmount, setEnterAmount] = useState();
   const [EnterDate, setEnterDate] = useState("");
-  const [EnterProject, setEnterProject] = useState("");
+  //本來想用Type 但會重複所以用income or expenditure的開頭取縮寫
+  const [EnterIOE, setEnterIOE] = useState("");
+  const [EnterProject, setEnterProject] = useState("一般收支");
   const [EnterType, setEnterType] = useState("");
 
   const SubmitHandlar = (event) => {
@@ -17,7 +19,8 @@ export default function ExpenseForm(props) {
       amount: +EnterAmount,
       date: new Date(EnterDate),
       project: EnterProject,
-      type: EnterType
+      type: EnterType,
+      IOE: EnterIOE
     };
 
     props.onSaveExpenseData(expenseData);
@@ -26,6 +29,8 @@ export default function ExpenseForm(props) {
     setEnterDate("");
     setEnterProject("");
     setEnterType("");
+    setEnterType("");
+    setEnterIOE("");
   };
 
   return (
@@ -70,7 +75,24 @@ export default function ExpenseForm(props) {
       </div>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>活動</label>
+          <label>收支種類</label>
+          <input
+            type="text"
+            list="IOEList"
+            value={EnterIOE}
+            onChange={(event) => {
+              setEnterIOE(event.target.value);
+            }}
+          />
+          <datalist id="IOEList">
+            <option value="收入" />
+            <option value="支出" />
+          </datalist>
+        </div>
+      </div>
+      <div className="new-expense__controls">
+        <div className="new-expense__control">
+          <label>用途</label>
           <input
             type="text"
             list="project-list"

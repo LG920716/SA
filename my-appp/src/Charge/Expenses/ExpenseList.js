@@ -19,6 +19,8 @@ export default function ExpenseList(props) {
           date={Expense.date}
           project={Expense.projectName}
           projectItems={props.projectItems}
+          type={Expense.type}
+          IOE={Expense.IOE}
         />
       ))}
     </ul>

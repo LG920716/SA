@@ -10,6 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function ExpenseItem(props) {
+  console.log(props);
   const [isEditing, setIsEditing] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
   const expenseItemRef = useRef(null);
