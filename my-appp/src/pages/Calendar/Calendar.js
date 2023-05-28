@@ -33,21 +33,6 @@ export default function Calendars({ isAuth }) {
   const [searchInput, setSearchInput] = useState("");
   const [color, setColor] = useState("");
   
-  const colorListDefault = [
-    "#0052cc",
-    "#8ed1fc",
-    "#0693e3",
-    "#ff6900",
-    "#fcb900",
-    "#0097a7",
-    "#7bdcb5",
-    "#00d084",
-    "#eb144c",
-    "#f78da7",
-    "#9900ef",
-    "#9575cd",
-  ];
-  
   let navigate = useNavigate();
   useEffect(() => {
     if (!isAuth) {
