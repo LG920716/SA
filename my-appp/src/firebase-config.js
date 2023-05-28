@@ -33,7 +33,7 @@ const firebaseConfig = {
   storageBucket: "sa-project-d7a1c.appspot.com",
   messagingSenderId: "181071305167",
   appId: "1:181071305167:web:4ed90139c5ddb5fa445aba",
-  measurementId: "G-Q77ZV6W9X4"
+  measurementId: "G-Q77ZV6W9X4",
 };
 
 // const firebaseConfig = {

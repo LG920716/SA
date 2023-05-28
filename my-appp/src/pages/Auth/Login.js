@@ -11,7 +11,7 @@ import {
   collection,
 } from "firebase/firestore";
 
-function Login({ setIsAuth, setLevel, setauthId }) {
+function Login({ setIsAuth, setLevel, setUrl, setNotePage }) {
   let navigate = useNavigate();
 
   const signInWithGoogle = () => {
@@ -20,10 +20,10 @@ function Login({ setIsAuth, setLevel, setauthId }) {
         const usersCollectionRef = doc(db, "users", auth?.currentUser?.uid);
         localStorage.setItem("isAuth", true);
         localStorage.setItem("url", auth?.currentUser?.photoURL);
-        localStorage.setItem("name", auth?.currentUser?.displayName);
-        localStorage.setItem("id", auth?.currentUser?.uid);
+        setUrl(auth?.currentUser?.photoURL);
+        localStorage.setItem("noteWay", "notes");
         setIsAuth(true);
-        setauthId(auth?.currentUser?.uid);
+        setNotePage("notes");
 
         const userAdd = async (level) => {
           try {
@@ -35,6 +35,7 @@ function Login({ setIsAuth, setLevel, setauthId }) {
               createAt: serverTimestamp(),
             });
             localStorage.setItem("level", level);
+
             setLevel(level);
           } catch (err) {
             console.error(err);
@@ -47,17 +48,19 @@ function Login({ setIsAuth, setLevel, setauthId }) {
             const data = await getDocs(collection(db, "users"));
             if (data.docs.length === 0) {
               userAdd("admin");
+              navigate("/");
             } else {
               userAdd("unCheck");
+              navigate("/nonUser");
             }
           } else {
             localStorage.setItem("level", account.data().level);
+
             setLevel(account.data().level);
+            navigate("/");
           }
         };
         checkHasAccount();
-
-        navigate("/");
       })
       .catch((err) => {
         console.error(err);

@@ -1,13 +1,14 @@
 import nonUser from "./img/nonUser.svg";
 import Logout from "../Auth/Logout";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 function NonUser({ setIsAuth, isAuth, level }) {
   let navigate = useNavigate();
   const levelList = ["admin", "money", "user"];
+
   useEffect(() => {
-    console.log(level);
+    console.log("non", level);
     if (!isAuth) {
       navigate("/login");
     } else if (levelList.includes(level)) {

@@ -1,39 +1,51 @@
 import { useState, useEffect } from "react";
 import { addDoc, serverTimestamp } from "firebase/firestore";
-import { notesCollectionRef } from "../../firebase-config";
+import { notesCollectionRef, auth } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import Editor from "./Components/Editor/Editor";
 import Tag from "./Components/Tag/Tag";
-import Editor1 from "./testEd"
 
 function Create() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tagList, setTagList] = useState([]);
+  const [userSelectList, setUserSelectList] = useState([]);
 
   let navigate = useNavigate();
 
   const createNote = async () => {
-    await addDoc(notesCollectionRef, {
-      title: title ? title : new Date().toLocaleString(),
-      body,
-      createAt: serverTimestamp(),
-      editAt: serverTimestamp(),
-      viewAt: serverTimestamp(),
-      tag: tagList ? tagList : [],
-    });
-    navigate("/");
-  };
+    try {
+      await addDoc(notesCollectionRef, {
+        title: title ? title : new Date().toLocaleString(),
+        body,
+        createAt: serverTimestamp(),
+        editAt: serverTimestamp(),
+        viewAt: serverTimestamp(),
+        tag: tagList,
+        owner: [
+          { uid: auth?.currentUser?.uid, email: auth?.currentUser?.email },
+        ],
+        allow: userSelectList,
+      });
 
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(userSelectList, "{{{");
   return (
     <div className="container">
       <div className="wrapper">
         <div className="editorTop">
-        <Editor
+          <Editor
             title={title}
             setTitle={setTitle}
             body={body}
             setBody={setBody}
+            setUserSelectList={setUserSelectList}
+            userSelectList={userSelectList}
+            userFrom={"create"}
           />
           <div
             style={{

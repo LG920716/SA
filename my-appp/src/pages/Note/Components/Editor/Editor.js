@@ -3,8 +3,19 @@ import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./Tool";
 import "react-quill/dist/quill.snow.css";
 import "./Editor.css";
+import MutiSelect from "../MutiSelect/MutiSelect";
 
-function Editor({ title, setTitle, body, setBody }) {
+function Editor({
+  title,
+  setTitle,
+  body,
+  setBody,
+  setUserSelectList,
+  userSelectList,
+  userFrom,
+  ownerEmail,
+  ownerUid,
+}) {
   return (
     <>
       <input
@@ -23,6 +34,13 @@ function Editor({ title, setTitle, body, setBody }) {
         placeholder={"內文..."}
         modules={modules}
         formats={formats}
+      />
+      <MutiSelect
+        setUserSelectList={setUserSelectList}
+        userSelectList={userSelectList}
+        userFrom={userFrom}
+        ownerEmail={ownerEmail}
+        ownerUid={ownerUid}
       />
     </>
   );
