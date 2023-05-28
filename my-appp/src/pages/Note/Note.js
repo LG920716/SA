@@ -4,37 +4,40 @@ import { useEffect, useState } from "react";
 import SearchBar from "./Components/Search/search";
 import "./Note.css";
 import AddIcon from "@mui/icons-material/Add";
-import { getDocs, orderBy, query } from "firebase/firestore";
-import { notesCollectionRef } from "../../firebase-config";
-import searchNote from "./Components/Search/search.svg";
-import { useNavigate } from "react-router-dom";
+import { getDocs, orderBy, query, collection } from "firebase/firestore";
+import searchNote from "./Components/Search/img/search.svg";
+import trash from "./Components/Search/img/trash.svg";
+import { db, auth } from "../../firebase-config";
+import DeleteIcon from "@mui/icons-material/Delete";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import ColorSelectOption from "./Components/Search/colorSelect";
 
-function Note({ level }) {
+function Note({ notePage, setNotePage, level }) {
   const [noteList, setNoteList] = useState([]);
   const [noteListFilter, setNoteListFilter] = useState([]);
   const [orderArr, setOrderArr] = useState("viewAt");
   const [order, setOrder] = useState("desc");
-
-  let navigate = useNavigate();
-
-  const q = query(notesCollectionRef, orderBy(orderArr, order));
+  const [color, setColor] = useState("");
   const getNotes = async () => {
-    const data = await getDocs(q);
-    const list = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    setNoteList(list);
-    setNoteListFilter(list);
+    try {
+      const notesCollectionRef = collection(db, notePage);
+      const q = query(notesCollectionRef, orderBy(orderArr, order));
+      const data = await getDocs(q);
+      const list = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setNoteList(list);
+
+      setNoteListFilter(list);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    if (level === "unCheck") {
-      navigate("/nonUser");
-    }
-  }, [level]);
-
-  console.log("levelNote", level);
-  useEffect(() => {
     getNotes();
-  }, [orderArr, order]);
+  }, [orderArr, order, notePage]);
 
   const selectChange = (e) => {
     setOrderArr(e.target.value);
@@ -43,12 +46,27 @@ function Note({ level }) {
   const orderIsChange = (e) => {
     order === "desc" ? setOrder("asc") : setOrder("desc");
   };
-  console.log(new Date().toLocaleString());
 
+  const pageIsChange = (e) => {
+    if (notePage === "notes") {
+      localStorage.setItem("noteWay", "noteDel");
+      setNotePage("noteDel");
+    } else {
+      localStorage.setItem("noteWay", "notes");
+      setNotePage("notes");
+    }
+  };
+  console.log("*******", color);
   return (
     <div className="container">
       <div className="wrapper">
-        <SearchBar noteList={noteList} setNoteListFilter={setNoteListFilter} />
+        <SearchBar
+          noteList={noteList}
+          setNoteListFilter={setNoteListFilter}
+          searchFrom={notePage}
+          level={level}
+          color={color}
+        />
         <div className="note-filter-tool">
           <div style={{ display: "flex" }}>
             <select
@@ -68,13 +86,25 @@ function Note({ level }) {
                 <i class="bi bi-arrow-down"></i>
               )}
             </button>
+            <ColorSelectOption color={color} setColor={setColor} />
           </div>
-          <Link to={"/create"}>
-            <button type="button" class="btn btn-primary1">
-              <AddIcon style={{ marginTop: "-2px", marginLeft: "-5px" }} />
-              新增文件
+          <div>
+            <button
+              type="button"
+              class="btn btn-primary1"
+              style={{ marginRight: "10px" }}
+              onClick={pageIsChange}
+            >
+              {notePage === "notes" ? <DeleteIcon /> : <LibraryBooksIcon />}
             </button>
-          </Link>
+
+            <Link to={"/create"}>
+              <button type="button" class="btn btn-primary1">
+                <AddIcon style={{ marginTop: "-2px", marginLeft: "-5px" }} />
+                新增文件
+              </button>
+            </Link>
+          </div>
         </div>
 
         <Link to={"/create"}>
@@ -85,7 +115,8 @@ function Note({ level }) {
         <div className="grid">
           {noteListFilter.length !== 0 ? (
             noteListFilter.map((note) => {
-              const { title = "", body = "", id } = note;
+              const { title = "", body = "", id, allow = [] } = note;
+
               return (
                 <NoteItem
                   key={id}
@@ -94,6 +125,13 @@ function Note({ level }) {
                   id={id}
                   noteList={noteList}
                   setNoteList={setNoteList}
+                  createAt={note.createAt}
+                  editAt={note.editAt}
+                  viewAt={note.viewAt}
+                  tag={note.tag}
+                  owner={note.owner}
+                  notePage={notePage}
+                  allow={allow}
                 />
               );
             })
@@ -102,7 +140,7 @@ function Note({ level }) {
               <div></div>
               <center>
                 <img
-                  src={searchNote}
+                  src={notePage === "notes" ? searchNote : trash}
                   style={{
                     height: "290px",
                   }}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db, auth } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import Editor from "./Components/Editor/Editor";
 import Tag from "./Components/Tag/Tag";
@@ -12,6 +12,11 @@ function Edit() {
   const { id } = useParams();
   const docNoteEditRef = doc(db, "notes", id);
   const [tagList, setTagList] = useState([]);
+  const [uid, setUid] = useState("");
+  const [userSelectList, setUserSelectList] = useState([]);
+  const [noteDataWait, setNoteDataWait] = useState([]);
+  const [ownerUid, setOwnerUid] = useState([]);
+  const [ownerEmail, setOwnerEmail] = useState([]);
 
   let navigate = useNavigate();
 
@@ -19,10 +24,16 @@ function Edit() {
     const getNoteEdit = async () => {
       try {
         const docSnap = await getDoc(docNoteEditRef);
+        setNoteDataWait(docSnap.data().title);
         setTitle(docSnap.data().title);
         setBody(docSnap.data().body);
+        setUserSelectList(docSnap.data().allow);
         setTagList(docSnap.data().tag);
+        setUid(auth?.currentUser?.uid);
+        setOwnerUid(docSnap.data().owner[0].uid);
+        setOwnerEmail(docSnap.data().owner[0].email);
       } catch (error) {
+        navigate("/");
         console.log(error);
       }
     };
@@ -30,23 +41,42 @@ function Edit() {
   }, []);
 
   useEffect(() => {
+    if (
+      noteDataWait &&
+      uid &&
+      !userSelectList.map((x) => x.value).includes(uid)
+    ) {
+      navigate("/");
+    }
+  }, [noteDataWait, uid]);
+
+  useEffect(() => {
     const updateViewTime = async (id) => {
-      await updateDoc(docNoteEditRef, {
-        viewAt: serverTimestamp(),
-      });
+      try {
+        await updateDoc(docNoteEditRef, {
+          viewAt: serverTimestamp(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
     };
     updateViewTime();
   }, []);
 
   const updateEditNote = async (id) => {
-    await updateDoc(docNoteEditRef, {
-      title: title ? title : new Date().toLocaleString(),
-      body,
-      editAt: serverTimestamp(),
-      viewAt: serverTimestamp(),
-      tag: tagList ? tagList : [],
-    });
-    navigate("/");
+    try {
+      await updateDoc(docNoteEditRef, {
+        title: title ? title : new Date().toLocaleString(),
+        body,
+        editAt: serverTimestamp(),
+        viewAt: serverTimestamp(),
+        tag: tagList,
+        allow: userSelectList,
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -58,6 +88,11 @@ function Edit() {
             setTitle={setTitle}
             body={body}
             setBody={setBody}
+            setUserSelectList={setUserSelectList}
+            userSelectList={userSelectList}
+            userFrom={"edit"}
+            ownerUid={ownerUid}
+            ownerEmail={ownerEmail}
           />
           <div
             style={{

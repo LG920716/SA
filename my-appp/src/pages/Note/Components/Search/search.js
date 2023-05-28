@@ -1,24 +1,38 @@
 import "./search.css";
 import { useEffect, useState } from "react";
+import { auth } from "../../../../firebase-config";
 
-const SearchBar = ({ noteList, setNoteListFilter }) => {
+const SearchBar = ({
+  noteList,
+  setNoteListFilter,
+  searchFrom,
+  level,
+  color,
+}) => {
   const [search, setSearch] = useState("");
 
   const searchNotes = () => {
     setNoteListFilter(
       noteList.filter((notes) => {
-        return (
-          notes.title.toLowerCase().includes(search.toLowerCase()) ||
-          notes.body
-            .replace(/<\/?.+?>/g, "")
-            .replace(/ /g, "")
-            .toLowerCase()
-            .includes(search.toLowerCase()) ||
-          notes.tag
-            .map((x) => x.tagName)
-            .filter((x) => x.toLowerCase().includes(search.toLowerCase()))
-            .length > 0
-        );
+        console.log("::::::::::::", color);
+        return searchFrom === "notes" || searchFrom === "noteDel"
+          ? (notes.title.toLowerCase().includes(search.toLowerCase()) ||
+              notes.body
+                .replace(/<\/?.+?>/g, "")
+                .replace(/ /g, "")
+                .toLowerCase()
+                .includes(search.toLowerCase()) ||
+              notes.tag
+                .map((x) => x.tagName)
+                .filter((x) => x.toLowerCase().includes(search.toLowerCase()))
+                .length > 0) &&
+              (searchFrom === "noteDel"
+                ? notes.owner[0].uid === auth.currentUser.uid ||
+                  level === "admin"
+                : notes) &&
+              (color ? notes.tag.map((x) => x.color).includes(color) : notes)
+          : notes.email.toLowerCase().includes(search.toLowerCase()) ||
+              notes.name.toLowerCase().includes(search.toLowerCase());
       })
     );
   };
@@ -35,7 +49,7 @@ const SearchBar = ({ noteList, setNoteListFilter }) => {
 
   useEffect(() => {
     searchNotes();
-  }, [search, noteList]);
+  }, [search, noteList, color]);
 
   return (
     <center>

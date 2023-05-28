@@ -1,19 +1,24 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db, auth } from "../../firebase-config";
 import { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import EditIcon from "@mui/icons-material/Edit";
 import Tag from "./Components/Tag/Tag";
+import { useNavigate } from "react-router-dom";
+import MutiSelect from "./Components/MutiSelect/MutiSelect";
 
-function View() {
+function View({ notePage, level }) {
   const { id } = useParams();
   const [noteData, setNoteData] = useState([]);
-  const docNoteRef = doc(db, "notes", id);
-  console.log("id", id);
+  const [uid, setUid] = useState("");
+  const [editOpen, setEditOpen] = useState(false);
+  const [userSelectList, setUserSelectList] = useState([]);
+  const docNoteRef = doc(db, notePage, id);
+
   let navigate = useNavigate();
-  console.log("noteData", noteData);
+
   const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
@@ -22,12 +27,34 @@ function View() {
         const docSnap = await getDoc(docNoteRef);
         setNoteData(docSnap.data());
         setTagList(docSnap.data().tag);
+        setUid(auth?.currentUser?.uid);
+        setUserSelectList(docSnap.data().allow);
       } catch (error) {
+        navigate("/");
         console.log(error);
       }
     };
     getNoteData();
   }, []);
+
+  useEffect(() => {
+    if (
+      notePage === "noteDel" &&
+      noteData &&
+      uid &&
+      noteData.owner[0].uid !== uid &&
+      level !== "admin"
+    ) {
+      navigate("/");
+    } else if (
+      noteData &&
+      uid &&
+      noteData.allow.map((x) => x.value).includes(uid) &&
+      notePage !== "noteDel"
+    ) {
+      setEditOpen(true);
+    }
+  }, [noteData, uid]);
 
   useEffect(() => {
     const viewNoteTime = async (id) => {
@@ -36,10 +63,11 @@ function View() {
           viewAt: serverTimestamp(),
         });
       } catch (error) {
+        navigate("/");
         console.log(error);
       }
     };
-    viewNoteTime();
+    notePage === "notes" && viewNoteTime();
   }, []);
 
   return (
@@ -71,11 +99,24 @@ function View() {
             <label></label>
           </div>
           <div>
-            <Link to={"../edit/" + id}>
-              <button type="button" class="note-tool" style={{ width: "60px" }}>
-                <EditIcon />
-              </button>
-            </Link>
+            <MutiSelect
+              setUserSelectList={setUserSelectList}
+              userSelectList={userSelectList}
+              userFrom={"view"}
+            />
+            <Tag tagFrom={"view"} tagList={tagList} />
+            {editOpen && (
+              <Link to={"../edit/" + id}>
+                <button
+                  type="button"
+                  class="note-tool"
+                  style={{ width: "60px" }}
+                >
+                  <EditIcon />
+                </button>
+              </Link>
+            )}
+
             <Link to={"../"}>
               <button type="button" class="note-tool" style={{ width: "60px" }}>
                 <FullscreenExitIcon />
