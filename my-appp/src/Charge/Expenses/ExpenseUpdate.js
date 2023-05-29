@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { db } from "../../firebase-config";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+// import { db } from "../../firebase-config";
+// import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { setUpdateExpense } from "../../Redux/updateExpense";
 
 import Card from "../UI/Card";
 import "./ExpenseUpdate.css";
 
 export default function ExpenseUpdate(props) {
+  const dispatch = useDispatch();
   console.log(props);
   const [EnterName, setEnterName] = useState(props.data.name);
   const [EnterAmount, setEnterAmount] = useState(props.data.amount);
@@ -23,18 +26,18 @@ export default function ExpenseUpdate(props) {
   const SubmitHandlar = async (event) => {
     event.preventDefault();
 
-    const expenseDoc = doc(db, "expenses", props.data.id);
-    console.log(expenseDoc);
+    // const expenseDoc = doc(db, "expenses", props.data.id);
+    // console.log(expenseDoc);
 
-    await updateDoc(expenseDoc, {
-      name: EnterName,
-      amount: +EnterAmount,
-      date: EnterDate,
-      projectName: EnterPropject,
-      updated_at: new Date(),
-      IOE: EnterIOE,
-      type: EnterType
-    });
+    // await updateDoc(expenseDoc, {
+    //   name: EnterName,
+    //   amount: +EnterAmount,
+    //   date: EnterDate,
+    //   projectName: EnterPropject,
+    //   updated_at: new Date(),
+    //   IOE: EnterIOE,
+    //   type: EnterType,
+    // });
 
     props.onStopEditing();
 
@@ -49,7 +52,23 @@ export default function ExpenseUpdate(props) {
   return (
     <Card className="update-expense">
       <span className="overlay"></span>
-      <form onSubmit={SubmitHandlar}>
+      <form
+        onSubmit={SubmitHandlar}
+        onClick={() => {
+          dispatch(
+            setUpdateExpense({
+              id: props.data.id,
+              name: EnterName,
+              amount: +EnterAmount,
+              date: EnterDate,
+              projectName: EnterPropject,
+              updated_at: new Date(),
+              IOE: EnterIOE,
+              type: EnterType,
+            })
+          );
+        }}
+      >
         <div className="update-expense__controls">
           <div className="update-expense__control">
             <label>標題</label>
@@ -90,22 +109,22 @@ export default function ExpenseUpdate(props) {
           </div>
         </div>
         <div className="new-expense__controls">
-        <div className="new-expense__control">
-          <label>收支種類</label>
-          <input
-            type="text"
-            list="IOEList"
-            value={EnterIOE}
-            onChange={(event) => {
-              setEnterIOE(event.target.value);
-            }}
-          />
-          <datalist id="IOEList">
-            <option value="收入" />
-            <option value="支出" />
-          </datalist>
+          <div className="new-expense__control">
+            <label>收支種類</label>
+            <input
+              type="text"
+              list="IOEList"
+              value={EnterIOE}
+              onChange={(event) => {
+                setEnterIOE(event.target.value);
+              }}
+            />
+            <datalist id="IOEList">
+              <option value="收入" />
+              <option value="支出" />
+            </datalist>
+          </div>
         </div>
-      </div>
         <div className="update-expense__controls">
           <div className="update-expense__control">
             <label>用途</label>
@@ -127,27 +146,27 @@ export default function ExpenseUpdate(props) {
           </div>
         </div>
         <div className="new-expense__controls">
-        <div className="new-expense__control">
-          <label>核銷</label>
-          <input
-            type="text"
-            value={EnterType}
-            list="type-list"
-            onChange={(event) => {
-              setEnterType(event.target.value);
-            }}
-          />
-          <datalist id="type-list">
-            <option value="不可核銷" key="0" />
-            <option value="可核銷-文具費" key="1" />
-            <option value="可核銷-印刷費" key="2" />
-            <option value="可核銷-保險費" key="3" />
-            <option value="可核銷-住宿費" key="4" />
-            <option value="可核銷-交通費" key="5" />
-            <option value="可核銷-講師費" key="6" />
-          </datalist>
+          <div className="new-expense__control">
+            <label>核銷</label>
+            <input
+              type="text"
+              value={EnterType}
+              list="type-list"
+              onChange={(event) => {
+                setEnterType(event.target.value);
+              }}
+            />
+            <datalist id="type-list">
+              <option value="不可核銷" key="0" />
+              <option value="可核銷-文具費" key="1" />
+              <option value="可核銷-印刷費" key="2" />
+              <option value="可核銷-保險費" key="3" />
+              <option value="可核銷-住宿費" key="4" />
+              <option value="可核銷-交通費" key="5" />
+              <option value="可核銷-講師費" key="6" />
+            </datalist>
+          </div>
         </div>
-      </div>
 
         <div className="update-expense__actions">
           <button className="canel" type="button" onClick={props.onStopEditing}>

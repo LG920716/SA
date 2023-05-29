@@ -29,13 +29,13 @@ export default function ProjectForm(props) {
     setEnterColor("");
   };
 
-  const changeColorHandler = color => {
+  const changeColorHandler = (color) => {
     setEnterColor(color);
-  }
+  };
 
-  const ChromePickerHandler = () => {
+  const openColorPicker = () => {
     setChromePicker(true);
-  }
+  };
 
   return (
     <form onSubmit={SubmitHandlar}>
@@ -89,17 +89,34 @@ export default function ProjectForm(props) {
           />
         </div>
       </div>
-      <div className="new-project__controls">
+      {/* <div className="new-project__controls">
         <div className="new-project__control">
           <label>Tag</label>
           <input
             type="text"
             value={EnterColor}
-            onClick={ChromePickerHandler}
+            onClick={openColorPicker}
           />
           {ChromePicker && <Color changeColor={changeColorHandler}/>}
         </div>
-      </div>
+      </div> */}
+      {/* <div className="new-project__controls">
+        <div className="new-project__control">
+          <label>Tag</label>
+          <input
+            type="text"
+            value={EnterColor}
+            onClick={openColorPicker}
+          />
+          {ChromePickerOpen && (
+            <Color
+              color={EnterColor}
+              onChangeColor={changeColorHandler}
+              onClose={() => setChromePickerOpen(false)}
+            />
+          )}
+        </div>
+      </div> */}
       <div className="new-project__actions">
         <button type="button" onClick={props.onStopEditing}>
           Cencel

@@ -7,7 +7,6 @@ import ExpenseForm from "./ExpenseForm";
 
 const NewExpense = (props) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [expensesItems, setExpensesItems] = useState(props.expensesItems);
   const [level, setLevel] = useState(localStorage.getItem("level"));
 
   const isEditingHandler = () => {
@@ -16,26 +15,7 @@ const NewExpense = (props) => {
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
-  const saveExpenseDataHandler = async (enterExpenseData) => {
-    // console.log(enterExpenseData);
-    const status = level == "money" ? 1 : 0;
-
-    const newExpense = {
-      name: enterExpenseData.name,
-      amount: enterExpenseData.amount,
-      date: enterExpenseData.date,
-      projectName: enterExpenseData.project,
-      created_at: new Date(),
-      updated_at: new Date(),
-      type: enterExpenseData.type,
-      IOE: enterExpenseData.IOE,
-      description: enterExpenseData.description,
-      status: status,
-    };
-
-    await addDoc(expensesCollectionRef, newExpense);
-    const updatedExpenses = [...expensesItems, newExpense];
-    setExpensesItems(updatedExpenses);
+  const saveExpenseDataHandler = async () => {
     setIsEditing(false);
   };
   return (
@@ -51,7 +31,7 @@ const NewExpense = (props) => {
         <ExpenseForm
           onSaveExpenseData={saveExpenseDataHandler}
           onStopEditing={stopEditingHandler}
-          expensesItems={expensesItems}
+          expensesItems={props.expensesItems}
           projectItems={props.projectItems}
         />
       )}

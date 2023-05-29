@@ -61,14 +61,14 @@
   }
 }
 /* style={{
-  background: "grey",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "10px",
-  width: "250px",
-  borderRadius: "25px",
-}} */
+    background: "grey",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "10px",
+    width: "250px",
+    borderRadius: "25px",
+  }} */
 
 .color-picker-tab {
   width: 270px;

@@ -23,50 +23,54 @@ function App() {
   const [tagList, setTagList] = useState([]);
 
   return (
-    <Router>
-      <NavBar
-        setIsAuth={setIsAuth}
-        level={level}
-        isAuth={isAuth}
-        setLevel={setLevel}
-        url={url}
-      />
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <Login
-              setIsAuth={setIsAuth}
-              setLevel={setLevel}
-              setUrl={setUrl}
-              setNotePage={setNotePage}
-            />
-          }
+      <Router>
+        <NavBar
+          setIsAuth={setIsAuth}
+          level={level}
+          isAuth={isAuth}
+          setLevel={setLevel}
+          url={url}
         />
-        <Route
-          path="/"
-          element={
-            <Note notePage={notePage} setNotePage={setNotePage} level={level} />
-          }
-        />
-        <Route path="/create" element={<Create />} />
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route
-          path="/view/:id"
-          element={<View notePage={notePage} level={level} />}
-        />
-        <Route path="/calendar" element={<Calendars isAuth={isAuth} />} />
-        <Route path="/charge" element={<Charge />} />
-        <Route path="/ProjectManagement" element={<Project />} />
-        <Route path="/admin" element={<Admin setLevel={setLevel} />} />
-        <Route
-          path="/nonUser"
-          element={
-            <NonUser setIsAuth={setIsAuth} level={level} isAuth={isAuth} />
-          }
-        />
-      </Routes>
-    </Router>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <Login
+                setIsAuth={setIsAuth}
+                setLevel={setLevel}
+                setUrl={setUrl}
+                setNotePage={setNotePage}
+              />
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <Note
+                notePage={notePage}
+                setNotePage={setNotePage}
+                level={level}
+              />
+            }
+          />
+          <Route path="/create" element={<Create />} />
+          <Route path="/edit/:id" element={<Edit />} />
+          <Route
+            path="/view/:id"
+            element={<View notePage={notePage} level={level} />}
+          />
+          <Route path="/calendar" element={<Calendars isAuth={isAuth} />} />
+          <Route path="/charge" element={<Charge />} />
+          <Route path="/ProjectManagement" element={<Project />} />
+          <Route path="/admin" element={<Admin setLevel={setLevel} />} />
+          <Route
+            path="/nonUser"
+            element={
+              <NonUser setIsAuth={setIsAuth} level={level} isAuth={isAuth} />
+            }
+          />
+        </Routes>
+      </Router>
   );
 }
 
