@@ -46,6 +46,9 @@ export default function Calendars({ isAuth }) {
     if (!eventInput) {
       return alert("請輸入活動名稱");
     }
+    if (!tagList.length) {
+      return alert("請設定活動標籤");
+    }
     if (startDate >= endDate) {
       return alert("開始時間必須早於結束時間");
     }
@@ -54,17 +57,15 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "1d83dccc",
-        tag: tagList ? tagList : [],
+        backgroundColor: tagList[0].color,
+        tag: tagList,
       });
       const newEvent = {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "1d83dccc",
-        tag: tagList ? tagList : [],
+        backgroundColor: tagList[0].color,
+        tag: tagList,
         id: newEventRef.id,
       };
       setEventsData((prevData) => [...prevData, newEvent]);
@@ -178,11 +179,14 @@ export default function Calendars({ isAuth }) {
   const handleEdit = async () => {
     setModalStatus(false);
     setDelStatus(false);
-    if (startDate >= endDate) {
-      return alert("開始時間必須早於結束時間");
-    }
     if (!eventInput) {
       return alert("請輸入活動名稱");
+    }
+    if (!tagList.length) {
+      return alert("請設定活動標籤");
+    }
+    if (startDate >= endDate) {
+      return alert("開始時間必須早於結束時間");
     }
     const eventDocRef = doc(db, "events", eventId);
     try {
@@ -190,9 +194,8 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "1d83dccc",
-        tag: tagList ? tagList : [],
+        backgroundColor: tagList[0].color,
+        tag: tagList,
       });
       setEventsData((prevData) =>
         prevData.map((event) => {
@@ -202,11 +205,8 @@ export default function Calendars({ isAuth }) {
               start: startDate,
               end: endDate,
               title: eventInput,
-              backgroundColor:
-                tagList.length > 0
-                  ? tagList[0].color
-                  : "1d83dccc",
-              tag: tagList ? tagList : [],
+              backgroundColor: tagList[0].color,
+              tag: tagList
             };
           }
           return event;
