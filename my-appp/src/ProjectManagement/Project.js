@@ -7,6 +7,7 @@ import {
 import { getDocs } from "firebase/firestore";
 import "./Project.css";
 import DonutChart from "../Charge/DonutChart/DonutChart";
+import BarChart from "./BarChart";
 
 export default function Project() {
   const [project, setProject] = useState([]);
@@ -44,7 +45,7 @@ export default function Project() {
 
   return (
     <div>
-      <DonutChart />
+      <BarChart />
       <ul class="accordion">
         {project.map((doc) => (
           <ProjectItems projectData={doc} chartDataPoints={chartDataPoints} />
