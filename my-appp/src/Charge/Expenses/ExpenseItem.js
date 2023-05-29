@@ -13,6 +13,7 @@ export default function ExpenseItem(props) {
   console.log(props);
   const [isEditing, setIsEditing] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
+  const [level, setLevel] = useState(localStorage.getItem("level"));
   const expenseItemRef = useRef(null);
 
   useEffect(() => {
@@ -79,20 +80,22 @@ export default function ExpenseItem(props) {
         <div className="expense-item__description">
           <h2>{props.name}</h2>
           <div className="expense-item__price">${props.amount}</div>
-          <div>
-            <button type="button" onClick={isEditingHandler}>
-              <EditIcon />
-            </button>
-            <button
-              className="delete-button"
-              type="button"
-              onClick={() => {
-                deleteProject(props.id);
-              }}
-            >
-              <DeleteIcon />
-            </button>
-          </div>
+          {level === "money" && (
+            <div>
+              <button type="button" onClick={isEditingHandler}>
+                <EditIcon />
+              </button>
+              <button
+                className="delete-button"
+                type="button"
+                onClick={() => {
+                  deleteProject(props.id);
+                }}
+              >
+                <DeleteIcon />
+              </button>
+            </div>
+          )}
         </div>
       </Card>
     </li>

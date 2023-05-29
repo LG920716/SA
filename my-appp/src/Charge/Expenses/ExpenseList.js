@@ -20,7 +20,7 @@ export default function ExpenseList(props) {
           project={Expense.projectName}
           projectItems={props.projectItems}
           type={Expense.type}
-          IOE={Expense.IOE}
+          IOE={Expense.IoE}
         />
       ))}
     </ul>

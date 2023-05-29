@@ -25,6 +25,7 @@ export default function Charge() {
     };
     getExpense();
   }, []);
+  
 
   return (
     <div>

@@ -7,6 +7,7 @@ import ExpenseForm from "./ExpenseForm";
 
 const NewExpense = (props) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [expensesItems, setExpensesItems] = useState(props.expensesItems);
   const [level, setLevel] = useState(localStorage.getItem("level"));
 
   const isEditingHandler = () => {
@@ -19,7 +20,7 @@ const NewExpense = (props) => {
     // console.log(enterExpenseData);
     const status = level == "money" ? 1 : 0;
 
-    await addDoc(expensesCollectionRef, {
+    const newExpense = {
       name: enterExpenseData.name,
       amount: enterExpenseData.amount,
       date: enterExpenseData.date,
@@ -30,7 +31,11 @@ const NewExpense = (props) => {
       IOE: enterExpenseData.IOE,
       description: enterExpenseData.description,
       status: status,
-    });
+    };
+
+    await addDoc(expensesCollectionRef, newExpense);
+    const updatedExpenses = [...expensesItems, newExpense];
+    setExpensesItems(updatedExpenses);
     setIsEditing(false);
   };
   return (
@@ -46,7 +51,7 @@ const NewExpense = (props) => {
         <ExpenseForm
           onSaveExpenseData={saveExpenseDataHandler}
           onStopEditing={stopEditingHandler}
-          expensesItems={props.expensesItems}
+          expensesItems={expensesItems}
           projectItems={props.projectItems}
         />
       )}
