@@ -100,7 +100,8 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     ) {
       if (
         (tagFrom === "create" || tagFrom === "edit") &&
-        colorDbList.filter((color) => color === tagList[index].color).length === 0
+        colorDbList.filter((color) => color === tagList[index].color).length ===
+          0
       ) {
         setColorTotalList(
           colorTotalList.filter((color) => color !== tagList[index].color)
@@ -109,7 +110,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
       } else if (
         tagFrom === "edit" &&
         colorTagDbCount[tagList[index].color] ===
-        colorTagCount[tagList[index].color]
+          colorTagCount[tagList[index].color]
       ) {
         console.log("!!!ww", colorTagDbCount[tagList[index].color]);
         console.log("!!!ww123", colorTagCount[tagList[index].color]);
@@ -152,23 +153,27 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     <>
       <div className="choose">
         <div className="tags-input">
-          <ul id="tags">
-            {tagList.map((tag, index) => (
-              <li key={index} className="tag" style={{ background: tag.color }}>
-                <span className="tag-title">{tag.tagName}</span>
-                {tagFrom !== "view" && (
-                  <span
-                    className="tag-close-icon"
-                    onClick={() => removeTags(index)}
-                  >
-                    <i class="bi bi-x-circle-fill"></i>
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
           {tagFrom !== "view" && (
             <div>
+              <ul id="tags">
+                {tagList.map((tag, index) => (
+                  <li
+                    key={index}
+                    className="tag"
+                    style={{ background: tag.color }}
+                  >
+                    <span className="tag-title">{tag.tagName}</span>
+                    {tagFrom !== "view" && (
+                      <span
+                        className="tag-close-icon"
+                        onClick={() => removeTags(index)}
+                      >
+                        <i class="bi bi-x-circle-fill"></i>
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
               <input
                 type="text"
                 value={search}
@@ -176,6 +181,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={tagFrom === "view" ? "" : "請輸入標籤"}
               />
+
               <ul
                 class="list-group"
                 style={{ position: "absolute", zIndex: "20" }}

@@ -72,7 +72,12 @@ const ColorSelectOption = ({ color, setColor }) => {
         {colorOpen && (
           <div
             className="color-picker-tab"
-            style={{ marginLeft: "-82px", marginTop: "0px", zIndex: "10" }}
+            style={{
+              marginLeft: "-23.5rem",
+              marginTop: "2.7rem",
+              zIndex: "10",
+              width: "285px",
+            }}
           >
             <Tabs
               value={value}

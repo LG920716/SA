@@ -71,7 +71,7 @@
 }} */
 
 .color-picker-tab {
-  width: 270px;
+  width: 285px !important;
   /* background: rgb(231, 238, 250); */
   background: rgb(219, 226, 250);
   /* background: rgb(249, 239, 239); */

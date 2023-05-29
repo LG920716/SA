@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import "./Calendar.css";
 import ColorSelectOption from "./colorSelect";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import ReplayIcon from "@mui/icons-material/Replay";
 
 moment.locale("zh-tw");
 const localizer = momentLocalizer(moment);
@@ -32,7 +33,7 @@ export default function Calendars({ isAuth }) {
 
   const [searchInput, setSearchInput] = useState("");
   const [color, setColor] = useState("");
-  
+
   let navigate = useNavigate();
   useEffect(() => {
     if (!isAuth) {
@@ -53,14 +54,16 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        backgroundColor:
+          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
         tag: tagList ? tagList : [],
       });
       const newEvent = {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        backgroundColor:
+          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
         tag: tagList ? tagList : [],
         id: newEventRef.id,
       };
@@ -82,19 +85,19 @@ export default function Calendars({ isAuth }) {
         tag: doc.data().tag,
       }));
       if (searchInput.trim() !== "" && color !== "") {
-        filteredEvents = filteredEvents.filter((event) =>
-          event.title.includes(searchInput) ||
-          event.tag.some((tag) => tag.tagName.includes(searchInput)) ||
-          event.tag.some((tag) => tag.color.includes(color))
+        filteredEvents = filteredEvents.filter(
+          (event) =>
+            event.title.includes(searchInput) ||
+            event.tag.some((tag) => tag.tagName.includes(searchInput)) ||
+            event.tag.some((tag) => tag.color.includes(color))
         );
-      }
-      else if (searchInput.trim() !== "") {
-        filteredEvents = filteredEvents.filter((event) =>
-          event.title.includes(searchInput) ||
-          event.tag.some((tag) => tag.tagName.includes(searchInput)) 
+      } else if (searchInput.trim() !== "") {
+        filteredEvents = filteredEvents.filter(
+          (event) =>
+            event.title.includes(searchInput) ||
+            event.tag.some((tag) => tag.tagName.includes(searchInput))
         );
-      }
-      else if (color !== "") {
+      } else if (color !== "") {
         filteredEvents = filteredEvents.filter((event) =>
           event.tag.some((tag) => tag.color.includes(color))
         );
@@ -103,11 +106,11 @@ export default function Calendars({ isAuth }) {
     } catch (err) {
       console.error(err);
     }
-  };  
-  
+  };
+
   useEffect(() => {
     getEvents();
-  }, [searchInput, color]);  
+  }, [searchInput, color]);
 
   console.log("eventId", eventId);
   console.log("title", eventInput);
@@ -187,7 +190,8 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+        backgroundColor:
+          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
         tag: tagList ? tagList : [],
       });
       setEventsData((prevData) =>
@@ -198,7 +202,10 @@ export default function Calendars({ isAuth }) {
               start: startDate,
               end: endDate,
               title: eventInput,
-              backgroundColor: tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+              backgroundColor:
+                tagList.length > 0
+                  ? tagList[0].color
+                  : "rgba(29, 131, 220, 0.8)",
               tag: tagList ? tagList : [],
             };
           }
@@ -209,8 +216,8 @@ export default function Calendars({ isAuth }) {
       console.error(err);
     }
   };
-  
-/*
+
+  /*
   const handleEventDrop = async (event) => {
     const { id, start, end } = event;
   
@@ -245,43 +252,48 @@ export default function Calendars({ isAuth }) {
         <div className="py-4 border-bottom">
           <div className="form-title text-center">
             <h1>行事曆</h1>
+            <br></br>
+            <input
+              className="calen-search"
+              type="text"
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+                getEvents();
+              }}
+              placeholder="以標籤或活動名稱搜尋"
+            />
             <div
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
-                right: "0",
+                justifyContent: "space-between",
               }}
             >
-              <input
-                type="text"
-                value={searchInput}
-                onChange={(e) => {
-                  setSearchInput(e.target.value);
-                  getEvents(); 
-                }}
-                placeholder="以標籤或活動名稱搜尋"
-              />
-              <ColorSelectOption color={color} setColor={setColor} />
-              <button 
-                className="btn btn-primary1"
-                onClick={() => {
-                setColor("")
-                getEvents();
-              }}>重新設定顏色
-              </button>
+              <div style={{ display: "flex" }}>
+                <ColorSelectOption color={color} setColor={setColor} />
+                <button
+                  className="reload-button"
+                  onClick={() => {
+                    setColor("");
+                    getEvents();
+                  }}
+                >
+                  <ReplayIcon />
+                </button>
+              </div>
               <button
                 className="btn btn-primary1"
                 onClick={() =>
                   handleSlotSelectEvent({ start: today, end: tomorrow })
                 }
               >
-              <CalendarMonthIcon
-                style={{
-                marginTop: "-3px",
-                marginRight: "3px",
-                marginLeft: "-3px",
-                }}
-              />
+                <CalendarMonthIcon
+                  style={{
+                    marginTop: "-3px",
+                    marginRight: "3px",
+                    marginLeft: "-3px",
+                  }}
+                />
                 新增活動
               </button>
             </div>
@@ -291,7 +303,7 @@ export default function Calendars({ isAuth }) {
         <Calendar
           className="CalendarContainer"
           views={["day", "week", "month", "agenda"]}
-          selectable = {true}
+          selectable={true}
           locale="zh"
           localizer={localizer}
           defaultDate={new Date()}
