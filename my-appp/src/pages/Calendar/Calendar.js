@@ -33,6 +33,7 @@ export default function Calendars({ isAuth }) {
 
   const [searchInput, setSearchInput] = useState("");
   const [color, setColor] = useState("");
+  const [colorTotalList, setColorTotalList] = useState([]);
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -268,7 +269,11 @@ export default function Calendars({ isAuth }) {
               }}
             >
               <div style={{ display: "flex" }}>
-                <ColorSelectOption color={color} setColor={setColor} />
+                <ColorSelectOption 
+                color={color} 
+                setColor={setColor}  
+                colorTotalList={colorTotalList}
+                setColorTotalList={setColorTotalList}/>
                 <button
                   className="reload-button"
                   onClick={() => {
@@ -335,6 +340,8 @@ export default function Calendars({ isAuth }) {
           setStartDate={setStartDate}
           tagList={tagList}
           setTagList={setTagList}
+          colorTotalList={colorTotalList}
+          setColorTotalList={setColorTotalList}
         />
       </div>
     </center>

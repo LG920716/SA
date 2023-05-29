@@ -19,6 +19,8 @@ function MyVerticallyCenteredModal({
   handleDelete,
   tagList,
   setTagList,
+  colorTotalList,
+  setColorTotalList,
 }) {
   const localStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
   const localEndDate = moment(endDate).format("YYYY-MM-DDTHH:mm");
@@ -65,6 +67,8 @@ function MyVerticallyCenteredModal({
               <Tag
                 tagList={tagList}
                 setTagList={setTagList}
+                colorTotalList={colorTotalList}
+                setColorTotalList={setColorTotalList}
                 tagFrom={"create"}
               />
             </div>
@@ -103,6 +107,8 @@ function MyVerticallyCenteredModal({
               <Tag
                 tagList={tagList}
                 setTagList={setTagList}
+                colorTotalList={colorTotalList}
+                setColorTotalList={setColorTotalList}
                 tagFrom={"create"}
               />
             </div>
