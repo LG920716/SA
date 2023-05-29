@@ -46,15 +46,14 @@ const firebaseConfig = {
   appId: "1:306156875849:web:d83456b1915b5300690f98",
   measurementId: "G-8EY31RFB5L"
 };
-
 // const firebaseConfig = {
-//   apiKey: "AIzaSyA9R1YugPwcxETx_lU2jhD92_Ogc_OsgXk",
-//   authDomain: "sa-css.firebaseapp.com",
-//   projectId: "sa-css",
-//   storageBucket: "sa-css.appspot.com",
-//   messagingSenderId: "1060226801896",
-//   appId: "1:1060226801896:web:5172196924fe242669295d",
-//   measurementId: "G-5TD1B1DBP7",
+//   apiKey: "AIzaSyCrc1-AotWkSo9hf5VwuLEK5Elo9GEoweE",
+//   authDomain: "sa-project-2f0fc.firebaseapp.com",
+//   projectId: "sa-project-2f0fc",
+//   storageBucket: "sa-project-2f0fc.appspot.com",
+//   messagingSenderId: "948003317990",
+//   appId: "1:948003317990:web:6db26ff7f3e0ffd54d3327",
+//   measurementId: "G-FB13Z7XN10"
 // };
 
 const app = initializeApp(firebaseConfig);

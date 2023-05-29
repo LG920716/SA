@@ -28,11 +28,12 @@ export default function Calendars({ isAuth }) {
   const [eventInput, setEventInput] = useState("");
   const [startDate, setStartDate] = useState(new Date(today));
   const [endDate, setEndDate] = useState(new Date(tomorrow));
-  const [backgroundColor, setbackgroundColor] = useState("red");
+  const [backgroundColor, setbackgroundColor] = useState("1d83dccc");
   const [tagList, setTagList] = useState([]);
 
   const [searchInput, setSearchInput] = useState("");
   const [color, setColor] = useState("");
+  const [colorTotalList, setColorTotalList] = useState([]);
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -46,6 +47,9 @@ export default function Calendars({ isAuth }) {
     if (!eventInput) {
       return alert("請輸入活動名稱");
     }
+    if (!tagList.length) {
+      return alert("請設定活動標籤");
+    }
     if (startDate >= endDate) {
       return alert("開始時間必須早於結束時間");
     }
@@ -54,17 +58,15 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
-        tag: tagList ? tagList : [],
+        backgroundColor: tagList[0].color,
+        tag: tagList,
       });
       const newEvent = {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
-        tag: tagList ? tagList : [],
+        backgroundColor: tagList[0].color,
+        tag: tagList,
         id: newEventRef.id,
       };
       setEventsData((prevData) => [...prevData, newEvent]);
@@ -178,11 +180,14 @@ export default function Calendars({ isAuth }) {
   const handleEdit = async () => {
     setModalStatus(false);
     setDelStatus(false);
-    if (startDate >= endDate) {
-      return alert("開始時間必須早於結束時間");
-    }
     if (!eventInput) {
       return alert("請輸入活動名稱");
+    }
+    if (!tagList.length) {
+      return alert("請設定活動標籤");
+    }
+    if (startDate >= endDate) {
+      return alert("開始時間必須早於結束時間");
     }
     const eventDocRef = doc(db, "events", eventId);
     try {
@@ -190,9 +195,8 @@ export default function Calendars({ isAuth }) {
         start: startDate,
         end: endDate,
         title: eventInput,
-        backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
-        tag: tagList ? tagList : [],
+        backgroundColor: tagList[0].color,
+        tag: tagList,
       });
       setEventsData((prevData) =>
         prevData.map((event) => {
@@ -202,11 +206,8 @@ export default function Calendars({ isAuth }) {
               start: startDate,
               end: endDate,
               title: eventInput,
-              backgroundColor:
-                tagList.length > 0
-                  ? tagList[0].color
-                  : "rgba(29, 131, 220, 0.8)",
-              tag: tagList ? tagList : [],
+              backgroundColor: tagList[0].color,
+              tag: tagList
             };
           }
           return event;
@@ -251,8 +252,6 @@ export default function Calendars({ isAuth }) {
       <div>
         <div className="py-4 border-bottom">
           <div className="form-title text-center">
-            <h1>行事曆</h1>
-            <br></br>
             <input
               className="calen-search"
               type="text"
@@ -270,7 +269,11 @@ export default function Calendars({ isAuth }) {
               }}
             >
               <div style={{ display: "flex" }}>
-                <ColorSelectOption color={color} setColor={setColor} />
+                <ColorSelectOption 
+                color={color} 
+                setColor={setColor}  
+                colorTotalList={colorTotalList}
+                setColorTotalList={setColorTotalList}/>
                 <button
                   className="reload-button"
                   onClick={() => {
@@ -337,6 +340,8 @@ export default function Calendars({ isAuth }) {
           setStartDate={setStartDate}
           tagList={tagList}
           setTagList={setTagList}
+          colorTotalList={colorTotalList}
+          setColorTotalList={setColorTotalList}
         />
       </div>
     </center>

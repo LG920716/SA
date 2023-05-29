@@ -14,11 +14,11 @@ import {
 import { getDocs } from "firebase/firestore";
 import PaidIcon from "@mui/icons-material/Paid";
 
-const Tag = ({ tagList, setTagList, tagFrom }) => {
+const Tag = ({ tagList, setTagList, tagFrom ,colorTotalList, setColorTotalList}) => {
   const [searchDbTag, setSearchDbTag] = useState([]);
   const [searchDbTagWait, setSearchDbTagWait] = useState([]);
   const [colorDbList, setColorDbList] = useState([]);
-  const [colorTotalList, setColorTotalList] = useState([]);
+  //const [colorTotalList, setColorTotalList] = useState([]);
   const [color, setColor] = useState("#0052cc");
   const [value, setValue] = useState("1");
   const [colorOpen, setColorOpen] = useState(false);
@@ -42,6 +42,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     "#9900ef",
     "#9575cd",
   ];
+
   const getCount = (arr) => {
     return arr.reduce((prev, next) => {
       prev[next] = prev[next] + 1 || 1;
@@ -79,7 +80,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     const DbcolorListArray = searchDbTag.map((tag) => tag.color);
     const colorListArray = tagList.map((tag) => tag.color);
     const DbcolorList = DbcolorListArray.filter(
-      (item, i, arr) => arr.indexOf(item) == i
+      (item, i, arr) => arr.indexOf(item) === i
     );
     console.log(":::::::::::::::::::::::::", getCount(DbcolorListArray));
     setColorDbList(DbcolorList);
@@ -100,8 +101,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     ) {
       if (
         (tagFrom === "create" || tagFrom === "edit") &&
-        colorDbList.filter((color) => color === tagList[index].color).length ===
-          0
+        colorDbList.filter((color) => color === tagList[index].color).length === 0
       ) {
         setColorTotalList(
           colorTotalList.filter((color) => color !== tagList[index].color)

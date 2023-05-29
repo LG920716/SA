@@ -13,10 +13,9 @@ import {
 import { getDocs } from "firebase/firestore";
 import PaidIcon from "@mui/icons-material/Paid";
 
-const ColorSelectOption = ({ color, setColor }) => {
+const ColorSelectOption = ({ color, setColor, colorTotalList, setColorTotalList}) => {
   const [searchDbTag, setSearchDbTag] = useState([]);
   const [searchDbTagWait, setSearchDbTagWait] = useState([]);
-  const [colorTotalList, setColorTotalList] = useState([]);
   const [value, setValue] = useState("1");
   const [colorOpen, setColorOpen] = useState(false);
   const [projectList, setProjectList] = useState([]);
@@ -49,7 +48,7 @@ const ColorSelectOption = ({ color, setColor }) => {
   useEffect(() => {
     const DbcolorListArray = searchDbTag.map((tag) => tag.color);
     const DbcolorList = DbcolorListArray.filter(
-      (item, i, arr) => arr.indexOf(item) == i
+      (item, i, arr) => arr.indexOf(item) === i
     );
     setColorTotalList(DbcolorList);
   }, [searchDbTagWait]);

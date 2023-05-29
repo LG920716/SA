@@ -57,7 +57,7 @@ const SearchBar = ({
         className="searchBar-wrap"
         style={{
           display: "flex",
-          width: "50%",
+          width: "40%",
           justifyContent: "space-between",
         }}
       >
