@@ -73,12 +73,11 @@
 }} */
 
 .color-picker-tab {
-  width: 270px;
-  /* background: rgb(231, 238, 250); */
+  width: 285px;
   background: rgb(219, 226, 250);
-  /* background: rgb(249, 239, 239); */
+
   margin-top: -7.8125rem;
-  margin-left: 17rem;
+  left: 31.3%;
   padding: 10px;
   position: absolute;
   border-radius: 10px;

@@ -14,7 +14,13 @@ import {
 import { getDocs } from "firebase/firestore";
 import PaidIcon from "@mui/icons-material/Paid";
 
-const Tag = ({ tagList, setTagList, tagFrom ,colorTotalList, setColorTotalList}) => {
+const Tag = ({
+  tagList,
+  setTagList,
+  tagFrom,
+  colorTotalList,
+  setColorTotalList,
+}) => {
   const [searchDbTag, setSearchDbTag] = useState([]);
   const [searchDbTagWait, setSearchDbTagWait] = useState([]);
   const [colorDbList, setColorDbList] = useState([]);
@@ -101,7 +107,8 @@ const Tag = ({ tagList, setTagList, tagFrom ,colorTotalList, setColorTotalList})
     ) {
       if (
         (tagFrom === "create" || tagFrom === "edit") &&
-        colorDbList.filter((color) => color === tagList[index].color).length === 0
+        colorDbList.filter((color) => color === tagList[index].color).length ===
+          0
       ) {
         setColorTotalList(
           colorTotalList.filter((color) => color !== tagList[index].color)
@@ -262,7 +269,7 @@ const Tag = ({ tagList, setTagList, tagFrom ,colorTotalList, setColorTotalList})
           </button>
         )}
         {colorOpen && (
-          <div className="color-picker-tab">
+          <div className="color-picker-tab1">
             <div>
               <Tabs
                 value={value}

@@ -9,3 +9,7 @@
   left: 50%;
   transform: translate(-50%);
 }
+.color-picker-tab1 {
+  width: 285px !important;
+  left: 96.7%;
+}
