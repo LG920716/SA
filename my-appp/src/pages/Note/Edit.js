@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { db, auth } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import Editor from "./Components/Editor/Editor";
@@ -17,6 +23,7 @@ function Edit() {
   const [noteDataWait, setNoteDataWait] = useState([]);
   const [ownerUid, setOwnerUid] = useState([]);
   const [ownerEmail, setOwnerEmail] = useState([]);
+  const [tagsListDbDefault, setTagsListDbDefault] = useState([]);
 
   let navigate = useNavigate();
 
@@ -73,6 +80,10 @@ function Edit() {
         tag: tagList,
         allow: userSelectList,
       });
+      await setDoc(doc(db, "tag", "tagsListDbDefault"), {
+        tags: tagsListDbDefault,
+      });
+
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -101,7 +112,13 @@ function Edit() {
               marginTop: "1rem",
             }}
           >
-            <Tag tagList={tagList} setTagList={setTagList} tagFrom={"edit"} />
+            <Tag
+              tagList={tagList}
+              setTagList={setTagList}
+              tagFrom={"edit"}
+              setTagsListDbDefault={setTagsListDbDefault}
+              tagsListDbDefault={tagsListDbDefault}
+            />
             <button
               class="btn btn-primary"
               onClick={updateEditNote}

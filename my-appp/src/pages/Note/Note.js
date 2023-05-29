@@ -116,8 +116,14 @@ function Note({ notePage, setNotePage, level }) {
         <div className="grid">
           {noteListFilter.length !== 0 ? (
             noteListFilter.map((note) => {
-              const { title = "", body = "", id, allow = [] } = note;
-
+              const {
+                title = "",
+                body = "",
+                id,
+                allow = [],
+                dateLineDel,
+              } = note;
+              console.log("LLLLL", dateLineDel);
               return (
                 <NoteItem
                   key={id}
@@ -133,6 +139,8 @@ function Note({ notePage, setNotePage, level }) {
                   owner={note.owner}
                   notePage={notePage}
                   allow={allow}
+                  dateLineDel={dateLineDel}
+                  noteListFilter={noteListFilter}
                 />
               );
             })

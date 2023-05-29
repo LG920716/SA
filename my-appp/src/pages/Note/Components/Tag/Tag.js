@@ -10,36 +10,44 @@ import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
 import {
   notesCollectionRef,
   projectsCollectionRef,
+  db,
 } from "../../../../firebase-config";
-import { getDocs } from "firebase/firestore";
+import { getDocs, getDoc, doc } from "firebase/firestore";
 import PaidIcon from "@mui/icons-material/Paid";
+import TagPop from "./TagPop";
+import EditIcon from "@mui/icons-material/Edit";
 
-const Tag = ({ tagList, setTagList, tagFrom }) => {
+const Tag = ({
+  tagList,
+  setTagList,
+  tagFrom,
+  setTagsListDbDefault,
+  tagsListDbDefault,
+}) => {
   const [searchDbTag, setSearchDbTag] = useState([]);
   const [searchDbTagWait, setSearchDbTagWait] = useState([]);
   const [colorDbList, setColorDbList] = useState([]);
-  const [colorTotalList, setColorTotalList] = useState([]);
-  const [color, setColor] = useState("#0052cc");
   const [value, setValue] = useState("1");
-  const [colorOpen, setColorOpen] = useState(false);
+  const [colorTotalList, setColorTotalList] = useState([]);
   const [colorCustomOpen, setColorCustomOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [colorTagDbCount, setColorTagDbCount] = useState([]);
   const [colorTagCount, setColorTagCount] = useState([]);
   const [projectList, setProjectList] = useState([]);
+  const [modalStatus, setModalStatus] = useState(false);
+  const [color, setColor] = useState("#0052cc");
+  const [colorOpen, setColorOpen] = useState(false);
+  const [noticeTagName, setNoticeTagName] = useState("");
 
-  const colorListDefault = [
+  const [projectListDb, setProjectListDb] = useState([]);
+  const [colorListDefault, setColorListDefault] = useState([]);
+
+  const colorListDefaultOrgin = [
     "#0052cc",
     "#8ed1fc",
-    "#0693e3",
-    "#ff6900",
-    "#fcb900",
-    "#0097a7",
-    "#7bdcb5",
     "#00d084",
     "#eb144c",
-    "#f78da7",
-    "#9900ef",
+    "#fcb900",
     "#9575cd",
   ];
   const getCount = (arr) => {
@@ -53,9 +61,12 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     try {
       const data = await getDocs(notesCollectionRef);
       const list = data.docs.map((doc) => doc.data().tag);
-      const tags = list.reduce((accumulator, currentValue) => {
-        return accumulator.concat(currentValue);
-      });
+      const tags =
+        list.length > 0
+          ? list.reduce((accumulator, currentValue) => {
+              return accumulator.concat(currentValue);
+            })
+          : [];
       setSearchDbTag(tags);
       setSearchDbTagWait(tags);
 
@@ -63,7 +74,18 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
       const projectList = project.docs
         .map((doc) => doc.data().color)
         .map((color) => color);
+      setProjectListDb(
+        project.docs.map((doc) => ({
+          name: doc.data().name,
+          color: doc.data().color,
+        }))
+      );
       setProjectList(projectList);
+
+      const defaultColorDb = await getDoc(doc(db, "tag", "tagsListDbDefault"));
+      const defaultColorListDb = defaultColorDb.data().tags;
+      setTagsListDbDefault(defaultColorListDb);
+      setColorListDefault(defaultColorListDb.map((x) => x.color));
     } catch (error) {
       console.log(error);
     }
@@ -73,23 +95,41 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
     getTags();
   }, []);
 
-  console.log(searchDbTag);
+  useEffect(() => {
+    if (projectList.includes(color)) {
+      setNoticeTagName(projectListDb.filter((x) => x.color === color)[0].name);
+    } else if (colorListDefault.includes(color)) {
+      setNoticeTagName(
+        tagsListDbDefault.filter((x) => x.color === color)[0].name
+      );
+    } else {
+      setNoticeTagName("");
+    }
+  }, [color]);
+
   useEffect(() => {
     const DbcolorListArray = searchDbTag.map((tag) => tag.color);
     const colorListArray = tagList.map((tag) => tag.color);
     const DbcolorList = DbcolorListArray.filter(
       (item, i, arr) => arr.indexOf(item) == i
     );
-    console.log(":::::::::::::::::::::::::", getCount(DbcolorListArray));
+
     setColorDbList(DbcolorList);
     setColorTotalList(DbcolorList);
     setColorTagDbCount(getCount(DbcolorListArray));
     setColorTagCount(getCount(colorListArray));
   }, [searchDbTagWait]);
-  console.log("!!!", colorTagDbCount);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  console.log(
+    colorListDefault.filter((x) => !colorListDefaultOrgin.includes(x)),
+    ";;",
+    colorListDefault,
+    colorListDefaultOrgin,
+    tagsListDbDefault
+  );
   const removeTags = (index) => {
     if (
       tagList.filter((tag) => tag.color === tagList[index].color).length === 1
@@ -102,20 +142,42 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
         setColorTotalList(
           colorTotalList.filter((color) => color !== tagList[index].color)
         );
+        // if (
+        //   colorListDefault
+        //     .filter((x) => !colorListDefaultOrgin.includes(x))
+        //     .includes(tagList[index].color)
+        // ) {
+        //   setTagsListDbDefault(
+        //     tagsListDbDefault.filter((x) => x.color !== tagList[index].color)
+        //   );
+        //   setColorListDefault(
+        //     colorListDefault.filter((x) => x !== tagList[index].color)
+        //   );
+        // }
         setColor("#0052cc");
       } else if (
         tagFrom === "edit" &&
         colorTagDbCount[tagList[index].color] ===
           colorTagCount[tagList[index].color]
       ) {
-        console.log("!!!ww", colorTagDbCount[tagList[index].color]);
-        console.log("!!!ww123", colorTagCount[tagList[index].color]);
         setColorDbList(
           colorDbList.filter((color) => color !== tagList[index].color)
         );
         setColorTotalList(
           colorTotalList.filter((color) => color !== tagList[index].color)
         );
+        // if (
+        //   colorListDefault
+        //     .filter((x) => !colorListDefaultOrgin.includes(x))
+        //     .includes(tagList[index].color)
+        // ) {
+        //   setTagsListDbDefault(
+        //     tagsListDbDefault.filter((x) => x.color !== tagList[index].color)
+        //   );
+        //   setColorListDefault(
+        //     colorListDefault.filter((x) => x !== tagList[index].color)
+        //   );
+        // }
         setColor("#0052cc");
       }
     }
@@ -244,6 +306,18 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
           )}
         </div>
 
+        {noticeTagName && (
+          <div
+            style={{
+              backgroundColor: "#E0E1E1",
+              borderRadius: "5px",
+              padding: "11px 10px 10px 10px",
+              height: "50px",
+            }}
+          >
+            {noticeTagName}
+          </div>
+        )}
         {tagFrom !== "view" && (
           <button
             class="btn btn-primary"
@@ -290,6 +364,16 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
                     }}
                   />
                 </center>
+                <i
+                  class="bi bi-plus-circle-fill"
+                  style={{ fontSize: "25px" }}
+                  onClick={(e) => {
+                    setColorCustomOpen(false);
+                    setColorOpen(false);
+                    setModalStatus(true);
+                    setColor("");
+                  }}
+                ></i>
               </div>
             )}
             {value === "2" && (
@@ -336,11 +420,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
                     setColor(colors.hex);
                   }}
                 />
-                <i
-                  class="bi bi-plus-circle-fill"
-                  style={{ fontSize: "25px" }}
-                  onClick={() => setColorCustomOpen(!colorCustomOpen)}
-                ></i>
+
                 {/* colorListDefault.concat(projectList).includes(color) */}
               </div>
             )}
@@ -362,6 +442,34 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
           </div>
         )}
       </div>
+
+      {/* <button
+        class="btn btn-primary"
+        style={{ marginLeft: "-129px" }}
+        onClick={(e) => {
+          setColorCustomOpen(false);
+          setColorOpen(false);
+          setModalStatus(true);
+        }}
+      >
+        pop
+      </button> */}
+      <TagPop
+        setModalStatus={setModalStatus}
+        modalStatus={modalStatus}
+        color={color}
+        value={value}
+        handleChange={handleChange}
+        colorListDefault={colorListDefault}
+        setColor={setColor}
+        projectList={projectList}
+        colorTotalList={colorTotalList}
+        setColorOpen={setColorOpen}
+        setTagsListDbDefault={setTagsListDbDefault}
+        tagsListDbDefault={tagsListDbDefault}
+        setColorListDefault={setColorListDefault}
+        setNoticeTagName={setNoticeTagName}
+      />
     </>
   );
 };

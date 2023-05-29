@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { addDoc, serverTimestamp } from "firebase/firestore";
-import { notesCollectionRef, auth } from "../../firebase-config";
+import { addDoc, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { notesCollectionRef, auth, db } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import Editor from "./Components/Editor/Editor";
 import Tag from "./Components/Tag/Tag";
@@ -10,6 +10,7 @@ function Create() {
   const [body, setBody] = useState("");
   const [tagList, setTagList] = useState([]);
   const [userSelectList, setUserSelectList] = useState([]);
+  const [tagsListDbDefault, setTagsListDbDefault] = useState([]);
 
   let navigate = useNavigate();
 
@@ -26,6 +27,10 @@ function Create() {
           { uid: auth?.currentUser?.uid, email: auth?.currentUser?.email },
         ],
         allow: userSelectList,
+        dateLineDel: "",
+      });
+      await setDoc(doc(db, "tag", "tagsListDbDefault"), {
+        tags: tagsListDbDefault,
       });
 
       navigate("/");
@@ -54,7 +59,13 @@ function Create() {
               marginTop: "1rem",
             }}
           >
-            <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
+            <Tag
+              tagList={tagList}
+              setTagList={setTagList}
+              tagFrom={"create"}
+              setTagsListDbDefault={setTagsListDbDefault}
+              tagsListDbDefault={tagsListDbDefault}
+            />
             <button class="btn btn-primary" onClick={createNote}>
               新增
             </button>

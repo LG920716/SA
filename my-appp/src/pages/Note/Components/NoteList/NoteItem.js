@@ -22,6 +22,8 @@ function NoteItem({
   notePage,
   owner,
   allow,
+  dateLineDel,
+  noteListFilter,
 }) {
   useEffect(() => {
     // Add the 'reveal' class to the card after the component mounts
@@ -32,6 +34,25 @@ function NoteItem({
       card.classList.remove("reveal");
     };
   }, [id]);
+
+  useEffect(() => {
+    if (!dateLineDel || noteListFilter.length === 0) {
+      return;
+    }
+
+    if (new Date(dateLineDel.toDate()) < new Date()) {
+      const delDateLine = async () => {
+        try {
+          const noteDoc = doc(db, "noteDel", id);
+          await deleteDoc(noteDoc);
+          setNoteList(noteList.filter((note) => note.id !== id));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      delDateLine();
+    }
+  }, []);
 
   const deleteNote = (id, email) => {
     Swal.fire({
@@ -46,6 +67,9 @@ function NoteItem({
     }).then((result) => {
       if (result.isConfirmed) {
         const createNoteDel = async () => {
+          const date = new Date(); // Now
+          date.setDate(date.getDate() + 30); // Set now + 30 days as the new date
+
           await addDoc(collection(db, "noteDel"), {
             title,
             body,
@@ -55,6 +79,7 @@ function NoteItem({
             tag,
             owner,
             allow,
+            dateLineDel: date,
           });
         };
 
@@ -85,6 +110,7 @@ function NoteItem({
       tag,
       owner,
       allow,
+      dateLineDel: "",
     });
     await deleteDoc(doc(db, notePage, id));
     setNoteList(noteList.filter((note) => note.id !== id));
@@ -160,11 +186,7 @@ function NoteItem({
             </div>
           )}
         </div>
-        {console.log(
-          notePage === "notes"
-            ? allow.map((x) => x.value).includes(auth?.currentUser?.uid)
-            : owner[0].uid === auth?.currentUser?.uid
-        )}
+
         {(notePage === "notes"
           ? allow.map((x) => x.value).includes(auth?.currentUser?.uid)
           : owner[0].uid === auth?.currentUser?.uid) && (

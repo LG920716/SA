@@ -9,9 +9,11 @@ import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
 import {
   notesCollectionRef,
   projectsCollectionRef,
+  db,
 } from "../../../../firebase-config";
-import { getDocs } from "firebase/firestore";
+import { getDocs, getDoc, doc } from "firebase/firestore";
 import PaidIcon from "@mui/icons-material/Paid";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 const ColorSelectOption = ({ color, setColor }) => {
   const [searchDbTag, setSearchDbTag] = useState([]);
@@ -20,14 +22,21 @@ const ColorSelectOption = ({ color, setColor }) => {
   const [value, setValue] = useState("1");
   const [colorOpen, setColorOpen] = useState(false);
   const [projectList, setProjectList] = useState([]);
+  const [projectListDb, setProjectListDb] = useState([]);
+  const [colorListDefault, setColorListDefault] = useState([]);
+  const [noticeTagName, setNoticeTagName] = useState("");
+  const [tagsListDbDefault, setTagsListDbDefault] = useState([]);
 
   const getTags = async () => {
     try {
       const data = await getDocs(notesCollectionRef);
       const list = data.docs.map((doc) => doc.data().tag);
-      const tags = list.reduce((accumulator, currentValue) => {
-        return accumulator.concat(currentValue);
-      });
+      const tags =
+        list.length > 0
+          ? list.reduce((accumulator, currentValue) => {
+              return accumulator.concat(currentValue);
+            })
+          : [];
       setSearchDbTag(tags);
       setSearchDbTagWait(tags);
 
@@ -35,7 +44,18 @@ const ColorSelectOption = ({ color, setColor }) => {
       const projectList = project.docs
         .map((doc) => doc.data().color)
         .map((color) => color);
+      setProjectListDb(
+        project.docs.map((doc) => ({
+          name: doc.data().name,
+          color: doc.data().color,
+        }))
+      );
       setProjectList(projectList);
+
+      const defaultColorDb = await getDoc(doc(db, "tag", "tagsListDbDefault"));
+      const defaultColorListDb = defaultColorDb.data().tags;
+      setTagsListDbDefault(defaultColorListDb);
+      setColorListDefault(defaultColorListDb.map((x) => x.color));
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +65,18 @@ const ColorSelectOption = ({ color, setColor }) => {
     getTags();
   }, []);
 
-  console.log(searchDbTag);
+  useEffect(() => {
+    if (projectList.includes(color)) {
+      setNoticeTagName(projectListDb.filter((x) => x.color === color)[0].name);
+    } else if (colorListDefault.includes(color)) {
+      setNoticeTagName(
+        tagsListDbDefault.filter((x) => x.color === color)[0].name
+      );
+    } else {
+      setNoticeTagName("");
+    }
+  }, [color]);
+
   useEffect(() => {
     const DbcolorListArray = searchDbTag.map((tag) => tag.color);
     const DbcolorList = DbcolorListArray.filter(
@@ -60,6 +91,20 @@ const ColorSelectOption = ({ color, setColor }) => {
 
   return (
     <>
+      {noticeTagName && (
+        <div
+          style={{
+            backgroundColor: "#E0E1E1",
+            borderRadius: "5px",
+            padding: "11px 10px 10px 10px",
+            height: "50px",
+            marginLeft: "5px",
+            marginRight: "5px",
+          }}
+        >
+          {noticeTagName}
+        </div>
+      )}
       <div className="choose">
         {
           <button
@@ -104,11 +149,10 @@ const ColorSelectOption = ({ color, setColor }) => {
                     setColor(colors.hex);
                   }}
                 />
-                <i
-                  class="bi bi-plus-circle-fill"
-                  style={{ fontSize: "25px" }}
+                <RestartAltIcon
                   onClick={() => setColor("")}
-                ></i>
+                  style={{ fontSize: "25px" }}
+                />
               </div>
             )}
             {value === "2" && (
@@ -131,12 +175,10 @@ const ColorSelectOption = ({ color, setColor }) => {
                     setColor(colors.hex);
                   }}
                 />
-                <i
-                  class="bi bi-plus-circle-fill"
-                  style={{ fontSize: "25px" }}
+                <RestartAltIcon
                   onClick={() => setColor("")}
-                ></i>
-                {/* colorListDefault.concat(projectList).includes(color) */}
+                  style={{ fontSize: "25px" }}
+                />
               </div>
             )}
           </div>
