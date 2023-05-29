@@ -251,8 +251,6 @@ export default function Calendars({ isAuth }) {
       <div>
         <div className="py-4 border-bottom">
           <div className="form-title text-center">
-            <h1>行事曆</h1>
-            <br></br>
             <input
               className="calen-search"
               type="text"
