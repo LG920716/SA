@@ -28,7 +28,7 @@ export default function Calendars({ isAuth }) {
   const [eventInput, setEventInput] = useState("");
   const [startDate, setStartDate] = useState(new Date(today));
   const [endDate, setEndDate] = useState(new Date(tomorrow));
-  const [backgroundColor, setbackgroundColor] = useState("red");
+  const [backgroundColor, setbackgroundColor] = useState("1d83dccc");
   const [tagList, setTagList] = useState([]);
 
   const [searchInput, setSearchInput] = useState("");
@@ -55,7 +55,7 @@ export default function Calendars({ isAuth }) {
         end: endDate,
         title: eventInput,
         backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+          tagList.length > 0 ? tagList[0].color : "1d83dccc",
         tag: tagList ? tagList : [],
       });
       const newEvent = {
@@ -63,7 +63,7 @@ export default function Calendars({ isAuth }) {
         end: endDate,
         title: eventInput,
         backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+          tagList.length > 0 ? tagList[0].color : "1d83dccc",
         tag: tagList ? tagList : [],
         id: newEventRef.id,
       };
@@ -191,7 +191,7 @@ export default function Calendars({ isAuth }) {
         end: endDate,
         title: eventInput,
         backgroundColor:
-          tagList.length > 0 ? tagList[0].color : "rgba(29, 131, 220, 0.8)",
+          tagList.length > 0 ? tagList[0].color : "1d83dccc",
         tag: tagList ? tagList : [],
       });
       setEventsData((prevData) =>
@@ -205,7 +205,7 @@ export default function Calendars({ isAuth }) {
               backgroundColor:
                 tagList.length > 0
                   ? tagList[0].color
-                  : "rgba(29, 131, 220, 0.8)",
+                  : "1d83dccc",
               tag: tagList ? tagList : [],
             };
           }
