@@ -15,21 +15,6 @@ export default function ExpenseItem(props) {
   const [isRevealed, setIsRevealed] = useState(false);
   const expenseItemRef = useRef(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const expenseItemPosition =
-        expenseItemRef.current.getBoundingClientRect().top;
-      const revealPosition = window.innerHeight - 100;
-
-      setIsRevealed(expenseItemPosition < revealPosition);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   const isEditingHandler = () => {
     setIsEditing(true);
   };
@@ -37,7 +22,17 @@ export default function ExpenseItem(props) {
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
+  useEffect(() => {
+    const revealItem = () => {
+      setIsRevealed(true);
+    };
 
+    setTimeout(revealItem, 100);
+
+    return () => {
+      clearTimeout(revealItem);
+    };
+  }, []);
   const deleteProject = (id) => {
     Swal.fire({
       title: "確定刪除?",
