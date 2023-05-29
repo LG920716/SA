@@ -98,42 +98,50 @@ function View({ notePage, level }) {
             </div>
             <label></label>
           </div>
-          <div>
+          <div style={{ marginTop: "0.5rem" }}>
             <MutiSelect
               setUserSelectList={setUserSelectList}
               userSelectList={userSelectList}
               userFrom={"view"}
             />
             <Tag tagFrom={"view"} tagList={tagList} />
-            {editOpen && (
-              <Link to={"../edit/" + id}>
+            <div
+              style={{
+                marginTop: "0.5rem",
+                display: "flex",
+                justifyContent: "end",
+              }}
+            >
+              {editOpen && (
+                <Link to={"../edit/" + id}>
+                  <button
+                    type="button"
+                    class="note-tool"
+                    style={{
+                      width: "60px",
+                      height: "41.59px",
+                      borderRadius: "5px 0px 0px 5px",
+                    }}
+                  >
+                    <EditIcon />
+                  </button>
+                </Link>
+              )}
+
+              <Link to={"../"}>
                 <button
                   type="button"
                   class="note-tool"
                   style={{
                     width: "60px",
                     height: "41.59px",
-                    borderRadius: "5px 0px 0px 5px",
+                    borderRadius: "0px 5px 5px 0px",
                   }}
                 >
-                  <EditIcon />
+                  <FullscreenExitIcon />
                 </button>
               </Link>
-            )}
-
-            <Link to={"../"}>
-              <button
-                type="button"
-                class="note-tool"
-                style={{
-                  width: "60px",
-                  height: "41.59px",
-                  borderRadius: "0px 5px 5px 0px",
-                }}
-              >
-                <FullscreenExitIcon />
-              </button>
-            </Link>
+            </div>
           </div>
         </div>
       </div>

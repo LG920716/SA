@@ -175,6 +175,7 @@ const Tag = ({ tagList, setTagList, tagFrom }) => {
                 ))}
               </ul>
               <input
+                style={{ width: "18rem" }}
                 type="text"
                 value={search}
                 onKeyUp={(e) => (e.key === "Enter" ? addTags(e) : null)}
