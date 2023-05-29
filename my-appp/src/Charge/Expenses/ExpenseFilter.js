@@ -12,7 +12,7 @@ const ExpensesFilter = (props) => {
   return (
     <div className="expenses-filter">
       <div className="expenses-filter__control">
-        <label>依專案尋找</label>
+        <label>依專案尋找 :</label>
         <select value={props.selected} onChange={dropdownChangeHandler}>
           <option key="all" value="" />
           {props.projectItems.map((doc) => (
@@ -23,8 +23,12 @@ const ExpensesFilter = (props) => {
         </select>
       </div>
       <div className="search">
-        <label>搜尋:</label>
-        <input type="text" onChange={searchChangeHandler} />
+        <label>搜尋 :</label>
+        <input
+          className="search-input"
+          type="text"
+          onChange={searchChangeHandler}
+        />
       </div>
       <NewExpense
         expensesItems={props.expensesItems}
