@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 import { moneyCollectionRef } from "../../firebase-config";
 import { useDispatch } from "react-redux";
 import { setPassExpense } from "../../Redux/passExpense";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function ListItem(props) {
   const dispatch = useDispatch();
@@ -71,21 +73,24 @@ export default function ListItem(props) {
       <div>{props.data.user}</div>
       <div className="expense-item__description">
         <h2>{props.data.description}</h2>
-        <div className="expense-item__price">${props.data.amount}</div>
+        <div className="expense-item__price1">${props.data.amount}</div>
         <div>
-          <button type="button" onClick={() => {
-            dispatch(setPassExpense({handler: true, id: props.data.id}))
-          }}>
-            <EditIcon />
-          </button>
           <button
-            className="delete-button"
-            type="button"
+            type="check-button"
             onClick={() => {
-              dispatch(setPassExpense({handler: false, id: props.data.id}))
+              dispatch(setPassExpense({ handler: true, id: props.data.id }));
             }}
           >
-            <DeleteIcon />
+            <CheckIcon />
+          </button>
+          <button
+            className="delete-button1"
+            type="button"
+            onClick={() => {
+              dispatch(setPassExpense({ handler: false, id: props.data.id }));
+            }}
+          >
+            <CloseIcon />
           </button>
         </div>
       </div>
