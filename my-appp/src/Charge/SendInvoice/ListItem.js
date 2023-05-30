@@ -67,7 +67,8 @@ export default function ListItem(props) {
   // };
   return (
     <Card className="list-item">
-      <img src={url} className="avatar" alt="User Avatar" />
+      {/* <img src={url} className="avatar" alt="User Avatar" /> */}
+      <div>{props.data.user}</div>
       <div className="expense-item__description">
         <h2>{props.data.description}</h2>
         <div className="expense-item__price">${props.data.amount}</div>

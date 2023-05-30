@@ -8,6 +8,7 @@ export default function ExpenseForm(props) {
   const [EnterTitle, setEnterTitle] = useState("");
   const [EnterAmount, setEnterAmount] = useState();
   const [EnterDate, setEnterDate] = useState("");
+  const [EnterUser, setEnterUser] = useState("");
   //本來想用Type 但會重複所以用income or expenditure的開頭取縮寫
   const [EnterIOE, setEnterIOE] = useState("");
   const [EnterProject, setEnterProject] = useState("一般收支");
@@ -31,7 +32,8 @@ export default function ExpenseForm(props) {
             description: EnterDescription,
             updated_at: new Date(),
             create_at: new Date(),
-            status: status
+            status: status,
+            user: EnterUser
           })
         );
         props.onSaveExpenseData();
@@ -59,6 +61,20 @@ export default function ExpenseForm(props) {
               value={EnterDescription}
               onChange={(event) => {
                 setEnterDescription(event.target.value);
+              }}
+            />
+          </div>
+        </div>
+      )}
+      {level !== "money" && (
+        <div className="new-expense__controls">
+          <div className="new-expense__control">
+            <label>請求者</label>
+            <input
+              type="text"
+              value={EnterDescription}
+              onChange={(event) => {
+                setEnterUser(event.target.value);
               }}
             />
           </div>

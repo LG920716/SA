@@ -5,7 +5,6 @@ import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
 import "./ExpenseItem.css";
 import ExpenseUpdate from "./ExpenseUpdate";
-import Swal from "sweetalert2";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";

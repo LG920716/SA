@@ -158,7 +158,7 @@ export default function Charge() {
         await updateDoc(moneyDoc, {
           money: remainMoney,
         });
-        dispatch(setPassExpense({ hander: false, id: "" }));
+        // dispatch(setPassExpense({ hander: false, id: "" }));
       } else {
         Swal.fire({
           title: "確定刪除?",
@@ -173,7 +173,7 @@ export default function Charge() {
           if (result.isConfirmed) {
             const del = async () => {
               await deleteDoc(doc(expensesCollectionRef, passExpenseData.id));
-              dispatch(setPassExpense({ hander: true, id: "" }));
+              // dispatch(setPassExpense({ hander: true, id: "" }));
             };
             del();
             Swal.fire({
