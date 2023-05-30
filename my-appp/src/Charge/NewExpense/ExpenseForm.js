@@ -72,7 +72,7 @@ export default function ExpenseForm(props) {
             <label>請求者</label>
             <input
               type="text"
-              value={EnterDescription}
+              value={EnterUser}
               onChange={(event) => {
                 setEnterUser(event.target.value);
               }}

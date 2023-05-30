@@ -143,7 +143,7 @@ export default function Charge() {
   }, [createExpenseData]);
   useEffect(() => {
     const passExpense = async () => {
-      if (passExpenseData.hander) {
+      if (passExpenseData.handler) {
         const expenseDoc = doc(expensesCollectionRef, passExpenseData.id);
         await updateDoc(expenseDoc, {
           status: 1,
@@ -154,11 +154,13 @@ export default function Charge() {
             : money + expenseDoc.amount;
         setMoney(remainMoney);
         const moneyDoc = doc(moneyCollectionRef, "money");
-
         await updateDoc(moneyDoc, {
           money: remainMoney,
         });
-        // dispatch(setPassExpense({ hander: false, id: "" }));
+        const updatedData = await getDocs(expensesCollectionRef);
+        setExpenses(
+          updatedData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
       } else {
         Swal.fire({
           title: "確定刪除?",
@@ -173,7 +175,10 @@ export default function Charge() {
           if (result.isConfirmed) {
             const del = async () => {
               await deleteDoc(doc(expensesCollectionRef, passExpenseData.id));
-              // dispatch(setPassExpense({ hander: true, id: "" }));
+              const updatedData = await getDocs(expensesCollectionRef);
+              setExpenses(
+                updatedData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+              );
             };
             del();
             Swal.fire({
