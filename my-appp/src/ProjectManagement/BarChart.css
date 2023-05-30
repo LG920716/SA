@@ -1,6 +1,6 @@
 .bar-chart {
   padding: 1rem;
-  background-color: #f5f5f5;
+  background-color: #fff;
   margin: 2rem auto;
   width: 100%;
   max-width: 90%;
@@ -35,4 +35,9 @@
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   margin-bottom: 1rem;
+}
+.bar-title {
+  margin-bottom: 0.5rem;
+  font-size: large;
+  font-weight: bold;
 }

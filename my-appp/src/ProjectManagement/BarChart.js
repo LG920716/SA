@@ -33,14 +33,28 @@ const BarChart = () => {
     0
   );
 
+  const totalWidth = 100;
+
+  const moneyRatio = (money / usedMoney) * 100;
+  const usedMoneyRatio = (usedMoney / money) * 100;
+
+  const adjustedMoneyRatio = moneyRatio > totalWidth ? totalWidth : moneyRatio;
+  const adjustedUsedMoneyRatio =
+    usedMoneyRatio > totalWidth ? totalWidth : usedMoneyRatio;
+
+  const moneyWidth = `${adjustedMoneyRatio}%`;
+  const usedMoneyWidth = `${adjustedUsedMoneyRatio}%`;
+
   return (
     <Card className="bar-chart">
       <div className="chart-container">
         {usedMoney > money && <Warning />}
-        <div className="bar-budget" style={{ width: "50%" }}>
+        <label className="bar-title">總預算</label>
+        <div className="bar-budget" style={{ width: "moneyWidth" }}>
           {money}
         </div>
-        <div className="bar-expense" style={{ width: "10%" }}>
+        <label className="bar-title">已分配預算</label>
+        <div className="bar-expense" style={{ width: "usedMoneyRatio" }}>
           {usedMoney}
         </div>
       </div>

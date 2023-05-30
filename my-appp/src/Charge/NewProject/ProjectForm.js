@@ -38,7 +38,7 @@ export default function ProjectForm(props) {
   };
 
   return (
-    <form onSubmit={SubmitHandlar}>
+    <form className="newproject-form" onSubmit={SubmitHandlar}>
       <div className="new-project__controls">
         <div className="new-project__control">
           <label>名稱</label>
