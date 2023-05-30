@@ -30,7 +30,15 @@ function Create() {
         dateLineDel: "",
       });
       await setDoc(doc(db, "tag", "tagsListDbDefault"), {
-        tags: tagsListDbDefault,
+        tags: [
+          "#0052cc",
+          "#8ed1fc",
+          "#00d084",
+          "#eb144c",
+          "#fcb900",
+          "#9575cd",
+        ].map((x) => ({ color: x, name: "" })),
+        // tagsListDbDefault,
       });
 
       navigate("/");

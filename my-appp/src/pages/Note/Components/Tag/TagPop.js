@@ -12,6 +12,8 @@ import { ChromePicker } from "react-color";
 import { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import WarningIcon from "@mui/icons-material/Warning";
+import Swal from "sweetalert2";
+
 function TagPop({
   modalStatus,
   setModalStatus,
@@ -362,6 +364,42 @@ function TagPop({
     }
   }, [color, name]);
 
+  const delColor = () => {
+    if (colorTotalList.includes(color)) {
+      return alert("此標籤正在使用中");
+    }
+    Swal.fire({
+      title: "確定刪除?",
+      text: `永久刪除${name}標籤`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "確認刪除",
+      cancelButtonText: "取消",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const del = () => {
+          setTagsListDbDefault(
+            tagsListDbDefault.filter((x) => x.color !== color)
+          );
+          setColorListDefault(colorListDefault.filter((x) => x != color));
+        };
+        del();
+        Swal.fire({
+          showConfirmButton: false,
+          title: "刪除成功",
+          text: `已刪除${name}標籤`,
+          icon: "success",
+          timer: 1100,
+        });
+      }
+    });
+    setColor("#0052cc");
+    setColorOpen(true);
+    setModalStatus(false);
+  };
+
   const EditColorTag = () => {
     if (!addStatus) {
       setColor("#0052cc");
@@ -512,7 +550,15 @@ function TagPop({
         </div>
       </Modal.Body>
       <Modal.Footer style={{ border: "none" }}>
-        <Button onClick={EditColorTag}>新增</Button>
+        <div style={{ diaplay: "flex" }}>
+          <Button
+            onClick={delColor}
+            style={{ marginRight: "10px", background: "red" }}
+          >
+            刪除
+          </Button>
+          <Button onClick={EditColorTag}>新增</Button>
+        </div>
       </Modal.Footer>
     </Modal>
   );

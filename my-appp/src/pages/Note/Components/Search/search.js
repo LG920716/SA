@@ -28,7 +28,8 @@ const SearchBar = ({
                 .length > 0) &&
               (searchFrom === "noteDel"
                 ? notes.owner[0].uid === auth.currentUser.uid ||
-                  level === "admin"
+                  level === "admin" ||
+                  notes.allow.map((x) => x.value).includes(auth.currentUser.uid)
                 : notes) &&
               (color ? notes.tag.map((x) => x.color).includes(color) : notes)
           : notes.email.toLowerCase().includes(search.toLowerCase()) ||
