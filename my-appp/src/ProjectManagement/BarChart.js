@@ -39,7 +39,7 @@ const BarChart = () => {
   const usedMoneyRatio = (usedMoney / money) * 100;
 
   const adjustedMoneyRatio = moneyRatio > totalWidth ? totalWidth : moneyRatio;
-  const adjustedUsedMoneyRatio =
+  const adjustedUsedMoneyRatio = 
     usedMoneyRatio > totalWidth ? totalWidth : usedMoneyRatio;
 
   const moneyWidth = `${adjustedMoneyRatio}%`;

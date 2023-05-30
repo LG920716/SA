@@ -7,7 +7,7 @@ export default function InvoiceList(props) {
   return (
     <Card className="invoice-list">
       {filterExpenses.length === 0 ? (
-        <p>目前無請求</p>
+        <p className="no-request">目前無請求</p>
       ) : (
         <ul>
           {filterExpenses.map((item) => (
