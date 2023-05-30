@@ -14,9 +14,11 @@ export default function Charge() {
   const updateExpenseData = useSelector((state) => state.updateExpense.value);
   const deleteExpenseData = useSelector((state) => state.deleteExpense.value);
   const createExpenseData = useSelector((state) => state.createExpense.value);
+  const passExpenseData = useSelector((state) => state.passExpense.value);
   const [firstDeleteExpense, setFirstDeleteExpense] = useState(true);
   const [firstUpdateExpense, setFirstUpdateExpense] = useState(true);
   const [firstCreateExpense, setFirstCreateExpense] = useState(true);
+  const [firstPassExpense, setFirstPassExpense] = useState(true);
   const [level, setLevel] = useState(localStorage.getItem("level"));
   const [project, setProject] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -136,6 +138,57 @@ export default function Charge() {
       createExpense();
     }
   }, [createExpenseData]);
+  useEffect(() => {
+    const passExpense = async () => {
+      if (passExpenseData.hander) {
+        const expenseDoc = doc(expensesCollectionRef, passExpenseData.id);
+        await updateDoc(expenseDoc, {
+          status: 1,
+        });
+        const remainMoney =
+          props.data.IOE === "支出"
+            ? money - props.data.amount
+            : money + props.data.amount;
+        setMoney(remainMoney);
+        const moneyDoc = doc(moneyCollectionRef, "money");
+
+        await updateDoc(moneyDoc, {
+          money: remainMoney,
+        });
+      } else {
+        Swal.fire({
+          title: "確定刪除?",
+          text: "刪除此要求",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "刪除",
+          cancelButtonText: "取消",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const del = async () => {
+              await deleteDoc(doc(expensesCollectionRef, passExpenseData.id));
+            };
+            del();
+            Swal.fire({
+              showConfirmButton: false,
+              title: "刪除成功",
+              text: "已刪除支出",
+              icon: "success",
+              timer: 1100,
+            });
+          }
+        });
+      }
+    };
+    if (firstPassExpense) {
+      setFirstPassExpense(false);
+      return;
+    } else {
+      passExpense();
+    }
+  }, [passExpenseData]);
 
   return (
     <div>

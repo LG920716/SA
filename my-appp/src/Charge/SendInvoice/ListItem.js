@@ -6,9 +6,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { db } from "../../firebase-config";
 import { doc, deleteDoc, updateDoc, getDocs } from "firebase/firestore";
 import Swal from "sweetalert2";
-import { moneyCollectionRef } from "../../firebase-config"; 
+import { moneyCollectionRef } from "../../firebase-config";
+import { useDispatch } from "react-redux";
+import { setPassExpense } from "../../Redux/passExpense";
 
 export default function ListItem(props) {
+  const dispatch = useDispatch();
   const [money, setMoney] = useState();
   useEffect(() => {
     const fetchMoney = async () => {
@@ -20,48 +23,48 @@ export default function ListItem(props) {
     fetchMoney();
   }, []);
   const [url, setUrl] = useState(localStorage.getItem("url"));
-  const failHandler = (id) => {
-    Swal.fire({
-      title: "確定刪除?",
-      text: "刪除此要求",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "刪除",
-      cancelButtonText: "取消",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const del = async () => {
-          await deleteDoc(doc(db, "expenses", id));
-        };
-        del();
-        Swal.fire({
-          showConfirmButton: false,
-          title: "刪除成功",
-          text: "已刪除支出",
-          icon: "success",
-          timer: 1100,
-        });
-      }
-    });
-  };
-  const passHandler = async () => {
-    const expenseDoc = doc(db, "expenses", props.data.id);
-    await updateDoc(expenseDoc, {
-      status: 1,
-    });
-    const remainMoney =
-      props.data.IOE === "支出"
-        ? money - props.data.amount
-        : money + props.data.amount;
-    setMoney(remainMoney);
-    const moneyDoc = doc(moneyCollectionRef, "money");
+  // const failHandler = (id) => {
+  //   Swal.fire({
+  //     title: "確定刪除?",
+  //     text: "刪除此要求",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "刪除",
+  //     cancelButtonText: "取消",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       const del = async () => {
+  //         await deleteDoc(doc(db, "expenses", id));
+  //       };
+  //       del();
+  //       Swal.fire({
+  //         showConfirmButton: false,
+  //         title: "刪除成功",
+  //         text: "已刪除支出",
+  //         icon: "success",
+  //         timer: 1100,
+  //       });
+  //     }
+  //   });
+  // };
+  // const passHandler = async () => {
+  //   const expenseDoc = doc(db, "expenses", props.data.id);
+  //   await updateDoc(expenseDoc, {
+  //     status: 1,
+  //   });
+  //   const remainMoney =
+  //     props.data.IOE === "支出"
+  //       ? money - props.data.amount
+  //       : money + props.data.amount;
+  //   setMoney(remainMoney);
+  //   const moneyDoc = doc(moneyCollectionRef, "money");
 
-    await updateDoc(moneyDoc, {
-      money: remainMoney,
-    });
-  };
+  //   await updateDoc(moneyDoc, {
+  //     money: remainMoney,
+  //   });
+  // };
   return (
     <Card className="list-item">
       <img src={url} className="avatar" alt="User Avatar" />
@@ -69,14 +72,16 @@ export default function ListItem(props) {
         <h2>{props.data.description}</h2>
         <div className="expense-item__price">${props.data.amount}</div>
         <div>
-          <button type="button" onClick={passHandler}>
+          <button type="button" onClick={() => {
+            dispatch(setPassExpense({handler: true, id: props.data.id}))
+          }}>
             <EditIcon />
           </button>
           <button
             className="delete-button"
             type="button"
             onClick={() => {
-              failHandler(props.data.id);
+              dispatch(setPassExpense({handler: false, id: props.data.id}))
             }}
           >
             <DeleteIcon />

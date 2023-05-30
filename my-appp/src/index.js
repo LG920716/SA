@@ -7,12 +7,14 @@ import { Provider } from "react-redux";
 import deleteExpense from "./Redux/deleteExpense";
 import updateExpense from "./Redux/updateExpense";
 import createExpense from "./Redux/createExpense";
+import passExpense from "./Redux/passExpense";
 
 const store = configureStore({
   reducer: {
     deleteExpense: deleteExpense,
     updateExpense: updateExpense,
-    createExpense: createExpense
+    createExpense: createExpense,
+    passExpense: passExpense
   },
 });
 
