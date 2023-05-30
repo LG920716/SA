@@ -146,9 +146,9 @@ export default function Charge() {
           status: 1,
         });
         const remainMoney =
-          props.data.IOE === "支出"
-            ? money - props.data.amount
-            : money + props.data.amount;
+          expenseDoc.IOE === "支出"
+            ? money - expenseDoc.amount
+            : money + expenseDoc.amount;
         setMoney(remainMoney);
         const moneyDoc = doc(moneyCollectionRef, "money");
 
