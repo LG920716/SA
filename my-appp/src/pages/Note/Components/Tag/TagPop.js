@@ -217,7 +217,7 @@ function TagPop({
   //       </p>
   //     );
   //   }
-  // }, [color, name]);
+  // }, [color, name])
 
   useEffect(() => {
     if (!modalStatus) {
@@ -367,6 +367,8 @@ function TagPop({
   const delColor = () => {
     if (colorTotalList.includes(color)) {
       return alert("此標籤正在使用中");
+    } else if (color === "#0052cc") {
+      return alert("此為系統預設標籤(不可刪)");
     }
     Swal.fire({
       title: "確定刪除?",
@@ -378,11 +380,13 @@ function TagPop({
       confirmButtonText: "確認刪除",
       cancelButtonText: "取消",
     }).then((result) => {
+      console.log(tagsListDbDefault.filter((x) => x.color !== color));
       if (result.isConfirmed) {
         const del = () => {
           setTagsListDbDefault(
             tagsListDbDefault.filter((x) => x.color !== color)
           );
+
           setColorListDefault(colorListDefault.filter((x) => x != color));
         };
         del();
@@ -399,7 +403,7 @@ function TagPop({
     setColorOpen(true);
     setModalStatus(false);
   };
-
+  console.log(tagsListDbDefault, "Newwwwwwwwwwwwwwwwwwwwwwwwwwwww");
   const EditColorTag = () => {
     if (!addStatus) {
       setColor("#0052cc");
@@ -417,7 +421,7 @@ function TagPop({
     setColorOpen(true);
     setModalStatus(false);
   };
-  console.log(colorTotalList, color);
+
   return (
     <Modal
       show={modalStatus}
