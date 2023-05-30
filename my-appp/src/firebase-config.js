@@ -26,14 +26,13 @@ import { getStorage } from "firebase/storage";
 // };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAEd6TVkA2r3yg8NHmsh2A5ld2SJlq7iJA",
-  authDomain: "sa-project-d7a1c.firebaseapp.com",
-  databaseURL: "https://sa-project-d7a1c-default-rtdb.firebaseio.com",
-  projectId: "sa-project-d7a1c",
-  storageBucket: "sa-project-d7a1c.appspot.com",
-  messagingSenderId: "181071305167",
-  appId: "1:181071305167:web:4ed90139c5ddb5fa445aba",
-  measurementId: "G-Q77ZV6W9X4",
+  apiKey: "AIzaSyBr6XDYQcRAWIO0Qf79JG93onHHeEP1m5c",
+  authDomain: "test-431dd.firebaseapp.com",
+  projectId: "test-431dd",
+  storageBucket: "test-431dd.appspot.com",
+  messagingSenderId: "6825246139",
+  appId: "1:6825246139:web:54676a96fd11fd42e7189e",
+  measurementId: "G-8BF2ZQCM7N",
 };
 
 // const firebaseConfig = {
