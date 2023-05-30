@@ -8,7 +8,7 @@ export const updateExpenseSlice = createSlice({
       name: "",
       amount: 0,
       date: new Date(),
-      projectName: "",
+      project: "",
       updated_at: new Date(),
       IOE: "",
       type: "",

@@ -8,12 +8,12 @@ import {
 import InvoiceList from "./SendInvoice/InvoiceList";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
-import { setPassExpense } from "../Redux/passExpense";
+// import { useDispatch } from "react-redux";
+// import { setPassExpense } from "../Redux/passExpense";
 import { doc, deleteDoc, updateDoc, getDocs, addDoc } from "firebase/firestore";
 
 export default function Charge() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const updateExpenseData = useSelector((state) => state.updateExpense.value);
   const deleteExpenseData = useSelector((state) => state.deleteExpense.value);
   const createExpenseData = useSelector((state) => state.createExpense.value);
@@ -52,15 +52,16 @@ export default function Charge() {
   useEffect(() => {
     const updateExpense = async () => {
       const expenseDoc = doc(expensesCollectionRef, updateExpenseData.id);
+      console.log(updateExpenseData);
 
       await updateDoc(expenseDoc, {
         name: updateExpenseData.name,
         amount: updateExpenseData.amount,
         date: updateExpenseData.date,
-        projectName: updateExpenseData.projectName,
+        project: updateExpenseData.project,
         updated_at: new Date(),
         IOE: updateExpenseData.IOE,
-        type: updateExpenseData.type,
+        type: updateExpenseData.type
       });
 
       const updatedData = await getDocs(expensesCollectionRef);
@@ -155,7 +156,7 @@ export default function Charge() {
         setMoney(remainMoney);
         const moneyDoc = doc(moneyCollectionRef, "money");
         await updateDoc(moneyDoc, {
-          money: remainMoney,
+          money: +remainMoney,
         });
         const updatedData = await getDocs(expensesCollectionRef);
         setExpenses(

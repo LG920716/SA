@@ -16,7 +16,7 @@ export default function Expense(props) {
     setfilteredExpenses(searchWord);
   };
   const filteredExpense = props.expensesItems.filter((doc) => {
-    if (filterProject !== "" && doc.projectName !== filterProject) {
+    if (filterProject !== "" && doc.project !== filterProject) {
       return false;
     }
     if (filteredExpenses !== "" && !doc.name.includes(filteredExpenses)) {

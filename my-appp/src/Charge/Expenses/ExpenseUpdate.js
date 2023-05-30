@@ -16,15 +16,15 @@ export default function ExpenseUpdate(props) {
   const [EnterIOE, setEnterIOE] = useState(props.data.IOE);
   const [EnterType, setEnterType] = useState(props.data.type);
   const [EnterDate, setEnterDate] = useState(props.data.date.toDate());
-  const [EnterPropject, setEnterProject] = useState(props.data.project);
+  const [EnterProject, setEnterProject] = useState(props.data.project);
   const [formattedDate, setFormattedDate] = useState("");
 
   useEffect(() => {
     setFormattedDate(format(EnterDate, "yyyy-MM-dd"));
   }, [EnterDate]);
 
-  const SubmitHandlar = async (event) => {
-    event.preventDefault();
+  // const SubmitHandlar = async (event) => {
+  //   event.preventDefault();
 
     // const expenseDoc = doc(db, "expenses", props.data.id);
     // console.log(expenseDoc);
@@ -39,34 +39,44 @@ export default function ExpenseUpdate(props) {
     //   type: EnterType,
     // });
 
-    props.onStopEditing();
+  //   props.onStopEditing();
 
-    setEnterName("");
-    setEnterAmount("");
-    setEnterDate("");
-    setEnterProject("");
-    setFormattedDate("");
-    setEnterType("");
-    setEnterIOE("");
-  };
+  //   setEnterName("");
+  //   setEnterAmount("");
+  //   setEnterDate("");
+  //   setEnterProject("");
+  //   setFormattedDate("");
+  //   setEnterType("");
+  //   setEnterIOE("");
+  // };
   return (
     <Card className="update-expense">
       <span className="overlay"></span>
       <form
-        onSubmit={SubmitHandlar}
-        onClick={() => {
+        onSubmit={(event) => {
+          event.preventDefault();
+          console.log(EnterProject);
           dispatch(
             setUpdateExpense({
               id: props.data.id,
               name: EnterName,
               amount: +EnterAmount,
               date: EnterDate,
-              projectName: EnterPropject,
+              project: EnterProject,
               updated_at: new Date(),
               IOE: EnterIOE,
               type: EnterType,
             })
           );
+          props.onStopEditing();
+
+          setEnterName("");
+          setEnterAmount("");
+          setEnterDate("");
+          setEnterProject("");
+          setFormattedDate("");
+          setEnterType("");
+          setEnterIOE("");
         }}
       >
         <div className="update-expense__controls">
@@ -128,21 +138,24 @@ export default function ExpenseUpdate(props) {
         <div className="update-expense__controls">
           <div className="update-expense__control">
             <label>用途</label>
-
-            <select
+            <input
+              type="text"
               className="form-select"
-              value={EnterPropject}
+              list="projectList"
+              value={EnterProject}
               onChange={(event) => {
                 setEnterProject(event.target.value);
               }}
-            >
-              <option value="">一般收支</option>
+            />
+
+            <datalist id="projectList">
+              <option value="一般收支">一般收支</option>
               {props.projectItems.map((doc) => (
                 <option value={doc.name} key={doc.id}>
                   {doc.name}
                 </option>
               ))}
-            </select>
+              </datalist>
           </div>
         </div>
         <div className="new-expense__controls">
