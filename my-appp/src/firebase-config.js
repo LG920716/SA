@@ -4,7 +4,6 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore, collection } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyBYk5dlRF-7RG7FCTfn58Fg1RwvLSofNKE",
   authDomain: "sa-final-79259.firebaseapp.com",
@@ -14,7 +13,6 @@ const firebaseConfig = {
   appId: "1:680242081016:web:8e328f4666568bb2369f0d",
   measurementId: "G-N0K81ZJB1D"
 };
-
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
