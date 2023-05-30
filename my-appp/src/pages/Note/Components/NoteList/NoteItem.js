@@ -26,11 +26,9 @@ function NoteItem({
   noteListFilter,
 }) {
   useEffect(() => {
-    // Add the 'reveal' class to the card after the component mounts
     const card = document.getElementById(id);
     card.classList.add("reveal");
     return () => {
-      // Remove the 'reveal' class when the component unmounts
       card.classList.remove("reveal");
     };
   }, [id]);

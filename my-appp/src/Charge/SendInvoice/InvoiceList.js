@@ -6,11 +6,15 @@ export default function InvoiceList(props) {
   const filterExpenses = props.expensesItems.filter((doc) => doc.status === 0);
   return (
     <Card className="invoice-list">
-      <ul>
-        {filterExpenses.map((item) => (
-          <ListItem data={item} />
-        ))}
-      </ul>
+      {filterExpenses.length === 0 ? (
+        <p>目前無請求</p>
+      ) : (
+        <ul>
+          {filterExpenses.map((item) => (
+            <ListItem data={item} />
+          ))}
+        </ul>
+      )}
     </Card>
   );
 }

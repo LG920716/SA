@@ -109,7 +109,7 @@ export default function ProjectUpdate(props) {
                 取消
               </button>
               <button type="submit" className="confirm">
-                更新專案
+                更新活動
               </button>
             </div>
           </form>

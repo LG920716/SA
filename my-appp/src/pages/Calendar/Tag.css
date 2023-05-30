@@ -3,14 +3,15 @@
   align-items: flex-start;
   flex-wrap: wrap;
   width: 20rem;
-  padding: 0 8px;
+  padding: 5px 5px;
+  padding-bottom: 0.5rem;
   border: 1px solid rgb(214, 216, 218);
   border-radius: 6px;
 }
 
 .tags-input input {
   flex: 1;
-  width: 20rem;
+  width: 10rem;
   border: none;
   height: 46px;
   max-height: 41.59px;
@@ -72,12 +73,11 @@
 }} */
 
 .color-picker-tab {
-  width: 270px;
-  /* background: rgb(231, 238, 250); */
+  width: 285px;
   background: rgb(219, 226, 250);
-  /* background: rgb(249, 239, 239); */
+
   margin-top: -7.8125rem;
-  margin-left: 17rem;
+  left: 31.3%;
   padding: 10px;
   position: absolute;
   border-radius: 10px;

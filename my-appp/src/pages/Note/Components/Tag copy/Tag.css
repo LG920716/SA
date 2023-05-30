@@ -14,10 +14,10 @@
   border: none;
   height: 46px;
   font-size: 14px;
-  padding: 4px 0 0 0;
-  &:focus {
+  padding-bottom: 1rem;
+  /* &:focus {
     outline: transparent;
-  }
+  } */
 }
 #tags {
   display: flex;
@@ -39,9 +39,9 @@
   border-radius: 6px;
   margin: 0 8px 8px 0;
   /* background: #0052cc; */
-  .tag-title {
+  /* .tag-title {
     margin-top: 3px;
-  }
+  } */
 }
 .tag-close-icon {
   display: block;
@@ -71,7 +71,7 @@
 }} */
 
 .color-picker-tab {
-  width: 270ssssspx;
+  width: 270px;
   /* background: rgb(231, 238, 250); */
   background: rgb(219, 226, 250);
   /* background: rgb(249, 239, 239); */

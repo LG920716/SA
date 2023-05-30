@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import ExpenseList from "./ExpenseList";
 import Card from "../UI/Card";
@@ -22,7 +22,7 @@ export default function Expense(props) {
     if (filteredExpenses !== "" && !doc.name.includes(filteredExpenses)) {
       return false;
     }
-    if(doc.status == 0){
+    if(doc.status === 0){
       return false;
     }
     return true;

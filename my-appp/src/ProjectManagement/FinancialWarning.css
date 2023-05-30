@@ -1,0 +1,7 @@
+.warning {
+  background-color: #ffc107;
+  padding: 10px;
+  border-radius: 5px;
+  color: #333;
+  font-weight: bold;
+}

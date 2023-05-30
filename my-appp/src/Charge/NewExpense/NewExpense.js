@@ -15,22 +15,7 @@ const NewExpense = (props) => {
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
-  const saveExpenseDataHandler = async (enterExpenseData) => {
-    // console.log(enterExpenseData);
-    const status = level == "money" ? 1 : 0;
-
-    await addDoc(expensesCollectionRef, {
-      name: enterExpenseData.name,
-      amount: enterExpenseData.amount,
-      date: enterExpenseData.date,
-      projectName: enterExpenseData.project,
-      created_at: new Date(),
-      updated_at: new Date(),
-      type: enterExpenseData.type,
-      IOE: enterExpenseData.IOE,
-      description: enterExpenseData.description,
-      status: status,
-    });
+  const saveExpenseDataHandler = async () => {
     setIsEditing(false);
   };
   return (

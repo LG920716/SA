@@ -4,7 +4,6 @@ import moment from "moment";
 import "./pop.css";
 import Tag from "./Tag";
 
-
 function MyVerticallyCenteredModal({
   modalStatus,
   handleClose,
@@ -20,6 +19,8 @@ function MyVerticallyCenteredModal({
   handleDelete,
   tagList,
   setTagList,
+  colorTotalList,
+  setColorTotalList,
 }) {
   const localStartDate = moment(startDate).format("YYYY-MM-DDTHH:mm");
   const localEndDate = moment(endDate).format("YYYY-MM-DDTHH:mm");
@@ -63,7 +64,13 @@ function MyVerticallyCenteredModal({
             </div>
             <div className="form-group">
               <label>活動標籤</label>
-              <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
+              <Tag
+                tagList={tagList}
+                setTagList={setTagList}
+                colorTotalList={colorTotalList}
+                setColorTotalList={setColorTotalList}
+                tagFrom={"create"}
+              />
             </div>
           </div>
         ) : (
@@ -97,7 +104,13 @@ function MyVerticallyCenteredModal({
             </div>
             <div className="form-group">
               <label>活動標籤</label>
-              <Tag tagList={tagList} setTagList={setTagList} tagFrom={"create"} />
+              <Tag
+                tagList={tagList}
+                setTagList={setTagList}
+                colorTotalList={colorTotalList}
+                setColorTotalList={setColorTotalList}
+                tagFrom={"create"}
+              />
             </div>
           </div>
         )}

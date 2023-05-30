@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCreateExpense } from "../../Redux/createExpense";
 import "./ExpenseForm.css";
 
-
 export default function ExpenseForm(props) {
+  const dispatch = useDispatch();
   const [EnterTitle, setEnterTitle] = useState("");
   const [EnterAmount, setEnterAmount] = useState();
   const [EnterDate, setEnterDate] = useState("");
@@ -12,33 +14,30 @@ export default function ExpenseForm(props) {
   const [EnterType, setEnterType] = useState("");
   const [EnterDescription, setEnterDescription] = useState("");
   const [level, setLevel] = useState(localStorage.getItem("level"));
-
-  const SubmitHandlar = (event) => {
-    event.preventDefault();
-
-    const expenseData = {
-      name: EnterTitle,
-      amount: +EnterAmount,
-      date: new Date(EnterDate),
-      project: EnterProject,
-      type: EnterType,
-      IOE: EnterIOE,
-      description: EnterDescription
-    };
-
-    props.onSaveExpenseData(expenseData);
-    setEnterTitle("");
-    setEnterAmount();
-    setEnterDate("");
-    setEnterProject("");
-    setEnterType("");
-    setEnterType("");
-    setEnterIOE("");
-    setEnterDescription("");
-  };
+  const status = level == "money" ? 1 : 0;
 
   return (
-    <form onSubmit={SubmitHandlar} className="form2">
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        dispatch(
+          setCreateExpense({
+            name: EnterTitle,
+            amount: +EnterAmount,
+            date: new Date(EnterDate),
+            project: EnterProject,
+            type: EnterType,
+            IOE: EnterIOE,
+            description: EnterDescription,
+            updated_at: new Date(),
+            create_at: new Date(),
+            status: status
+          })
+        );
+        props.onSaveExpenseData();
+      }}
+      className="form2"
+    >
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>標題</label>
@@ -51,18 +50,20 @@ export default function ExpenseForm(props) {
           />
         </div>
       </div>
-      {level !== "money" && <div className="new-expense__controls">
-        <div className="new-expense__control">
-          <label>敘述</label>
-          <input
-            type="text"
-            value={EnterDescription}
-            onChange={(event) => {
-              setEnterDescription(event.target.value);
-            }}
-          />
+      {level !== "money" && (
+        <div className="new-expense__controls">
+          <div className="new-expense__control">
+            <label>敘述</label>
+            <input
+              type="text"
+              value={EnterDescription}
+              onChange={(event) => {
+                setEnterDescription(event.target.value);
+              }}
+            />
+          </div>
         </div>
-      </div>}
+      )}
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>金額</label>
