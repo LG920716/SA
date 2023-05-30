@@ -5,23 +5,14 @@ import { getFirestore, collection } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCrc1-AotWkSo9hf5VwuLEK5Elo9GEoweE",
-//   authDomain: "sa-project-2f0fc.firebaseapp.com",
-//   projectId: "sa-project-2f0fc",
-//   storageBucket: "sa-project-2f0fc.appspot.com",
-//   messagingSenderId: "948003317990",
-//   appId: "1:948003317990:web:6db26ff7f3e0ffd54d3327",
-//   measurementId: "G-FB13Z7XN10"
-// };
 const firebaseConfig = {
-  apiKey: "AIzaSyDMCf_Re5jo40lNJKd4DGKtPHZxVyPpShU",
-  authDomain: "sa-firebase-30573.firebaseapp.com",
-  projectId: "sa-firebase-30573",
-  storageBucket: "sa-firebase-30573.appspot.com",
-  messagingSenderId: "306156875849",
-  appId: "1:306156875849:web:7227bf0b830e2c56690f98",
-  measurementId: "G-F2F9LRDDJM"
+  apiKey: "AIzaSyBYk5dlRF-7RG7FCTfn58Fg1RwvLSofNKE",
+  authDomain: "sa-final-79259.firebaseapp.com",
+  projectId: "sa-final-79259",
+  storageBucket: "sa-final-79259.appspot.com",
+  messagingSenderId: "680242081016",
+  appId: "1:680242081016:web:8e328f4666568bb2369f0d",
+  measurementId: "G-N0K81ZJB1D"
 };
 
 const app = initializeApp(firebaseConfig);

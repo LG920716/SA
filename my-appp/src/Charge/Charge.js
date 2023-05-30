@@ -8,9 +8,12 @@ import {
 import InvoiceList from "./SendInvoice/InvoiceList";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { setPassExpense } from "../Redux/passExpense";
 import { doc, deleteDoc, updateDoc, getDocs, addDoc } from "firebase/firestore";
 
 export default function Charge() {
+  const dispatch = useDispatch();
   const updateExpenseData = useSelector((state) => state.updateExpense.value);
   const deleteExpenseData = useSelector((state) => state.deleteExpense.value);
   const createExpenseData = useSelector((state) => state.createExpense.value);
@@ -155,6 +158,7 @@ export default function Charge() {
         await updateDoc(moneyDoc, {
           money: remainMoney,
         });
+        dispatch(setPassExpense({ hander: false, id: "" }));
       } else {
         Swal.fire({
           title: "確定刪除?",
@@ -169,6 +173,7 @@ export default function Charge() {
           if (result.isConfirmed) {
             const del = async () => {
               await deleteDoc(doc(expensesCollectionRef, passExpenseData.id));
+              dispatch(setPassExpense({ hander: true, id: "" }));
             };
             del();
             Swal.fire({
