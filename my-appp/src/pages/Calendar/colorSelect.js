@@ -108,11 +108,7 @@ const ColorSelectOption = ({ color, setColor, colorTotalList, setColorTotalList}
                     setColor(colors.hex);
                   }}
                 />
-                <i
-                  class="bi bi-plus-circle-fill"
-                  style={{ fontSize: "25px" }}
-                  onClick={() => setColor("")}
-                ></i>
+               
               </div>
             )}
             {value === "2" && (
@@ -135,12 +131,7 @@ const ColorSelectOption = ({ color, setColor, colorTotalList, setColorTotalList}
                     setColor(colors.hex);
                   }}
                 />
-                <i
-                  class="bi bi-plus-circle-fill"
-                  style={{ fontSize: "25px" }}
-                  onClick={() => setColor("")}
-                ></i>
-                {/* colorListDefault.concat(projectList).includes(color) */}
+               
               </div>
             )}
           </div>
