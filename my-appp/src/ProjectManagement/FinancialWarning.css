@@ -1,7 +1,10 @@
 .warning {
-  background-color: #ffc107;
   padding: 10px;
   border-radius: 5px;
   color: #333;
-  font-weight: bold;
+}
+.warning-title {
+  color: rgb(220, 48, 48);
+  font-weight: 900;
+  font-size: 20px;
 }

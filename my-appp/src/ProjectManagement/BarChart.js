@@ -49,10 +49,12 @@ const BarChart = () => {
     <Card className="bar-chart">
       <div className="chart-container">
         {usedMoney > money && <Warning />}
-        <div className="bar" style={{ width: moneyWidth }}>
+        <label className="bar-title">總預算</label>
+        <div className="bar-budget" style={{ width: "moneyWidth" }}>
           {money}
         </div>
-        <div className="bar" style={{ width: usedMoneyWidth }}>
+        <label className="bar-title">已分配預算</label>
+        <div className="bar-expense" style={{ width: "usedMoneyRatio" }}>
           {usedMoney}
         </div>
       </div>
