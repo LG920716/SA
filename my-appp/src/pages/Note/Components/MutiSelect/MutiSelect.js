@@ -21,10 +21,13 @@ function MutiSelect({
   const getUserSelect = async () => {
     try {
       const data = await getDocs(collection(db, "users"));
-      const list = data.docs.map((doc) => ({
-        value: doc.id,
-        label: doc.data().email,
-      }));
+      const list = data.docs
+        .map((doc) => ({
+          value: doc.id,
+          label: doc.data().email,
+          level: doc.data().level,
+        }))
+        .filter((x) => x.level !== "unCheck");
 
       setUid(auth.currentUser.uid);
       setEmail(auth.currentUser.email);

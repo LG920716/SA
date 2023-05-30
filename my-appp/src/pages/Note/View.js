@@ -43,7 +43,8 @@ function View({ notePage, level }) {
       noteData &&
       uid &&
       noteData.owner[0].uid !== uid &&
-      level !== "admin"
+      level !== "admin" &&
+      !noteData.allow.map((x) => x.value).includes(uid)
     ) {
       navigate("/");
     } else if (
