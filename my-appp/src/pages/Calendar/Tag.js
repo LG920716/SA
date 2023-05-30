@@ -24,7 +24,6 @@ const Tag = ({
   const [searchDbTag, setSearchDbTag] = useState([]);
   const [searchDbTagWait, setSearchDbTagWait] = useState([]);
   const [colorDbList, setColorDbList] = useState([]);
-  //const [colorTotalList, setColorTotalList] = useState([]);
   const [color, setColor] = useState("#0052cc");
   const [value, setValue] = useState("1");
   const [colorOpen, setColorOpen] = useState(false);
@@ -107,8 +106,7 @@ const Tag = ({
     ) {
       if (
         (tagFrom === "create" || tagFrom === "edit") &&
-        colorDbList.filter((color) => color === tagList[index].color).length ===
-          0
+        colorDbList.filter((color) => color === tagList[index].color).length === 0
       ) {
         setColorTotalList(
           colorTotalList.filter((color) => color !== tagList[index].color)
@@ -117,7 +115,7 @@ const Tag = ({
       } else if (
         tagFrom === "edit" &&
         colorTagDbCount[tagList[index].color] ===
-          colorTagCount[tagList[index].color]
+        colorTagCount[tagList[index].color]
       ) {
         console.log("!!!ww", colorTagDbCount[tagList[index].color]);
         console.log("!!!ww123", colorTagCount[tagList[index].color]);
