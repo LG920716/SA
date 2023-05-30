@@ -37,10 +37,10 @@ const BarChart = () => {
     <Card className="bar-chart">
       <div className="chart-container">
         {usedMoney > money && <Warning />}
-        <div className="bar" style={{ width: "50%" }}>
+        <div className="bar-budget" style={{ width: "50%" }}>
           {money}
         </div>
-        <div className="bar" style={{ width: "10%" }}>
+        <div className="bar-expense" style={{ width: "10%" }}>
           {usedMoney}
         </div>
       </div>

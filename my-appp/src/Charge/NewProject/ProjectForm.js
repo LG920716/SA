@@ -18,7 +18,7 @@ export default function ProjectForm(props) {
       budget: +EnterBudget,
       date: new Date(EnterDate),
       description: EnterDescription,
-      color: EnterColor
+      color: EnterColor,
     };
 
     props.onSaveProjectData(projectData);
@@ -41,33 +41,33 @@ export default function ProjectForm(props) {
     <form onSubmit={SubmitHandlar}>
       <div className="new-project__controls">
         <div className="new-project__control">
-          <label>Name</label>
+          <label>名稱</label>
           <input
             type="text"
             value={EnterName}
             onChange={(event) => {
-                setEnterName(event.target.value);
+              setEnterName(event.target.value);
             }}
           />
         </div>
       </div>
       <div className="new-project__controls">
         <div className="new-project__control">
-          <label>Budget</label>
+          <label>預算</label>
           <input
             type="number"
             min="1"
             step="1"
             value={EnterBudget}
             onChange={(event) => {
-                setEnterBudget(event.target.value);
+              setEnterBudget(event.target.value);
             }}
           />
         </div>
       </div>
       <div className="new-project__controls">
         <div className="new-project__control">
-          <label>Date</label>
+          <label>日期</label>
           <input
             type="date"
             value={EnterDate}
@@ -79,12 +79,12 @@ export default function ProjectForm(props) {
       </div>
       <div className="new-project__controls">
         <div className="new-project__control">
-          <label>Description</label>
+          <label>敘述</label>
           <input
             type="text"
             value={EnterDescription}
             onChange={(event) => {
-                setEnterDescription(event.target.value);
+              setEnterDescription(event.target.value);
             }}
           />
         </div>
@@ -118,10 +118,14 @@ export default function ProjectForm(props) {
         </div>
       </div> */}
       <div className="new-project__actions">
-        <button type="button" onClick={props.onStopEditing}>
-          Cencel
+        <button
+          className="cancel-button"
+          type="button"
+          onClick={props.onStopEditing}
+        >
+          取消
         </button>
-        <button type="sumbit">New Project</button>
+        <button type="sumbit">創建活動</button>
       </div>
     </form>
   );
